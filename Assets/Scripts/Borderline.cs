@@ -11,8 +11,8 @@ public class Borderline : MonoBehaviour
     public bool offRight, offLeft, offUp, offDown;
 
     public bool isOnscreen = true;
-    private float camWidth;
-    private float camHeight;
+    public float camWidth;
+    public float camHeight;
 
     private void Awake()
     {
@@ -25,6 +25,9 @@ public class Borderline : MonoBehaviour
         Vector3 position = transform.position;
         isOnscreen = true;
         offDown = offUp = offRight = offLeft = false;
+
+        if (CompareTag("Enemy"))
+            keepOnScreen = false;
 
         if (position.x > camWidth - radius) 
         {

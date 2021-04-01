@@ -14,9 +14,6 @@ public class PlayerController : MonoBehaviour
     {
          if (instance == null)
              instance = this;
-
-
-        transform.rotation = Quaternion.Euler(-90, 0, 0);
     }
 
     private void Update()
