@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public float speedY = 10f;
     public float speedX = 15f;
     public float health = 10f;
-    public float directionChangeChance = 0.001f;
+    public float directionChangeChance = 0.01f;
 
     private Borderline _borderline;
     private bool startDirection = false;
@@ -41,18 +41,19 @@ public class Enemy : MonoBehaviour
     {
         Vector3 tempPosition = position;
         tempPosition.y -= speedY * Time.deltaTime;
+        
+        // Меняет направление движения в случае выхода объекта за границы по сторонам.
+        if (_borderline.offLeft || _borderline.offRight)
+            speedX *= -1;
+        // Случайно меняет направление движения
+        if (Random.value < directionChangeChance)
+            speedX *= -1;
         // Случайно определяет изначальное напрвление движения по оси Х.
         if (startDirection == true)
             tempPosition.x += speedX * Time.deltaTime;
         else
             tempPosition.x -= speedX * Time.deltaTime;
-        // Меняет направление движения в случае выхода объекта за границы по стороном.
-        if (_borderline.offLeft || _borderline.offRight)
-            speedX *= -1;
-        // Случайно меняет направление движения
-        if (Random.value < directionChangeChance)
-            speedX *= -1;        
-        
+
         position = tempPosition;
     }
 }

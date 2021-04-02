@@ -33,9 +33,10 @@ public class EnemySpawner : MonoBehaviour
             childRenderers[i].material = enemyMaterials[materialIndex];
         }
 
-        // Включает скрипт Enemy и присваивает соответствующий тег.
+        // Включает скрипт Enemy и присваивает соответствующий тег и слой.
         enemy.GetComponent<Enemy>().enabled = true;
         enemy.tag = "Enemy";
+        enemy.layer = LayerMask.NameToLayer("Enemy");
 
         // Позволяет задать случайную точку спавна по Х в пределах ширины экрана.
         // По Y позиция - самый верх+отступ.
