@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class GameSceneManager : MonoBehaviour
 {
-    public GameObject[] playerPrefabs;
+    private GameObject _playerPrefab = Singleton.Singleton.playerPrefab;
+    private Material _playerMaterial = Singleton.Singleton.playerMaterial;
 
     private GameObject _player;
 
     private void Start()
     {
-        // Спавнит игрока, включает соответствующий скрипт и присваивает тег+слой.
-        _player = Instantiate(playerPrefabs[0]);
+        _player = Instantiate(_playerPrefab);
+        // Костыль создающий массив дочерних элементов, после чего, с помощью цикла присваивающий каждому элементу материал.
+        MeshRenderer[] childRenderers = _player.GetComponentsInChildren<MeshRenderer>();
+        for (int i = 0; i < childRenderers.Length; i++)
+        {
+            childRenderers[i].material = _playerMaterial;
+        }
+
         _player.GetComponent<PlayerController>().enabled = true;
         _player.transform.Find("Shield").gameObject.SetActive(true);        
         _player.tag = "Player";

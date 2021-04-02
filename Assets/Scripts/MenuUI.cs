@@ -5,6 +5,15 @@ using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour
 {
+    public Canvas upgradeMenu;
+    public Canvas cosmeticMenu;
+
+    private void Awake()
+    {
+        upgradeMenu.gameObject.SetActive(true);
+        cosmeticMenu.gameObject.SetActive(false);
+    }
+
     public void PlayClicked()
     {
         SceneLoader.Load(SceneLoader.Scenes.GameScene);
@@ -23,5 +32,17 @@ public class MenuUI : MonoBehaviour
     public void ExitClicked()
     {
         Application.Quit();
+    }
+
+    public void AppearnceClicked()
+    {
+        upgradeMenu.gameObject.SetActive(false);
+        cosmeticMenu.gameObject.SetActive(true);
+    }
+
+    public void ApplyClicked()
+    {
+        cosmeticMenu.gameObject.SetActive(false);
+        upgradeMenu.gameObject.SetActive(true);        
     }
 }

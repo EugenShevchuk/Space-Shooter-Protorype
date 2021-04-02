@@ -18,5 +18,8 @@ namespace Singleton
             }
             return _instance;
         }
+
+        public static GameObject playerPrefab;
+        public static Material playerMaterial;
     }
 }
