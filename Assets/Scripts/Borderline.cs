@@ -26,7 +26,7 @@ public class Borderline : MonoBehaviour
         isOnscreen = true;
         offDown = offUp = offRight = offLeft = false;
 
-        if (CompareTag("Enemy"))
+        if (CompareTag("Enemy") || CompareTag("PlayerProjectile") || CompareTag("EnemyProjectile"))
             keepOnScreen = false;
 
         if (position.x > camWidth - radius) 

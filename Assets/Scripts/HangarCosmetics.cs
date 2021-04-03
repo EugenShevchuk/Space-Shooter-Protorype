@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HangarManager : MonoBehaviour
+public class HangarCosmetics : MonoBehaviour
 {
     public GameObject[] shipPrefabs;
     private int prefabIndex = 0;
     public Material[] shipMaterials;
     private int materialIndex = 0;
+
+    public static GameObject chosenPrefab;
+    public static Material chosenMaterial;
 
     public float prefabRotationSpeed = 25f;
 
@@ -27,9 +30,9 @@ public class HangarManager : MonoBehaviour
     private void FixedUpdate()
     {
         currentPrefab.transform.Rotate(0, prefabRotationSpeed * Time.deltaTime, 0);
-        currentRotation = currentPrefab.transform.rotation;
+        currentRotation = currentPrefab.transform.rotation;        
     }
-
+    // Метод спавнит префаб и устанавливает ему материал под соответствующими индексами.
     public void SetPrefabMaterial()
     {
         Vector3 spawnPosition = new Vector3(0, 55, 0);
@@ -88,7 +91,7 @@ public class HangarManager : MonoBehaviour
 
     public void ApplyClicked()
     {
-        Singleton.Singleton.playerPrefab = shipPrefabs[prefabIndex];
-        Singleton.Singleton.playerMaterial = shipMaterials[materialIndex];
+        chosenPrefab = shipPrefabs[prefabIndex];
+        chosenMaterial = shipMaterials[materialIndex];
     }
 }

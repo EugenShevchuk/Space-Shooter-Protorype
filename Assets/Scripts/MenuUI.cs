@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuUI : MonoBehaviour
 {
@@ -10,8 +11,11 @@ public class MenuUI : MonoBehaviour
 
     private void Awake()
     {
-        upgradeMenu.gameObject.SetActive(true);
-        cosmeticMenu.gameObject.SetActive(false);
+        if (upgradeMenu != null && cosmeticMenu != null)
+        {
+            upgradeMenu.gameObject.SetActive(true);
+            cosmeticMenu.gameObject.SetActive(false);
+        }
     }
 
     public void PlayClicked()
@@ -32,7 +36,7 @@ public class MenuUI : MonoBehaviour
     public void ExitClicked()
     {
         Application.Quit();
-    }
+    }    
 
     public void AppearnceClicked()
     {
