@@ -33,6 +33,10 @@ public class WeaponManager : MonoBehaviour
     public Toggle blaster;
     public Toggle laser;
 
+    public bool isWeaponKinematic;
+    public bool isWeaponBlaster;
+    public bool isWeaponLaser;
+
     private static Dictionary<WeaponType, WeaponDefinition> _weaponDictionary;
 
     private void Awake()
@@ -63,21 +67,41 @@ public class WeaponManager : MonoBehaviour
         // Если ключа нет в словаре, создать новое описание basic.
         return new WeaponDefinition();
     }
+    #region WeaponSwitcher
+    public void WeaponSwitcher()
+    {
+        if (isWeaponKinematic == true)
+            type = WeaponType.kinematic;
+        if (isWeaponBlaster == true)
+            type = WeaponType.blaster;
+        if (isWeaponLaser == true)
+            type = WeaponType.laser;
+    }
     public void KinematicIsOn()
     {
         if (kinematic.isOn)
-            type = WeaponType.kinematic;
+        {
+            isWeaponKinematic = true;
+            WeaponSwitcher();
+        }
     }
 
     public void BlasterIsOn()
     {
         if (blaster.isOn)
-            type = WeaponType.blaster;
+        {
+            isWeaponBlaster = true;
+            WeaponSwitcher();
+        }
     }
 
     public void LaserIsOn()
     {
         if (laser.isOn)
-            type = WeaponType.laser;
+        {
+            isWeaponLaser = true;
+            WeaponSwitcher();
+        }
     }
+    #endregion
 }

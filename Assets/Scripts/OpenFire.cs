@@ -10,6 +10,8 @@ public class OpenFire : MonoBehaviour
     private GameObject _gunRight;
     private GameObject _gunLeft;
 
+    private Projectile proj;
+
     private void Start()
     {
         GameObject gunSet = transform.Find("GunSet").gameObject;
@@ -23,17 +25,9 @@ public class OpenFire : MonoBehaviour
         StartCoroutine(nameof(Fire));
     }
 
-    public WeaponType type
-    {
-        get { return _type; }
-        set { SetType(value); }
-    }
-
     public void SetType(WeaponType weaponType)
     {
-        _type = weaponType;
-        if (type == WeaponType.basic)
-            print("tvar");
+        _type = weaponType;        
         _definition = WeaponManager.GetWeaponDefinition(_type);
     }
 
@@ -43,32 +37,31 @@ public class OpenFire : MonoBehaviour
         {
             if (_definition != null)
             {
-                GameObject projectileRight = Instantiate(_definition.projectilePrefab);
-                GameObject projectileLeft = Instantiate(_definition.projectilePrefab);
-                
-                if (_gunRight.transform.parent.gameObject.CompareTag("Player"))
-                {
-                    projectileRight.tag = "PlayerProjectile";
-                    projectileRight.layer = LayerMask.NameToLayer("PlayerProjectile");
-                    projectileLeft.tag = "PlayerProjectile";
-                    projectileLeft.layer = LayerMask.NameToLayer("PlayerProjectile");
-                }
-                else
-                {
-                    projectileRight.tag = "EnemyProjectile";
-                    projectileRight.layer = LayerMask.NameToLayer("EnemyProjectile");
-                    projectileLeft.tag = "EnemyProjectile";
-                    projectileLeft.layer = LayerMask.NameToLayer("EnemyProjectile");
-                }
-                
-                projectileRight.transform.position = _gunRight.transform.position;
-                projectileRight.GetComponent<Rigidbody>().velocity = Vector3.up * _definition.velocity;
-
-
-                projectileLeft.transform.position = _gunLeft.transform.position;
-                projectileLeft.GetComponent<Rigidbody>().velocity = Vector3.up * _definition.velocity;
+                MakeProjectile(_gunRight);
+                MakeProjectile(_gunLeft);
             }
             yield return new WaitForSeconds(_definition.fireRate);
         }
+    }
+
+    private void MakeProjectile(GameObject projectileAnchor)
+    {
+        GameObject projectile = Instantiate(_definition.projectilePrefab);
+
+        if (projectileAnchor.transform.parent.root.gameObject.CompareTag("Player"))
+        {
+            projectile.tag = "PlayerProjectile";
+            projectile.layer = LayerMask.NameToLayer("PlayerProjectile");
+        }
+        else 
+        {
+            projectile.tag = "EnemyProjectile";
+            projectile.layer = LayerMask.NameToLayer("EnemyProjectile");
+        }
+        projectile.transform.position = projectileAnchor.transform.position;
+        projectile.GetComponent<Rigidbody>().velocity = Vector3.up * _definition.velocity;
+
+        proj = projectile.GetComponent<Projectile>();
+        proj.Ptype = _type;
     }
 }

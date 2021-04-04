@@ -36,7 +36,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
     private void Move()
     {
         Vector3 tempPosition = position;
@@ -55,5 +54,20 @@ public class Enemy : MonoBehaviour
             tempPosition.x -= speedX * Time.deltaTime;
 
         position = tempPosition;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        GameObject triggerGO = other.gameObject;
+        if (triggerGO.tag == "PlayerProjectile")
+        {
+            Projectile proj = triggerGO.GetComponent<Projectile>();
+            health -= WeaponManager.GetWeaponDefinition(proj.Ptype).damageOnHit;
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
+            Destroy(triggerGO);
+        }
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     private Borderline _borderline;
+    [HideInInspector]
+    public WeaponType Ptype;
 
     private void Awake()
     {
