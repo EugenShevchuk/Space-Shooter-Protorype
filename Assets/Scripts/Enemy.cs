@@ -68,6 +68,15 @@ public class Enemy : MonoBehaviour
                 Destroy(gameObject);
             }
             Destroy(triggerGO);
+        }        
+    }
+
+    public void TakeDamageFromLaser(float damage)
+    {
+        health -= damage * Time.deltaTime;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }

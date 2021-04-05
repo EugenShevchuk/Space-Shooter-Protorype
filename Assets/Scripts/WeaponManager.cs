@@ -15,6 +15,7 @@ public class WeaponDefinition
 {
     public WeaponType type = WeaponType.basic;
     public GameObject projectilePrefab;
+    public Material laserMaterial;
     public float damageOnHit = 0;
     public float damagePerSecond = 0;
     public float fireRate = 50;
@@ -82,6 +83,8 @@ public class WeaponManager : MonoBehaviour
         if (kinematic.isOn)
         {
             isWeaponKinematic = true;
+            isWeaponBlaster = false;
+            isWeaponLaser = false;
             WeaponSwitcher();
         }
     }
@@ -91,6 +94,8 @@ public class WeaponManager : MonoBehaviour
         if (blaster.isOn)
         {
             isWeaponBlaster = true;
+            isWeaponKinematic = false;
+            isWeaponLaser = false;
             WeaponSwitcher();
         }
     }
@@ -100,6 +105,8 @@ public class WeaponManager : MonoBehaviour
         if (laser.isOn)
         {
             isWeaponLaser = true;
+            isWeaponKinematic = false;
+            isWeaponBlaster = false;
             WeaponSwitcher();
         }
     }

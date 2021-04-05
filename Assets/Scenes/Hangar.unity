@@ -1511,19 +1511,31 @@ MonoBehaviour:
   weaponDefinitions:
   - type: 1
     projectilePrefab: {fileID: 595834727452409173, guid: 9f993c89f18c9f34f930f4ea80566a66, type: 3}
+    laserMaterial: {fileID: 0}
     damageOnHit: 1
     damagePerSecond: 0
     fireRate: 0.2
     velocity: 100
   - type: 2
     projectilePrefab: {fileID: 7944127336424917720, guid: 710f0521ec247f948b55e7eae570fa56, type: 3}
+    laserMaterial: {fileID: 0}
     damageOnHit: 5
     damagePerSecond: 0
     fireRate: 0.5
     velocity: 75
+  - type: 3
+    projectilePrefab: {fileID: 5573171456088269011, guid: 7a81b2a4989c9204ab7f8a444cad6816, type: 3}
+    laserMaterial: {fileID: 0}
+    damageOnHit: 0
+    damagePerSecond: 3
+    fireRate: 0
+    velocity: 0
   kinematic: {fileID: 654326314}
   blaster: {fileID: 1743051358}
   laser: {fileID: 2098334571}
+  isWeaponKinematic: 0
+  isWeaponBlaster: 0
+  isWeaponLaser: 0
 --- !u!1 &405869531
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,9 +2785,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeMenu: {fileID: 97963090}
   cosmeticMenu: {fileID: 1968263229}
-  kinematic: {fileID: 0}
-  blaster: {fileID: 0}
-  laser: {fileID: 0}
 --- !u!114 &719471864
 MonoBehaviour:
   m_ObjectHideFlags: 0
