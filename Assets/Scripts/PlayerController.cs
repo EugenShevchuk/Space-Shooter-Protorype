@@ -6,11 +6,11 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
 
-    public float speed = 25f;
+    public float speed = PlayerCharacteristics.speed;
     public float roll = 20f;
     public float pitch = 15f;
-    public float health = 10;
-    public float shieldHealth = 10;
+    public float health = PlayerCharacteristics.health;
+    public float shieldHealth = PlayerCharacteristics.shieldHealth;
 
     private GameObject lastTriggerGo = null;
 
