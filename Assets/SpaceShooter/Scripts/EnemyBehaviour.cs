@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour
 {
-    public float speedY = 10f;
-    public float speedX = 15f;
-    public float health = 10f;
-    public float directionChangeChance = 0.01f;
+    [SerializeField] private float speedY = 10f;
+    [SerializeField] private float speedX = 15f;
+    [SerializeField] private float health = 10f;
+    [SerializeField] private float directionChangeChance = 0.01f;
 
-    private Borderline _borderline;
+    private Borderline borderline;
     private bool startDirection = false;
+    private float deltaTime;
 
-    public Vector3 position 
+    public Vector3 Position 
     { 
         get { return (transform.position); }
         set { transform.position = value; }    
@@ -20,7 +19,8 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        _borderline = GetComponent<Borderline>();
+        borderline = GetComponent<Borderline>();
+        deltaTime = Time.deltaTime;
 
         if (Random.value > 1)
             startDirection = true;
@@ -30,30 +30,30 @@ public class Enemy : MonoBehaviour
     {
         Move();
 
-        if (_borderline != null && _borderline.offDown)
+        if (borderline != null && borderline.offDown)
         {
             Destroy(gameObject);            
         }
     }
 
-    private void Move()
+    public virtual void Move()
     {
-        Vector3 tempPosition = position;
-        tempPosition.y -= speedY * Time.deltaTime;
+        Vector3 tempPosition = Position;
+        tempPosition.y -= speedY * deltaTime;
         
         // Меняет направление движения в случае выхода объекта за границы по сторонам.
-        if (_borderline.offLeft || _borderline.offRight)
+        if (borderline.offLeft || borderline.offRight)
             speedX *= -1;
         // Случайно меняет направление движения
         if (Random.value < directionChangeChance)
             speedX *= -1;
         // Случайно определяет изначальное напрвление движения по оси Х.
         if (startDirection == true)
-            tempPosition.x += speedX * Time.deltaTime;
+            tempPosition.x += speedX * deltaTime;
         else
-            tempPosition.x -= speedX * Time.deltaTime;
+            tempPosition.x -= speedX * deltaTime;
 
-        position = tempPosition;
+        Position = tempPosition;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamageFromLaser(float damage)
     {
-        health -= damage * Time.deltaTime;
+        health -= damage * deltaTime;
         if (health <= 0)
         {
             Destroy(gameObject);

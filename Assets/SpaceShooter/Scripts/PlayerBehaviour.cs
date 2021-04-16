@@ -1,26 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerBehaviour : MonoBehaviour
 {
-    public static PlayerController instance;
+    public static PlayerBehaviour Instance;
 
-    public float speed = PlayerCharacteristics.speed;
-    public float roll = 20f;
-    public float pitch = 15f;
-    public float health = PlayerCharacteristics.health;
-    public float shieldHealth = PlayerCharacteristics.shieldHealth;
+    private float speed;
+    private float roll;
+    private float pitch;
+    private float health;
+    private float shieldHealth;
 
     private GameObject lastTriggerGo = null;
 
     private void Awake()
-    {
-        if (instance == null)
-            instance = this;
+    {        
+        if (Instance == null)
+            Instance = this;
+
+        speed = PlayerManager.Instance.Speed;
+        roll = PlayerManager.Instance.roll;
+        pitch = PlayerManager.Instance.pitch;
+        health = PlayerManager.Instance.Health;
+        shieldHealth = PlayerManager.Instance.Shield;
     }
 
     private void Update()
+    {
+        PlayerMove();
+    }
+
+    public void PlayerMove()
     {
         float xAxis = Input.GetAxis("Horizontal");
         float yAxis = Input.GetAxis("Vertical");

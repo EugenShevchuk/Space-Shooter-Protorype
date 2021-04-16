@@ -1,16 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OpenFire : MonoBehaviour
 {
-    private WeaponType _type = WeaponType.kinematic;
-    protected WeaponDefinition _definition;
+    private WeaponType type = WeaponType.kinematic;
+    private WeaponDefinition definition;
 
-    public GameObject firePointRight;
-    public GameObject firePoinLeft;
-
-    private Borderline _borderline;
+    [SerializeField] private GameObject firePointRight;
+    [SerializeField] private GameObject firePoinLeft;
 
     private Projectile proj;
 
@@ -23,25 +20,25 @@ public class OpenFire : MonoBehaviour
 
     public void SetType(WeaponType weaponType)
     {
-        _type = weaponType;        
-        _definition = WeaponManager.GetWeaponDefinition(_type);
+        type = weaponType;        
+        definition = WeaponManager.GetWeaponDefinition(type);
     }
 
     public IEnumerator Fire()
     {
-        if (_definition != null)
+        if (definition != null)
         {
-            if (_type == WeaponType.kinematic || _type == WeaponType.blaster)
+            if (type == WeaponType.kinematic || type == WeaponType.blaster)
             {
                 while (true)
                 {
                     MakeProjectile(firePointRight);
                     MakeProjectile(firePoinLeft);
 
-                    yield return new WaitForSeconds(_definition.fireRate);
+                    yield return new WaitForSeconds(definition.fireRate);
                 }                
             }
-            if (_type == WeaponType.laser)
+            if (type == WeaponType.laser)
             {
                 LineRenderer laserRight = firePointRight.GetComponent<LineRenderer>();
                 LineRenderer laserLeft = firePoinLeft.GetComponent<LineRenderer>();
@@ -63,9 +60,9 @@ public class OpenFire : MonoBehaviour
                     if (Physics.Raycast(firePointRight.transform.position, direction.normalized, out hit, 500f))
                     {
                         laserRight.SetPosition(1, hit.point);
-                        if (hit.collider.tag == "Enemy") 
+                        if (hit.collider.CompareTag("Enemy")) 
                         {
-                            hit.collider.GetComponent<Enemy>().TakeDamageFromLaser(_definition.damagePerSecond);
+                            hit.collider.GetComponent<EnemyBehaviour>().TakeDamageFromLaser(definition.damagePerSecond);
                         }
                     }
                     else
@@ -79,9 +76,9 @@ public class OpenFire : MonoBehaviour
                     if (Physics.Raycast(firePoinLeft.transform.position, direction.normalized, out hit, 500f))
                     {
                         laserLeft.SetPosition(1, hit.point);
-                        if (hit.collider.tag == "Enemy")
+                        if (hit.collider.CompareTag("Enemy"))
                         {
-                            hit.collider.GetComponent<Enemy>().TakeDamageFromLaser(_definition.damagePerSecond);
+                            hit.collider.GetComponent<EnemyBehaviour>().TakeDamageFromLaser(definition.damagePerSecond);
                         }
                     }
                     else 
@@ -98,22 +95,22 @@ public class OpenFire : MonoBehaviour
 
     private void MakeProjectile(GameObject projectileAnchor)
     {
-        GameObject projectile = Instantiate(_definition.projectilePrefab);
+        GameObject projectile = Instantiate(definition.projectilePrefab);
 
         if (projectileAnchor.transform.parent.root.gameObject.CompareTag("Player"))
         {
             projectile.tag = "PlayerProjectile";
             projectile.layer = LayerMask.NameToLayer("PlayerProjectile");
         }
-        else 
+        else
         {
             projectile.tag = "EnemyProjectile";
             projectile.layer = LayerMask.NameToLayer("EnemyProjectile");
         }
         projectile.transform.position = projectileAnchor.transform.position;
-        projectile.GetComponent<Rigidbody>().velocity = Vector3.up * _definition.velocity;
+        projectile.GetComponent<Rigidbody>().velocity = Vector3.up * definition.velocity;
 
         proj = projectile.GetComponent<Projectile>();
-        proj.Ptype = _type;
+        proj.Ptype = type;
     }    
 }

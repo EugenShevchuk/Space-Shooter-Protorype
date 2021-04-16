@@ -237,6 +237,57 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &67822559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 67822561}
+  - component: {fileID: 67822560}
+  m_Layer: 0
+  m_Name: PlayerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &67822560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67822559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc111538a144a4d499dc6ed588770f0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHealth: 10
+  baseShield: 10
+  baseSpeed: 25
+  roll: 20
+  pitch: 15
+  HealthSlider: {fileID: 1172813006}
+  ShieldSlider: {fileID: 339202136}
+  EngineSlider: {fileID: 1748008662}
+--- !u!4 &67822561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67822559}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &80036712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,9 +1591,6 @@ MonoBehaviour:
   kinematicSlider: {fileID: 1954567039}
   blasterSlider: {fileID: 322996317}
   laserSlider: {fileID: 895475826}
-  healthSlider: {fileID: 1172813006}
-  shieldSlider: {fileID: 0}
-  engineSlider: {fileID: 0}
 --- !u!114 &400141087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1555,11 +1603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9255f8d77ae038a4ab0109b7f75bb7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 25
-  roll: 20
-  pitch: 15
-  health: 10
-  shieldHealth: 10
 --- !u!1 &405869531
 GameObject:
   m_ObjectHideFlags: 0
@@ -5711,8 +5754,8 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 400141087}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 67822560}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: UpgradeShield
         m_Mode: 1
         m_Arguments:
@@ -5949,8 +5992,8 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 400141087}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 67822560}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: UpgradeEngine
         m_Mode: 1
         m_Arguments:
@@ -6610,8 +6653,8 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 400141086}
-        m_TargetAssemblyTypeName: WeaponManager, Assembly-CSharp
+      - m_Target: {fileID: 67822560}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: UpgradeHealth
         m_Mode: 1
         m_Arguments:

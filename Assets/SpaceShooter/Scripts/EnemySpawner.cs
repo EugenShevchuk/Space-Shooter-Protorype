@@ -34,18 +34,18 @@ public class EnemySpawner : MonoBehaviour
         }
 
         // Включает скрипт Enemy и присваивает соответствующий тег и слой.
-        enemy.GetComponent<Enemy>().enabled = true;
+        enemy.GetComponent<EnemyBehaviour>().enabled = true;
         enemy.tag = "Enemy";
         enemy.layer = LayerMask.NameToLayer("Enemy");
 
         // Позволяет задать случайную точку спавна по Х в пределах ширины экрана.
         // По Y позиция - самый верх+отступ.
         Vector3 position = Vector3.zero;        
-        float minX = padding - _borderline.camWidth;
-        float maxX = _borderline.camWidth - padding;
+        float minX = padding - _borderline.CamWidth;
+        float maxX = _borderline.CamWidth - padding;
 
         position.x = Random.Range(minX, maxX);
-        position.y = _borderline.camHeight + padding;
+        position.y = _borderline.CamHeight + padding;
 
         enemy.transform.position = position;
         enemy.transform.rotation = Quaternion.Euler(90, 180, 0);

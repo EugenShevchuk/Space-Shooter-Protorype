@@ -1,23 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Borderline : MonoBehaviour
 {
-    public float radius = 1f;
-    public bool keepOnScreen = true;
+    [SerializeField] private float radius = 1f;
+    [SerializeField] private bool keepOnScreen = true;
 
     [HideInInspector]
     public bool offRight, offLeft, offUp, offDown;
 
-    public bool isOnscreen = true;
-    public float camWidth;
-    public float camHeight;
+    [SerializeField] private bool isOnscreen = true;
+    public float CamWidth;
+    public float CamHeight;
 
     private void Awake()
     {
-        camHeight = Camera.main.orthographicSize;
-        camWidth = camHeight * Camera.main.aspect;
+        CamHeight = Camera.main.orthographicSize;
+        CamWidth = CamHeight * Camera.main.aspect;
     }
 
     private void LateUpdate()
@@ -29,27 +27,27 @@ public class Borderline : MonoBehaviour
         if (CompareTag("Enemy") || CompareTag("PlayerProjectile") || CompareTag("EnemyProjectile"))
             keepOnScreen = false;
 
-        if (position.x > camWidth - radius) 
+        if (position.x > CamWidth - radius) 
         {
-            position.x = camWidth - radius;
+            position.x = CamWidth - radius;
             offRight = true;
         }
 
-        if (position.x < radius - camWidth)
+        if (position.x < radius - CamWidth)
         {
-            position.x = radius - camWidth;
+            position.x = radius - CamWidth;
             offLeft = true;
         }
 
-        if (position.y > camHeight - radius)
+        if (position.y > CamHeight - radius)
         {
-            position.y = camHeight - radius;
+            position.y = CamHeight - radius;
             offUp = true;
         }
 
-        if (position.y < radius - camHeight)
+        if (position.y < radius - CamHeight)
         {
-            position.y = radius - camHeight;
+            position.y = radius - CamHeight;
             offDown = true;
         }
 
@@ -66,7 +64,7 @@ public class Borderline : MonoBehaviour
     {
         if (!Application.isPlaying) return;
 
-        Vector3 borders = new Vector3(camWidth * 2, camHeight * 2, 0.1f);
+        Vector3 borders = new Vector3(CamWidth * 2, CamHeight * 2, 0.1f);
 
         Gizmos.DrawWireCube(Vector3.zero, borders);
     }

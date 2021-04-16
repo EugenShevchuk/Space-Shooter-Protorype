@@ -1,35 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HangarCosmetics : MonoBehaviour
 {
-    public GameObject[] shipPrefabs;
+    [SerializeField] private GameObject[] shipPrefabs;
     private int prefabIndex = 0;
-    public Material[] shipMaterials;
+    [SerializeField] private Material[] shipMaterials;
     private int materialIndex = 0;
 
-    public static GameObject chosenPrefab;
-    public static Material chosenMaterial;
+    public static GameObject ChosenPrefab;
+    public static Material ChosenMaterial;
 
-    public float prefabRotationSpeed = 25f;
+    [SerializeField] private float prefabRotationSpeed = 25f;
 
     private GameObject currentPrefab;
     private Quaternion currentRotation;
+    private float deltaTime;
 
-    public Text prefabText;
-    public Text materialText;
+    [SerializeField] private Text prefabText;
+    [SerializeField] private Text materialText;
 
     private void Start()
     {
+        deltaTime = Time.deltaTime;
         currentRotation = Quaternion.Euler(7, 140, 0);
         SetPrefabMaterial();        
     }
 
     private void FixedUpdate()
     {
-        currentPrefab.transform.Rotate(0, prefabRotationSpeed * Time.deltaTime, 0);
+        currentPrefab.transform.Rotate(0, prefabRotationSpeed * deltaTime, 0);
         currentRotation = currentPrefab.transform.rotation;        
     }
     // Метод спавнит префаб и устанавливает ему материал под соответствующими индексами.
@@ -91,7 +91,7 @@ public class HangarCosmetics : MonoBehaviour
 
     public void ApplyClicked()
     {
-        chosenPrefab = shipPrefabs[prefabIndex];
-        chosenMaterial = shipMaterials[materialIndex];
+        ChosenPrefab = shipPrefabs[prefabIndex];
+        ChosenMaterial = shipMaterials[materialIndex];
     }
 }
