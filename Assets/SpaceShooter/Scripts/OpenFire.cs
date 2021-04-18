@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class OpenFire : MonoBehaviour
 {
-    private WeaponType type = WeaponType.kinematic;
-    private WeaponDefinition definition;
+    [SerializeField] private WeaponObject weapon;
 
     [SerializeField] private GameObject firePointRight;
     [SerializeField] private GameObject firePoinLeft;
@@ -13,32 +12,26 @@ public class OpenFire : MonoBehaviour
 
     private void Start()
     {
-        SetType(WeaponManager.type);
+        weapon = WeaponsData.Instance.CurrentWeapon;
 
         StartCoroutine(nameof(Fire));
     }
 
-    public void SetType(WeaponType weaponType)
-    {
-        type = weaponType;        
-        definition = WeaponManager.GetWeaponDefinition(type);
-    }
-
     public IEnumerator Fire()
     {
-        if (definition != null)
+        if (weapon != null)
         {
-            if (type == WeaponType.kinematic || type == WeaponType.blaster)
+            if (weapon.WeaponType == WeaponType.Kinematic || weapon.WeaponType == WeaponType.Blaster)
             {
                 while (true)
                 {
                     MakeProjectile(firePointRight);
                     MakeProjectile(firePoinLeft);
 
-                    yield return new WaitForSeconds(definition.fireRate);
+                    yield return new WaitForSeconds(1 / weapon.FireRate);
                 }                
             }
-            if (type == WeaponType.laser)
+            if (weapon.WeaponType == WeaponType.Laser)
             {
                 LineRenderer laserRight = firePointRight.GetComponent<LineRenderer>();
                 LineRenderer laserLeft = firePoinLeft.GetComponent<LineRenderer>();
@@ -46,45 +39,10 @@ public class OpenFire : MonoBehaviour
                 laserLeft.enabled = true;
                 laserRight.enabled = true;
 
-                Vector3 endPosRight;
-                Vector3 endPosLeft;
-                Vector3 direction = Vector3.up;
-
-                RaycastHit hit;
-
                 while(true)
                 {
-                    endPosRight = new Vector3(firePointRight.transform.position.x, Mathf.Abs(firePointRight.transform.position.y * 500f), firePointRight.transform.position.z);
-                    laserRight.SetPosition(0, firePointRight.transform.position);
-                    
-                    if (Physics.Raycast(firePointRight.transform.position, direction.normalized, out hit, 500f))
-                    {
-                        laserRight.SetPosition(1, hit.point);
-                        if (hit.collider.CompareTag("Enemy")) 
-                        {
-                            hit.collider.GetComponent<EnemyBehaviour>().TakeDamageFromLaser(definition.damagePerSecond);
-                        }
-                    }
-                    else
-                    {
-                        laserRight.SetPosition(1, firePointRight.transform.position + endPosRight);
-                    }
-
-                    endPosLeft = new Vector3(firePoinLeft.transform.position.x, Mathf.Abs(firePoinLeft.transform.position.y * 500f), firePoinLeft.transform.position.z);
-                    laserLeft.SetPosition(0, firePoinLeft.transform.position);
-
-                    if (Physics.Raycast(firePoinLeft.transform.position, direction.normalized, out hit, 500f))
-                    {
-                        laserLeft.SetPosition(1, hit.point);
-                        if (hit.collider.CompareTag("Enemy"))
-                        {
-                            hit.collider.GetComponent<EnemyBehaviour>().TakeDamageFromLaser(definition.damagePerSecond);
-                        }
-                    }
-                    else 
-                    {
-                        laserLeft.SetPosition(1, firePoinLeft.transform.position + endPosLeft);
-                    }
+                    FireLaser(laserRight, firePointRight);
+                    FireLaser(laserLeft, firePoinLeft);
                     
                     yield return new WaitForEndOfFrame();
                 }
@@ -93,11 +51,11 @@ public class OpenFire : MonoBehaviour
         }
     }
 
-    private void MakeProjectile(GameObject projectileAnchor)
+    private void MakeProjectile(GameObject firePoint)
     {
-        GameObject projectile = Instantiate(definition.projectilePrefab);
+        GameObject projectile = Instantiate(weapon.ProjectilePrefab);
 
-        if (projectileAnchor.transform.parent.root.gameObject.CompareTag("Player"))
+        if (firePoint.transform.parent.root.gameObject.CompareTag("Player"))
         {
             projectile.tag = "PlayerProjectile";
             projectile.layer = LayerMask.NameToLayer("PlayerProjectile");
@@ -107,10 +65,34 @@ public class OpenFire : MonoBehaviour
             projectile.tag = "EnemyProjectile";
             projectile.layer = LayerMask.NameToLayer("EnemyProjectile");
         }
-        projectile.transform.position = projectileAnchor.transform.position;
-        projectile.GetComponent<Rigidbody>().velocity = Vector3.up * definition.velocity;
+        projectile.transform.position = firePoint.transform.position;
+        projectile.GetComponent<Rigidbody>().velocity = Vector3.up * weapon.Velocity;
 
         proj = projectile.GetComponent<Projectile>();
-        proj.Ptype = type;
-    }    
+        proj.ProjectileType = weapon;
+    }
+
+    private void FireLaser(LineRenderer laser, GameObject firePoint)
+    {
+        Vector3 endPos;        
+        Vector3 direction = Vector3.up;
+
+        RaycastHit hit;
+
+        endPos = new Vector3(firePoint.transform.position.x, Mathf.Abs(firePoint.transform.position.y * 500f), firePoint.transform.position.z);
+        laser.SetPosition(0, firePoint.transform.position);
+
+        if (Physics.Raycast(firePoint.transform.position, direction.normalized, out hit, 500f))
+        {
+            laser.SetPosition(1, hit.point);
+            if (hit.collider.CompareTag("Enemy"))
+            {
+                hit.collider.GetComponent<EnemyBehaviour>().TakeDamageFromLaser(weapon.DamagePerSecond);
+            }
+        }
+        else
+        {
+            laser.SetPosition(1, firePointRight.transform.position + endPos);
+        }
+    }
 }

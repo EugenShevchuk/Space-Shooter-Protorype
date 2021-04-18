@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameSceneManager : MonoBehaviour
@@ -12,6 +10,11 @@ public class GameSceneManager : MonoBehaviour
     private GameObject player;
 
     private void Start()
+    {
+        InitializePlayer();
+    }
+
+    private void InitializePlayer()
     {
         if (playerPrefab != null)
         {
@@ -30,7 +33,7 @@ public class GameSceneManager : MonoBehaviour
 
         player.GetComponent<PlayerBehaviour>().enabled = true;
         player.GetComponent<OpenFire>().enabled = true;
-        player.transform.Find("Shield").gameObject.SetActive(true);        
+        player.transform.Find("Shield").gameObject.SetActive(true);
         player.tag = "Player";
         player.layer = LayerMask.NameToLayer("Player");
     }

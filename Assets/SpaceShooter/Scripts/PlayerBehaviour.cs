@@ -4,29 +4,40 @@ public class PlayerBehaviour : MonoBehaviour
 {
     public static PlayerBehaviour Instance;
 
+    [SerializeField] private PlayerStatsObject playerStats;
+    [SerializeField] private float roll = 20f;
+    [SerializeField] private float pitch = 15f;
+
     private float speed;
-    private float roll;
-    private float pitch;
     private float health;
     private float shieldHealth;
+    private float deltaTime;
 
     private GameObject lastTriggerGo = null;
 
     private void Awake()
-    {        
+    {
         if (Instance == null)
             Instance = this;
 
-        speed = PlayerManager.Instance.Speed;
-        roll = PlayerManager.Instance.roll;
-        pitch = PlayerManager.Instance.pitch;
-        health = PlayerManager.Instance.Health;
-        shieldHealth = PlayerManager.Instance.Shield;
+        deltaTime = Time.deltaTime;
+
+        GetStats();
     }
 
     private void Update()
     {
         PlayerMove();
+    }
+
+    public void GetStats()
+    {
+        if (playerStats != null)
+        {
+            speed = playerStats.Speed; 
+            health = playerStats.MaxHealthValue;
+            shieldHealth = playerStats.MaxShieldValue;
+        }
     }
 
     public void PlayerMove()
@@ -36,8 +47,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         Vector3 position = transform.position;
 
-        position.x += xAxis * speed * Time.deltaTime;
-        position.y += yAxis * speed * Time.deltaTime;
+        position.x += xAxis * speed * deltaTime;
+        position.y += yAxis * speed * deltaTime;
 
         transform.position = position;
 
@@ -53,7 +64,7 @@ public class PlayerBehaviour : MonoBehaviour
             return;
         lastTriggerGo = triggerGO;
 
-        if (triggerGO.tag == "Enemy")
+        if (triggerGO.CompareTag("Enemy"))
         {
             Destroy(triggerGO);
             // При столкновении с вражеским кораблем деактивируется щит.

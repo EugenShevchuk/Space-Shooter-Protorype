@@ -3,7 +3,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     private Borderline borderline;
-    [HideInInspector] public WeaponType Ptype;
+    [HideInInspector] public WeaponObject ProjectileType;
 
     private void Awake()
     {

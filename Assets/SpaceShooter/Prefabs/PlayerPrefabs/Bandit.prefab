@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5928461842004377241}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.070878, z: 2.5}
+  m_LocalPosition: {x: -0.25, y: 0.98, z: 2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8137862968245735538}
@@ -285,7 +285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5928461843094966280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.070878, z: 2.5}
+  m_LocalPosition: {x: -0.25, y: 1.070878, z: 2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8138093270777022880}
@@ -3252,11 +3252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9255f8d77ae038a4ab0109b7f75bb7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 25
+  playerStats: {fileID: 11400000, guid: 5bd465f273e45bc489bf2340b0bec25d, type: 2}
   roll: 20
   pitch: 15
-  health: 10
-  shieldHealth: 10
 --- !u!114 &1520409335632695304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3276,8 +3274,8 @@ MonoBehaviour:
   offUp: 0
   offDown: 0
   isOnscreen: 0
-  camWidth: 0
-  camHeight: 0
+  CamWidth: 0
+  CamHeight: 0
 --- !u!114 &-7016594539299388835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3306,6 +3304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fc01b01b769224aa96dac86f38b900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon: {fileID: 0}
   firePointRight: {fileID: 5928461843094966280}
   firePoinLeft: {fileID: 5928461842004377241}
 --- !u!1 &8135290786950879896

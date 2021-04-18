@@ -59,10 +59,10 @@ public class EnemyBehaviour : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameObject triggerGO = other.gameObject;
-        if (triggerGO.tag == "PlayerProjectile")
+        if (triggerGO.CompareTag("PlayerProjectile"))
         {
             Projectile proj = triggerGO.GetComponent<Projectile>();
-            health -= WeaponManager.GetWeaponDefinition(proj.Ptype).damageOnHit;
+            health -= proj.ProjectileType.DamageOnHit;
             if (health <= 0)
             {
                 Destroy(gameObject);
