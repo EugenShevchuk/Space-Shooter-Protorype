@@ -39,6 +39,9 @@ public class WeaponsData : MonoBehaviour
             laserLvl = LaserWeapon.Level;
         }
         WeaponSwitcher();
+
+        if (CurrentWeapon == null)
+            CurrentWeapon = KinematicWeapon;
     }
 
     public void WeaponSwitcher()

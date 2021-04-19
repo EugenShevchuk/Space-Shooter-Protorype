@@ -12,7 +12,8 @@ public class OpenFire : MonoBehaviour
 
     private void Start()
     {
-        weapon = WeaponsData.Instance.CurrentWeapon;
+        if (WeaponsData.Instance.CurrentWeapon != null)
+            weapon = WeaponsData.Instance.CurrentWeapon;       
 
         StartCoroutine(nameof(Fire));
     }

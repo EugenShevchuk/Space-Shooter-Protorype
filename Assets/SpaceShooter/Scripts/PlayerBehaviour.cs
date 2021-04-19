@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
@@ -8,12 +9,16 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float roll = 20f;
     [SerializeField] private float pitch = 15f;
 
-    private float speed;
-    private float health;
-    private float shieldHealth;
+    public int healthValue;
+    public int shieldValue;
+
+    private int speedValue;
     private float deltaTime;
 
     private GameObject lastTriggerGo = null;
+
+    public static event Action<int> OnHealthValueChangedEvent;
+    public static event Action<int> OnShieldValueChangedEvent;
 
     private void Awake()
     {
@@ -34,9 +39,9 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (playerStats != null)
         {
-            speed = playerStats.Speed; 
-            health = playerStats.MaxHealthValue;
-            shieldHealth = playerStats.MaxShieldValue;
+            speedValue = playerStats.Speed; 
+            healthValue = playerStats.MaxHealthValue;
+            shieldValue = playerStats.MaxShieldValue;
         }
     }
 
@@ -47,8 +52,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         Vector3 position = transform.position;
 
-        position.x += xAxis * speed * deltaTime;
-        position.y += yAxis * speed * deltaTime;
+        position.x += xAxis * speedValue * deltaTime;
+        position.y += yAxis * speedValue * deltaTime;
 
         transform.position = position;
 
@@ -68,20 +73,24 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Destroy(triggerGO);
             // При столкновении с вражеским кораблем деактивируется щит.
-            if (shieldHealth > 0)
+            if (shieldValue > 0)
             {
-                shieldHealth = 0;
-                transform.Find("Shield").gameObject.SetActive(false);
+                shieldValue -= 5;
+                OnShieldValueChangedEvent?.Invoke(shieldValue);
+                if (shieldValue <= 0)
+                {
+                    transform.Find("Shield").gameObject.SetActive(false);
+                }
                 return;
             }
             // Если щит выключен наносится урон по хп.
             if (transform.Find("Shield").gameObject.activeSelf == false)
             {
-                health -= 5;
-                if (health <= 0)
+                healthValue -= 5;
+                OnHealthValueChangedEvent?.Invoke(healthValue);
+                if (healthValue <= 0)
                     Destroy(gameObject);
-            }
-                       
+            }                       
         }
     }
 }

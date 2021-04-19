@@ -17,6 +17,7 @@ public class MenuUI : MonoBehaviour
     public void PlayClicked()
     {
         SceneLoader.Load(SceneLoader.Scenes.GameScene);
+        
     }
 
     public void ToHangarClicked()

@@ -6,9 +6,9 @@ public class PlayerStatsManager : MonoBehaviour
     public static PlayerStatsManager Instance;
 
     [SerializeField] private PlayerStatsObject playerStats;
-    private float health;
-    private float shield;
-    private float speed;
+    private int health;
+    private int shield;
+    private int speed;
 
     private int healthLvl;
     private int shieldLvl;
@@ -62,9 +62,9 @@ public class PlayerStatsManager : MonoBehaviour
         if (healthLvl < 10)
         {
             if (healthLvl <= 5)
-                health += 1f;
+                health += 1;
             if (healthLvl > 5 && healthLvl < 10)
-                health += 2f;
+                health += 2;
             healthLvl++;
             healthSlider.value = healthLvl;
         }
@@ -76,10 +76,10 @@ public class PlayerStatsManager : MonoBehaviour
         if (shieldLvl < 10)
         {
             if (shieldLvl <= 5)
-                shield += 1f;
+                shield += 1;
 
             if (shieldLvl > 5 && shieldLvl < 10)
-                shield += 2f;
+                shield += 2;
 
             shieldLvl++;
             shieldSlider.value = shieldLvl;
@@ -92,10 +92,10 @@ public class PlayerStatsManager : MonoBehaviour
         if (engineLvl < 10)
         {
             if (engineLvl <= 5)
-                speed += 1f;
+                speed += 1;
 
             if (engineLvl > 5)
-                speed += 2f;
+                speed += 2;
 
             engineLvl++;
             engineSlider.value = engineLvl;
