@@ -2,54 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+namespace SpaceShooter
 {
-    public GameObject[] enemyPrefabs;
-    public Material[] enemyMaterials;
-
-    public float spawnRate = 2f;
-    public float padding = 5f;
-
-    private Borderline _borderline;
-
-    private void Awake()
+    public class EnemySpawner : MonoBehaviour
     {
-        _borderline = GetComponent<Borderline>();
+        public GameObject[] enemyPrefabs;
+        public Material[] enemyMaterials;
 
-        Invoke(nameof(SpawnEnemy), spawnRate);
-    }
+        public float spawnRate = 2f;
+        public float padding = 5f;
 
-    private void SpawnEnemy()
-    {
-        int prefabIndex = Random.Range(0, enemyPrefabs.Length);
-        int materialIndex = Random.Range(0, enemyMaterials.Length);
+        private Borderline borderline;
 
-        GameObject enemy = Instantiate(enemyPrefabs[prefabIndex]);
-
-        // Костыль создающий массив дочерних элементов, после чего, с помощью цикла присваивающий каждому элементу материал.
-        MeshRenderer[] childRenderers = enemy.GetComponentsInChildren<MeshRenderer>();
-        for (int i = 0; i < childRenderers.Length; i++)
+        private void Awake()
         {
-            childRenderers[i].material = enemyMaterials[materialIndex];
+            borderline = GetComponent<Borderline>();
+
+            Invoke(nameof(SpawnEnemy), spawnRate);
         }
 
-        // Включает скрипт Enemy и присваивает соответствующий тег и слой.
-        enemy.GetComponent<EnemyBehaviour>().enabled = true;
-        enemy.tag = "Enemy";
-        enemy.layer = LayerMask.NameToLayer("Enemy");
+        private void SpawnEnemy()
+        {
+            int prefabIndex = Random.Range(0, enemyPrefabs.Length);
+            int materialIndex = Random.Range(0, enemyMaterials.Length);
 
-        // Позволяет задать случайную точку спавна по Х в пределах ширины экрана.
-        // По Y позиция - самый верх+отступ.
-        Vector3 position = Vector3.zero;        
-        float minX = padding - _borderline.CamWidth;
-        float maxX = _borderline.CamWidth - padding;
+            GameObject enemy = Instantiate(enemyPrefabs[prefabIndex]);
 
-        position.x = Random.Range(minX, maxX);
-        position.y = _borderline.CamHeight + padding;
+            // Костыль создающий массив дочерних элементов, после чего, с помощью цикла присваивающий каждому элементу материал.
+            MeshRenderer[] childRenderers = enemy.GetComponentsInChildren<MeshRenderer>();
+            for (int i = 0; i < childRenderers.Length; i++)
+            {
+                childRenderers[i].material = enemyMaterials[materialIndex];
+            }
 
-        enemy.transform.position = position;
-        enemy.transform.rotation = Quaternion.Euler(90, 180, 0);
+            // Включает скрипт Enemy и присваивает соответствующий тег и слой.
+            enemy.GetComponent<EnemyBehaviour>().enabled = true;
+            enemy.tag = "Enemy";
+            enemy.layer = LayerMask.NameToLayer("Enemy");
 
-        Invoke(nameof(SpawnEnemy), spawnRate);
+            // Позволяет задать случайную точку спавна по Х в пределах ширины экрана.
+            // По Y позиция - самый верх+отступ.
+            Vector3 position = Vector3.zero;
+            float minX = padding - borderline.CamWidth;
+            float maxX = borderline.CamWidth - padding;
+
+            position.x = Random.Range(minX, maxX);
+            position.y = borderline.CamHeight + padding;
+
+            enemy.transform.position = position;
+            enemy.transform.rotation = Quaternion.Euler(90, 180, 0);
+
+            Invoke(nameof(SpawnEnemy), spawnRate);
+        }
     }
 }
