@@ -1,65 +1,45 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using SpaceShooter.Architecture.SaveSystem;
 
 namespace SpaceShooter.Architecture
 {    
     public class WeaponsRepository : Repository
     {
-        public IWeapon SelectedWeapon;
-        private const string selectedWeapon_KEY = "selectedWeapon_KEY";
+        public Type WeaponKey => weaponsData.typeKey; 
+        public Dictionary<Type, IWeapon> WeaponsMap;
 
-        private Dictionary<Type, IWeapon> weaponsMap;
-        private WeaponsRepositoryData repoData = new WeaponsRepositoryData();
-
-        public override void OnCreate()
-        {
-            InitializeWeapons();
-        }        
+        private Storage storage;
+        private WeaponsRepoData weaponsData;
+        private const string path = "/Weapons.dat";
 
         public override void Initialize()
         {
-            
-        }
+            InitializeWeapons();
 
-        public void SetDefaultWeapon()
-        {
-            SelectedWeapon = GetWeapon<KinematicWeaponInteractor>();
+            storage = new Storage(path);
+            weaponsData = (WeaponsRepoData)storage.Load(new WeaponsRepoData());
         }
 
         public override void Save()
         {
-            repoData.Weapon = SelectedWeapon;            
-
-            var json = JsonUtility.ToJson(repoData);
-            Debug.Log($"Saved Value: {json}");
-            PlayerPrefs.SetString(selectedWeapon_KEY, json);
-            PlayerPrefs.Save();
+            storage.Save(weaponsData);
         }
 
         public void Load()
         {
-            if (!PlayerPrefs.HasKey(selectedWeapon_KEY))
-            {
-                SetDefaultWeapon();
-                Save();
-                return;
-            }
-
-            var json = PlayerPrefs.GetString(selectedWeapon_KEY);
-            repoData = JsonUtility.FromJson<WeaponsRepositoryData>(json);
-            SelectedWeapon = repoData.Weapon;
+            storage.Load(new WeaponsRepoData());
         }
-        
-        public IWeapon GetWeapon<T>() where T : IWeapon
+
+        public void SetWeapon<T>() where T : IWeapon
         {
-            var type = typeof(T);
-            return weaponsMap[type];
+            weaponsData.typeKey = typeof(T);            
+            Save();
         }
 
         private void InitializeWeapons()
         {
-            weaponsMap = new Dictionary<Type, IWeapon>
+            WeaponsMap = new Dictionary<Type, IWeapon>
             {
                 [typeof(KinematicWeaponInteractor)] = new KinematicWeaponInteractor(),
                 [typeof(BlasterWeaponInteractor)] = new BlasterWeaponInteractor(),

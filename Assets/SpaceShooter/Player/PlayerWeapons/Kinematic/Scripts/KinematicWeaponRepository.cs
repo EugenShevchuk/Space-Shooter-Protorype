@@ -1,42 +1,60 @@
 using UnityEngine;
+using SpaceShooter.Architecture.SaveSystem;
 
 namespace SpaceShooter.Architecture {
     
     public class KinematicWeaponRepository : Repository
     {
-        public KinematicWeaponObject KinematicObject;
+        public float DamageOnHit { get; private set; }
+        public float FireRate { get; private set; }
+        public float Velocity { get; private set; }
+        public int KinematicLevel { get; private set; }
+        private float damageOnHitBonus1_5 => kinematicData.DamageOnHitBonus1_5;
+        private float damageOnHitBonus5_10 => kinematicData.DamageOnHitBonus5_10;
 
-        private const string damageOnHit_KEY = "K_damageOnHit_KEY";
-        public float DamageOnHit { get; set; }
-
-        private const string fireRate_KEY = "K_fireRate_KEY";
-        public float FireRate { get; set; }
-
-        private const string velocity_KEY = "K_velocity_KEY";
-        public float Velocity { get; set; }
-
-        private const string level_KEY = "K_level_KEY";
-        public int Level { get; set; }
-
-        public override void OnCreate()
-        {
-            KinematicObject = Resources.Load<KinematicWeaponObject>("Kinematic");            
-        }
-
+        private Storage storage;
+        private KinematicRepositoryData kinematicData;
+        private const string SAVE_NAME = "/Kinematic.dat";
+        
         public override void Initialize()
         {
-            DamageOnHit = PlayerPrefs.GetFloat(damageOnHit_KEY, KinematicObject.DamageOnHit);
-            FireRate = PlayerPrefs.GetFloat(fireRate_KEY, KinematicObject.FireRate);
-            Velocity = PlayerPrefs.GetFloat(velocity_KEY, KinematicObject.Velocity);
-            Level = PlayerPrefs.GetInt(level_KEY, 0);            
+            storage = new Storage(SAVE_NAME);
+            kinematicData = (KinematicRepositoryData)storage.Load(new KinematicRepositoryData());
+
+            Load();
         }
 
         public override void Save()
         {
-            PlayerPrefs.SetFloat(damageOnHit_KEY, DamageOnHit);
-            PlayerPrefs.SetFloat(fireRate_KEY, FireRate);
-            PlayerPrefs.SetFloat(velocity_KEY, Velocity);
-            PlayerPrefs.SetInt(level_KEY, Level);
+            kinematicData.DamageOnHit = this.DamageOnHit;
+            kinematicData.FireRate = this.FireRate;
+            kinematicData.Velocity = this.Velocity;
+            kinematicData.KinematicLevel = this.KinematicLevel;
+
+            storage.Save(kinematicData);
+        }
+
+        public void Load()
+        {
+            this.DamageOnHit = kinematicData.DamageOnHit;
+            this.FireRate = kinematicData.FireRate;
+            this.Velocity = kinematicData.Velocity;
+            this.KinematicLevel = kinematicData.KinematicLevel;
+        }
+
+        public void UpgradeKinematic()
+        {
+            if (KinematicLevel < 10)
+            {
+                if (KinematicLevel <= 5)
+                    this.DamageOnHit += damageOnHitBonus1_5;
+
+                else
+                    this.DamageOnHit += damageOnHitBonus5_10;
+
+                KinematicLevel++;
+                Save();
+            }
         }
     }
 }

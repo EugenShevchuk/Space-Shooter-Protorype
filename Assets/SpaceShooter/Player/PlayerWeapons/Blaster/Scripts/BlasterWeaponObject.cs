@@ -6,9 +6,9 @@ public class BlasterWeaponObject : ScriptableObject
     public GameObject ProjectilePrefab;
 
     [Header("Base Stats")]
-    public float DamageOnHit = 0;
-    public float FireRate = 0;
-    public float Velocity = 0;
+    public float DamageOnHit;
+    public float FireRate;
+    public float Velocity;
 
     [Header("Bonuses for Upgrading")]
     public float DamageOnHitBonus1_5 = 1;

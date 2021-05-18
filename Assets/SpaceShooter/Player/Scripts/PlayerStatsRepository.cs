@@ -1,67 +1,106 @@
 using UnityEngine;
+using SpaceShooter.Architecture.SaveSystem;
 
 namespace SpaceShooter.Architecture
 {
     public class PlayerStatsRepository : Repository
-    {
-        public PlayerStatsObject stats;
+    {        
+        public float Health { get; private set; }        
+        public int HealthLevel { get; private set; }
+        private float healthBonusLevel1_5 => statsData.HealthBonusLevel1_5;
+        private float healthBonusLevel5_10 => statsData.HealthBonusLevel5_10;
 
-        private const string health_KEY = "Health_KEY";        
-        public float Health { get; set; }
-        private const string healthLevel_KEY = "HealthLevel_KEY";
-        public int HealthLevel { get; set; }
+        public float Shield { get; private set; }        
+        public int ShieldLevel { get; private set; }
+        private float shieldBonusLevel1_5 => statsData.ShieldBonusLevel1_5;
+        private float shieldBonusLevel5_10 => statsData.ShieldBonusLevel5_10;
+                
+        public float Speed { get; private set; }        
+        public int SpeedLevel { get; private set; }
+        private float speedBonusLevel1_5 => statsData.SpeedBonusLevel1_5;
+        private float speedBonusLevel5_10 => statsData.SpeedBonusLevel5_10;
 
-        private const string shield_KEY = "Shield_KEY";
-        public float Shield { get; set; }
-        private const string shieldLevel_KEY = "ShieldLevel_KEY";
-        public int ShieldLevel { get; set; }
-
-        private const string speed_KEY = "Speed_KEY";
-        public float Speed { get; set; }
-        private const string speedLevel_KEY = "SpeedLevel_KEY";
-        public int SpeedLevel { get; set; }
-
-        private PlayerStatsObject statsObject;
-
-        public override void OnCreate()
-        {
-            statsObject = Resources.Load<PlayerStatsObject>("PlayerStats");
-        }
+        private Storage storage;
+        private PlayerStatsRepositoryData statsData;
+        private const string path = "/PlayerStats.dat";
 
         public override void Initialize()
         {
-            Health = PlayerPrefs.GetFloat(health_KEY, statsObject.BaseHealthValue);
-            HealthLevel = PlayerPrefs.GetInt(healthLevel_KEY, 0);
+            storage = new Storage(path);
+            statsData = (PlayerStatsRepositoryData)storage.Load(new PlayerStatsRepositoryData());
 
-            Shield = PlayerPrefs.GetFloat(shield_KEY, statsObject.BaseShieldValue);
-            ShieldLevel = PlayerPrefs.GetInt(shieldLevel_KEY, 0);
-
-            Speed = PlayerPrefs.GetFloat(speed_KEY, statsObject.BaseSpeedValue);
-            SpeedLevel = PlayerPrefs.GetInt(speedLevel_KEY, 0);
+            Load();
         }
 
         public override void Save()
         {
-            PlayerPrefs.SetFloat(health_KEY, Health);
-            PlayerPrefs.SetInt(healthLevel_KEY, HealthLevel);
+            statsData.MaxHealth = this.Health;
+            statsData.HealthLevel = this.HealthLevel;
 
-            PlayerPrefs.SetFloat(shield_KEY, Shield);
-            PlayerPrefs.SetInt(shieldLevel_KEY, ShieldLevel);
+            statsData.MaxShield = this.Shield;
+            statsData.ShieldLevel = this.ShieldLevel;
 
-            PlayerPrefs.SetFloat(speed_KEY, Speed);
-            PlayerPrefs.SetInt(speedLevel_KEY, SpeedLevel);
+            statsData.MaxSpeed = this.Speed;
+            statsData.SpeedLevel = this.SpeedLevel;
+
+            storage.Save(statsData);
         }
 
-        public void Reset()
+        public void Load()
         {
-            PlayerPrefs.DeleteKey(health_KEY);
-            PlayerPrefs.DeleteKey(healthLevel_KEY);
+            this.Health = statsData.MaxHealth;
+            this.HealthLevel = statsData.HealthLevel;
 
-            PlayerPrefs.DeleteKey(shield_KEY);
-            PlayerPrefs.DeleteKey(shieldLevel_KEY);
+            this.Shield = statsData.MaxShield;
+            this.ShieldLevel = statsData.ShieldLevel;
 
-            PlayerPrefs.DeleteKey(speed_KEY);
-            PlayerPrefs.DeleteKey(speedLevel_KEY);
+            this.Speed = statsData.MaxSpeed;
+            this.SpeedLevel = statsData.SpeedLevel;
+        }
+
+        public void UpgradeMaxHealth()
+        {
+            if (HealthLevel < 10)
+            {
+                if (HealthLevel <= 5)
+                    Health += healthBonusLevel1_5;
+
+                else
+                    Health += healthBonusLevel5_10;
+
+                HealthLevel++;
+                Save();
+            }
+        }
+
+        public void UpgradeMaxShield()
+        {
+            if (ShieldLevel < 10)
+            {
+                if (ShieldLevel <= 5)
+                    Shield += shieldBonusLevel1_5;
+
+                else
+                    Shield += shieldBonusLevel5_10;
+
+                ShieldLevel++;
+                Save();
+            }
+        }
+
+        public void UpgradeMaxSpeed()
+        {
+            if (SpeedLevel < 10)
+            {
+                if (SpeedLevel <= 5)
+                    Speed += speedBonusLevel1_5;
+
+                else
+                    Speed += speedBonusLevel5_10;
+
+                SpeedLevel++;
+                Save();
+            }
         }
     }
 }

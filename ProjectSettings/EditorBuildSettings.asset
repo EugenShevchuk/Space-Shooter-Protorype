@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/SpaceShooter/Scenes/Game/Game.unity
     guid: a3320f9a94c66d6459479d87a59bb104
   - enabled: 1
-    path: Assets/SpaceShooter/Scenes/InGameUI.unity
+    path: Assets/SpaceShooter/Scenes/Game/InGameUI/InGameUI.unity
     guid: 63c47b7be56669f4e87eb34b6361b1fd
   m_configObjects: {}

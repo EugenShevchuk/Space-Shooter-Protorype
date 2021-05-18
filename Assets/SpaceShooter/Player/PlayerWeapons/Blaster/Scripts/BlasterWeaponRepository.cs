@@ -1,44 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using SpaceShooter.Architecture.SaveSystem;
 
 namespace SpaceShooter.Architecture
 {
     public class BlasterWeaponRepository : Repository
     {
-        public BlasterWeaponObject BlasterObject;
+        public float DamageOnHit { get; private set; }
+        public float FireRate { get; private set; }
+        public float Velocity { get; private set; }
+        public int BlasterLevel { get; private set; }
+        private float damageOnHitBonus1_5 => blasterData.DamageOnHitBonus1_5;
+        private float damageOnHitBonus5_10 => blasterData.DamageOnHitBonus5_10;
 
-        private const string damageOnHit_KEY = "B_damageOnHit_KEY";
-        public float DamageOnHit { get; set; }
-
-        private const string fireRate_KEY = "B_fireRate_KEY";
-        public float FireRate { get; set; }
-
-        private const string velocity_KEY = "B_velocity_KEY";
-        public float Velocity { get; set; }
-
-        private const string level_KEY = "B_level_KEY";
-        public int Level { get; set; }
-
-        public override void OnCreate()
-        {
-            BlasterObject = Resources.Load<BlasterWeaponObject>("Blaster");
-        }
+        private Storage storage;
+        private BlasterRepositoryData blasterData;
+        private const string SAVE_NAME = "/Blaster.dat";
 
         public override void Initialize()
         {
-            DamageOnHit = PlayerPrefs.GetFloat(damageOnHit_KEY, BlasterObject.DamageOnHit);
-            FireRate = PlayerPrefs.GetFloat(fireRate_KEY, BlasterObject.FireRate);
-            Velocity = PlayerPrefs.GetFloat(velocity_KEY, BlasterObject.Velocity);
-            Level = PlayerPrefs.GetInt(level_KEY, 0);
+            storage = new Storage(SAVE_NAME);
+            blasterData = (BlasterRepositoryData)storage.Load(new BlasterRepositoryData());
+
+            Load();
         }
 
         public override void Save()
         {
-            PlayerPrefs.SetFloat(damageOnHit_KEY, DamageOnHit);
-            PlayerPrefs.SetFloat(fireRate_KEY, FireRate);
-            PlayerPrefs.SetFloat(velocity_KEY, Velocity);
-            PlayerPrefs.SetInt(level_KEY, Level);
+            blasterData.DamageOnHit = this.DamageOnHit;
+            blasterData.FireRate = this.FireRate;
+            blasterData.Velocity = this.Velocity;
+            blasterData.BlasterLevel = this.BlasterLevel;
+
+            storage.Save(blasterData);
+        }
+
+        private void Load()
+        {
+            this.DamageOnHit = blasterData.DamageOnHit;
+            this.FireRate = blasterData.FireRate;
+            this.Velocity = blasterData.Velocity;
+            this.BlasterLevel = blasterData.BlasterLevel;
+        }
+
+        public void UpgradeBlaster()
+        {
+            if (BlasterLevel < 10)
+            {
+                if (BlasterLevel <= 5)
+                    this.DamageOnHit += damageOnHitBonus1_5;
+
+                else
+                    this.DamageOnHit += damageOnHitBonus5_10;
+
+                BlasterLevel++;
+                Save();
+            }
         }
     }
 }

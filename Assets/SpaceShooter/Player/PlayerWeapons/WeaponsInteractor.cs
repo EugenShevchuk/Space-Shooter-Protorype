@@ -4,19 +4,9 @@ namespace SpaceShooter.Architecture
 {
     public class WeaponsInteractor : Interactor
     {
-        public static event Action OnWeaponSelectedAction;
-
-        public IWeapon CurrentWeapon
-        { 
-            get 
-            {
-                if (repository.SelectedWeapon == null)
-                    repository.Load();
-
-                return repository.SelectedWeapon;
-            } 
-        }
-
+        public IWeapon CurrentWeapon => repository.WeaponsMap[repository.WeaponKey];
+        public Type WeaponType => repository.WeaponKey;
+        
         private WeaponsRepository repository;
 
         public WeaponsInteractor()
@@ -26,27 +16,17 @@ namespace SpaceShooter.Architecture
                 
         public void SelectKinematic()
         {
-            var weapon = repository.GetWeapon<KinematicWeaponInteractor>();
-            SetWeapon(weapon);
+            repository.SetWeapon<KinematicWeaponInteractor>();
         }
 
         public void SelectBlaster()
         {
-            var weapon = repository.GetWeapon<BlasterWeaponInteractor>();
-            SetWeapon(weapon);
+            repository.SetWeapon<BlasterWeaponInteractor>();
         }
 
         public void SelectLaser()
         {
-            var weapon = repository.GetWeapon<LaserWeaponInteractor>();
-            SetWeapon(weapon);
-        }
-
-        private void SetWeapon(IWeapon weapon)
-        {
-            repository.SelectedWeapon = weapon;
-            repository.Save();
-            OnWeaponSelectedAction?.Invoke();
+            repository.SetWeapon<LaserWeaponInteractor>();
         }
     }
 }

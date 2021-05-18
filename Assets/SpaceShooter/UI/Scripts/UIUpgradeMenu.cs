@@ -2,7 +2,6 @@ using Lean.Gui;
 using UnityEngine;
 using UnityEngine.UI;
 using SpaceShooter.Architecture;
-using System;
 
 namespace SpaceShooter
 {
@@ -47,32 +46,26 @@ namespace SpaceShooter
         [SerializeField] private Canvas upgradeMenu;
         [SerializeField] private Canvas cosmeticMenu;
 
-        private PlayerStatsInteractor playerStats;
+        private PlayerStatsInteractor playerStatsInteractor;
         private WeaponsInteractor weaponsInteractor;
-
+        private KinematicWeaponInteractor kinematicInteractor;
+        private BlasterWeaponInteractor blasterInteractor;
 
         #endregion
 
-        private void OnGameInitialized()
-        {
-            playerStats = Game.GetInteractor<PlayerStatsInteractor>();
-            weaponsInteractor = Game.GetInteractor<WeaponsInteractor>();
-
-            healthBar.value = playerStats.HealthLevel;
-            shieldBar.value = playerStats.ShieldLevel;
-            engineBar.value = playerStats.SpeedLevel;
-
-            
-        }
-
         private void OnEnable()
         {
-            Game.GameInitializedEvent += OnGameInitialized;
-            
+            playerStatsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
+            weaponsInteractor = Game.GetInteractor<WeaponsInteractor>();
+            kinematicInteractor = Game.GetInteractor<KinematicWeaponInteractor>();
+            blasterInteractor = Game.GetInteractor<BlasterWeaponInteractor>();
+
             kinematicToggle.OnOn.AddListener(OnKinematicSelected);
             blasterToggle.OnOn.AddListener(OnBlasterSelected);
             laserToggle.OnOn.AddListener(OnLaserSelected);
-            
+
+            SetToggles(weaponsInteractor);
+
             kinematicUpgradeButton.OnClick.AddListener(OnKinematicUpgradeClicked);
             blasterUpgradeButton.OnClick.AddListener(OnBlasterUpgradeClicked);
             laserUpgradeButton.OnClick.AddListener(OnLaserUpgradeClicked);
@@ -84,17 +77,16 @@ namespace SpaceShooter
             playButton.OnClick.AddListener(OnPlayButtonClicked);
             appearenceButton.OnClick.AddListener(OnAppearenceButtonClicked);
             menuButton.OnClick.AddListener(OnMenuButtonClicked);
+
+            SetSliderValues();
         }
 
-
-        private void OnDisable()
+        private void OnDestroy()
         {
-            Game.GameInitializedEvent -= OnGameInitialized;
-            
             kinematicToggle.OnOn.RemoveListener(OnKinematicSelected);
             blasterToggle.OnOn.RemoveListener(OnBlasterSelected);
             laserToggle.OnOn.RemoveListener(OnLaserSelected);
-            
+
             kinematicUpgradeButton.OnClick.RemoveListener(OnKinematicUpgradeClicked);
             blasterUpgradeButton.OnClick.RemoveListener(OnBlasterUpgradeClicked);
             laserUpgradeButton.OnClick.RemoveListener(OnLaserUpgradeClicked);
@@ -106,6 +98,30 @@ namespace SpaceShooter
             playButton.OnClick.RemoveListener(OnPlayButtonClicked);
             appearenceButton.OnClick.RemoveListener(OnAppearenceButtonClicked);
             menuButton.OnClick.RemoveListener(OnMenuButtonClicked);
+        }
+
+        #region Toggles;
+
+        private void SetToggles(WeaponsInteractor interactor)
+        {
+            if (interactor.WeaponType == typeof(KinematicWeaponInteractor) || interactor.WeaponType == null)
+            {
+                kinematicToggle.TurnOn();
+                blasterToggle.TurnOff();
+                laserToggle.TurnOff();
+            }
+            else if (interactor.WeaponType == typeof(BlasterWeaponInteractor))
+            {
+                kinematicToggle.TurnOff();
+                blasterToggle.TurnOn();
+                laserToggle.TurnOff();
+            }
+            else if (interactor.WeaponType == typeof(LaserWeaponInteractor))
+            {
+                kinematicToggle.TurnOff();
+                blasterToggle.TurnOff();
+                laserToggle.TurnOn();
+            }
         }
 
         private void OnKinematicSelected()
@@ -123,14 +139,30 @@ namespace SpaceShooter
             weaponsInteractor.SelectLaser();
         }
 
+        #endregion
+
+        #region Upgrades;
+
+        private void SetSliderValues()
+        {
+            healthBar.value = playerStatsInteractor.HealthLevel;
+            shieldBar.value = playerStatsInteractor.ShieldLevel;
+            engineBar.value = playerStatsInteractor.SpeedLevel;
+
+            kinematicBar.value = kinematicInteractor.KinematicLevel;
+            blasterBar.value = blasterInteractor.BlasterLevel;
+        }
+
         private void OnKinematicUpgradeClicked()
         {
-            
+            kinematicInteractor.UpgradeKinematic();
+            SetSliderValues();
         }
 
         private void OnBlasterUpgradeClicked()
         {
-
+            blasterInteractor.UpgradeBlaster();
+            SetSliderValues();
         }
 
         private void OnLaserUpgradeClicked()
@@ -140,21 +172,22 @@ namespace SpaceShooter
 
         private void OnHealthUpgradeClicked()
         {
-            playerStats.UpgradeMaxHealth();
-            healthBar.value = playerStats.HealthLevel;
+            playerStatsInteractor.UpgradeMaxHealth();
+            SetSliderValues();
         }
 
         private void OnShieldUpgradeClicked()
         {
-            playerStats.UpgradeMaxShield();
-            shieldBar.value = playerStats.ShieldLevel;
+            playerStatsInteractor.UpgradeMaxShield();
+            SetSliderValues();
         }
 
         private void OnEngineUpgradeClicked()
         {
-            playerStats.UpgradeMaxSpeed();
-            engineBar.value = playerStats.SpeedLevel;
+            playerStatsInteractor.UpgradeMaxSpeed();
+            SetSliderValues();
         }
+        #endregion
 
         private void OnPlayButtonClicked()
         {
