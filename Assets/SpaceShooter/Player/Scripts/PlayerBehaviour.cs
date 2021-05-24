@@ -8,15 +8,18 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float pitch = 15f;
 
     private PlayerStatsInteractor statsInteractor;
-    
+    private WeaponsInteractor weaponsInteractor;
+        
     private void OnEnable()
     {
-        SceneManagerBase.OnSceneInitializedEvent += OnSceneInitialized;
+        SceneManagerBase.OnSceneInitializedEvent += OnSceneInitialized;        
     }
 
     private void OnSceneInitialized()
     {
-        statsInteractor = Game.GetInteractor<PlayerStatsInteractor>();               
+        statsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
+        weaponsInteractor = Game.GetInteractor<WeaponsInteractor>();
+        weaponsInteractor.OpenFire();
     }
     
     private void Update()

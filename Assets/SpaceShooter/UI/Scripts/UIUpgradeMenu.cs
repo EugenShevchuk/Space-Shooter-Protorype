@@ -7,7 +7,7 @@ namespace SpaceShooter
 {
     public class UIUpgradeMenu : MonoBehaviour
     {
-        #region Fields;
+        #region Fields
 
         [Header("KINEMATIC")]
         [SerializeField] private LeanToggle kinematicToggle;
@@ -50,21 +50,23 @@ namespace SpaceShooter
         private WeaponsInteractor weaponsInteractor;
         private KinematicWeaponInteractor kinematicInteractor;
         private BlasterWeaponInteractor blasterInteractor;
+        private LaserWeaponInteractor laserInteractor;
 
         #endregion
 
+        #region OnEnable/OnDisable
         private void OnEnable()
         {
             playerStatsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
             weaponsInteractor = Game.GetInteractor<WeaponsInteractor>();
             kinematicInteractor = Game.GetInteractor<KinematicWeaponInteractor>();
             blasterInteractor = Game.GetInteractor<BlasterWeaponInteractor>();
-
+            laserInteractor = Game.GetInteractor<LaserWeaponInteractor>();
+                       
             kinematicToggle.OnOn.AddListener(OnKinematicSelected);
             blasterToggle.OnOn.AddListener(OnBlasterSelected);
             laserToggle.OnOn.AddListener(OnLaserSelected);
-
-            SetToggles(weaponsInteractor);
+            SetToggles();
 
             kinematicUpgradeButton.OnClick.AddListener(OnKinematicUpgradeClicked);
             blasterUpgradeButton.OnClick.AddListener(OnBlasterUpgradeClicked);
@@ -81,7 +83,7 @@ namespace SpaceShooter
             SetSliderValues();
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             kinematicToggle.OnOn.RemoveListener(OnKinematicSelected);
             blasterToggle.OnOn.RemoveListener(OnBlasterSelected);
@@ -99,44 +101,50 @@ namespace SpaceShooter
             appearenceButton.OnClick.RemoveListener(OnAppearenceButtonClicked);
             menuButton.OnClick.RemoveListener(OnMenuButtonClicked);
         }
+        #endregion
 
-        #region Toggles;
+        #region Toggles
 
-        private void SetToggles(WeaponsInteractor interactor)
+        private void SetToggles()
         {
-            if (interactor.WeaponType == typeof(KinematicWeaponInteractor) || interactor.WeaponType == null)
+            switch (weaponsInteractor.CurrentWeapon.WeaponType)
             {
-                kinematicToggle.TurnOn();
-                blasterToggle.TurnOff();
-                laserToggle.TurnOff();
-            }
-            else if (interactor.WeaponType == typeof(BlasterWeaponInteractor))
-            {
-                kinematicToggle.TurnOff();
-                blasterToggle.TurnOn();
-                laserToggle.TurnOff();
-            }
-            else if (interactor.WeaponType == typeof(LaserWeaponInteractor))
-            {
-                kinematicToggle.TurnOff();
-                blasterToggle.TurnOff();
-                laserToggle.TurnOn();
+                case WeaponType.Kinematic:
+                    kinematicToggle.TurnOn();
+                    blasterToggle.TurnOff();
+                    laserToggle.TurnOff();
+                    break;
+                case WeaponType.Blaster:
+                    kinematicToggle.TurnOff();
+                    blasterToggle.TurnOn();
+                    laserToggle.TurnOff();
+                    break;
+                case WeaponType.Laser:
+                    kinematicToggle.TurnOff();
+                    blasterToggle.TurnOff();
+                    laserToggle.TurnOn();
+                    break;
+                default:
+                    kinematicToggle.TurnOn();
+                    blasterToggle.TurnOff();
+                    laserToggle.TurnOff();
+                    break;
             }
         }
 
         private void OnKinematicSelected()
         {
-            weaponsInteractor.SelectKinematic();
+            weaponsInteractor.SelectWeapon(kinematicInteractor);
         }
 
         private void OnBlasterSelected()
         {
-            weaponsInteractor.SelectBlaster();
+            weaponsInteractor.SelectWeapon(blasterInteractor);
         }
 
         private void OnLaserSelected()
         {
-            weaponsInteractor.SelectLaser();
+            weaponsInteractor.SelectWeapon(laserInteractor);
         }
 
         #endregion
@@ -149,25 +157,27 @@ namespace SpaceShooter
             shieldBar.value = playerStatsInteractor.ShieldLevel;
             engineBar.value = playerStatsInteractor.SpeedLevel;
 
-            kinematicBar.value = kinematicInteractor.KinematicLevel;
-            blasterBar.value = blasterInteractor.BlasterLevel;
+            kinematicBar.value = kinematicInteractor.Level;
+            blasterBar.value = blasterInteractor.Level;
+            laserBar.value = laserInteractor.Level;
         }
 
         private void OnKinematicUpgradeClicked()
         {
-            kinematicInteractor.UpgradeKinematic();
+            kinematicInteractor.Upgrade();
             SetSliderValues();
         }
 
         private void OnBlasterUpgradeClicked()
         {
-            blasterInteractor.UpgradeBlaster();
+            blasterInteractor.Upgrade();
             SetSliderValues();
         }
 
         private void OnLaserUpgradeClicked()
         {
-
+            laserInteractor.Upgrade();
+            SetSliderValues();
         }
 
         private void OnHealthUpgradeClicked()

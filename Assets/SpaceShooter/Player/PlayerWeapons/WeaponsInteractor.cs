@@ -1,32 +1,57 @@
-using System;
+using System.Collections.Generic;
 
 namespace SpaceShooter.Architecture
 {
     public class WeaponsInteractor : Interactor
     {
-        public IWeapon CurrentWeapon => repository.WeaponsMap[repository.WeaponKey];
-        public Type WeaponType => repository.WeaponKey;
-        
+        public IWeaponInteractor CurrentWeapon => repository.WeaponsMap[repository.WeaponKey];
+
+        private HashSet<IWeapon> weapons = new HashSet<IWeapon>();
         private WeaponsRepository repository;
 
-        public WeaponsInteractor()
+        public override void Initialize()
         {
-            repository = Game.GetRepository<WeaponsRepository>();
-        }
-                
-        public void SelectKinematic()
-        {
-            repository.SetWeapon<KinematicWeaponInteractor>();
+            repository = Game.GetRepository<WeaponsRepository>();            
         }
 
-        public void SelectBlaster()
+        public void OpenFire()
         {
-            repository.SetWeapon<BlasterWeaponInteractor>();
+            foreach (var weapon in weapons)
+            {
+                weapon.OpenFire(CurrentWeapon);
+            }
         }
 
-        public void SelectLaser()
+        public void CeaseFire()
         {
-            repository.SetWeapon<LaserWeaponInteractor>();
+            foreach (var weapon in weapons)
+            {
+                weapon.CeaseFire(CurrentWeapon);
+            }
         }
+
+        public void AddWeapon(IWeapon weapon)
+        {
+            weapons.Add(weapon);
+        }
+
+        public void RemoveWeapon(IWeapon weapon)
+        {
+            weapons.Remove(weapon);
+        }
+
+        #region WeaponSelector
+        public void SwitchWeapon(IWeaponInteractor weapon)
+        {
+            CeaseFire();
+            weapon.SetAsCurrentWeapon();
+            OpenFire();            
+        }
+
+        public void SelectWeapon(IWeaponInteractor weapon)
+        {
+            weapon.SetAsCurrentWeapon();
+        }
+        #endregion
     }
 }

@@ -7,7 +7,7 @@ namespace SpaceShooter.Architecture
     public class WeaponsRepository : Repository
     {
         public Type WeaponKey => weaponsData.typeKey; 
-        public Dictionary<Type, IWeapon> WeaponsMap;
+        public Dictionary<Type, IWeaponInteractor> WeaponsMap;
 
         private Storage storage;
         private WeaponsRepoData weaponsData;
@@ -31,7 +31,7 @@ namespace SpaceShooter.Architecture
             storage.Load(new WeaponsRepoData());
         }
 
-        public void SetWeapon<T>() where T : IWeapon
+        public void SetWeapon<T>() where T : IWeaponInteractor
         {
             weaponsData.typeKey = typeof(T);            
             Save();
@@ -39,7 +39,7 @@ namespace SpaceShooter.Architecture
 
         private void InitializeWeapons()
         {
-            WeaponsMap = new Dictionary<Type, IWeapon>
+            WeaponsMap = new Dictionary<Type, IWeaponInteractor>
             {
                 [typeof(KinematicWeaponInteractor)] = new KinematicWeaponInteractor(),
                 [typeof(BlasterWeaponInteractor)] = new BlasterWeaponInteractor(),

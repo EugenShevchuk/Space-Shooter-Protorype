@@ -6,6 +6,7 @@ namespace SpaceShooter.Architecture.SaveSystem
     [Serializable]
     public class KinematicRepositoryData
     {
+        public GameObject ProjectilePrefab => kinematicObject.ProjectilePrefab;
         public int KinematicLevel;
         public float DamageOnHit;
         public float FireRate;

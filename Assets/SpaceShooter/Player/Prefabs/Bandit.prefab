@@ -2695,6 +2695,7 @@ GameObject:
   - component: {fileID: 8137862968245735538}
   - component: {fileID: 8112939393139550920}
   - component: {fileID: 8120430196412404726}
+  - component: {fileID: 2255321631149422445}
   m_Layer: 0
   m_Name: GunLeft
   m_TagString: Untagged
@@ -2767,6 +2768,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2255321631149422445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135131587547035992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 280a2ffb1461df548858009ce491e252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 5928461842004377240}
 --- !u!1 &8135134106242788568
 GameObject:
   m_ObjectHideFlags: 0
@@ -2948,6 +2962,7 @@ GameObject:
   - component: {fileID: 8138093270777022880}
   - component: {fileID: 8112719686364884584}
   - component: {fileID: 8121277348938709846}
+  - component: {fileID: 2911369685529260967}
   m_Layer: 0
   m_Name: GunRight
   m_TagString: Untagged
@@ -3020,6 +3035,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2911369685529260967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135212135477165220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 280a2ffb1461df548858009ce491e252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 5928461843094966283}
 --- !u!1 &8135213365473961340
 GameObject:
   m_ObjectHideFlags: 0

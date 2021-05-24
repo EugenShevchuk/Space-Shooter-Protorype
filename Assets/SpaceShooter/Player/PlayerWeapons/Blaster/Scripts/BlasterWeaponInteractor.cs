@@ -4,66 +4,34 @@ using SpaceShooter.Tools;
 
 namespace SpaceShooter.Architecture
 {
-    public class BlasterWeaponInteractor : Interactor, IWeapon
+    public class BlasterWeaponInteractor : Interactor, IWeaponInteractor
     {
-        public GameObject ProjectilePrefab;
-
-        public int BlasterLevel => repository.BlasterLevel;
+        public WeaponType WeaponType { get; set; }
+        public GameObject ProjectilePrefab { get; }
+        public int Level => repository.BlasterLevel;
         public float DamageOnHit => repository.DamageOnHit;
         public float FireRate => repository.FireRate;
         public float Velocity => repository.Velocity;
-        
+        public float DamagePerSecond { get; }
+
         private BlasterWeaponRepository repository;
-        private Coroutine fireRoutine;
+        private WeaponsRepository weaponsRepository;
         
-        private BlasterWeaponObject weaponObject;
-        private const string SO_PATH = "Blaster";
-        
-        public BlasterWeaponInteractor()
+        public override void Initialize()
         {
-            repository = Game.GetRepository<BlasterWeaponRepository>();            
+            WeaponType = WeaponType.Blaster;
+            repository = Game.GetRepository<BlasterWeaponRepository>();
+            weaponsRepository = Game.GetRepository<WeaponsRepository>();
         }
 
-        public void UpgradeBlaster()
+        public void SetAsCurrentWeapon()
+        {
+            weaponsRepository.SetWeapon<BlasterWeaponInteractor>();
+        }
+
+        public void Upgrade()
         {
             repository.UpgradeBlaster();
         }
-
-        public void OpenFire(Transform firePointRight, Transform firePointLeft)
-        {
-            weaponObject = Resources.Load<BlasterWeaponObject>(SO_PATH);
-            ProjectilePrefab = weaponObject.ProjectilePrefab;
-
-            fireRoutine = Coroutines.StartRoutine(FireRoutine(firePointRight, firePointLeft));
-        }
-
-        public void CeaseFire()
-        {
-            Coroutines.StopRoutine(fireRoutine);
-
-            Resources.UnloadUnusedAssets();
-        }
-
-        private IEnumerator FireRoutine(Transform firePointRight, Transform firePointLeft)
-        {
-            while (true)
-            {
-                MakeProjectile(firePointRight);
-                MakeProjectile(firePointLeft);
-
-                yield return new WaitForSeconds(1 / repository.FireRate);
-            }
-        }
-
-        private void MakeProjectile(Transform firePoint)
-        {
-            GameObject projectile = Object.Instantiate(weaponObject.ProjectilePrefab);
-
-            projectile.tag = "PlayerProjectile";
-            projectile.layer = LayerMask.NameToLayer("PlayerProjectile");
-
-            projectile.transform.position = firePoint.transform.position;
-            projectile.GetComponent<Rigidbody>().velocity = Vector3.up * repository.Velocity;
-        }        
     }
 }

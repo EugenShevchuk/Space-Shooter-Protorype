@@ -37,35 +37,6 @@ namespace SpaceShooter.Architecture {
         public void UpgradeMaxSpeed()
         {
             repository.UpgradeMaxSpeed();
-        }
-        /*
-        private void OnDamageTaken(float damageValue)
-        {
-            if (repository.Shield > 0)
-            {
-                if (Shield >= damageValue)
-                {
-                    repository.Shield -= damageValue;
-                    OnShieldValueChangedEvent?.Invoke(Shield);
-                    return;
-                }
-                if (Shield < damageValue)
-                {
-                    var exscessDamage = Mathf.Abs(repository.Shield -= damageValue);
-                    repository.Shield = 0;
-                    repository.Health -= exscessDamage;
-                    OnShieldValueChangedEvent?.Invoke(Shield);
-                    OnHealthValueChangedEvent?.Invoke(Health);
-                    return;
-                }
-            }
-            if (Shield <= 0 && Health > 0)
-            {
-                repository.Health -= damageValue;
-            }
-            if (Health < 0)
-                OnPlayerDiedEvent?.Invoke();
-        }
-        */
+        }        
     }
 }

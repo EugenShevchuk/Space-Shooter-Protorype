@@ -1,70 +1,37 @@
-using System.Collections;
 using UnityEngine;
-using SpaceShooter.Tools;
 
 namespace SpaceShooter.Architecture
 {
-    public class KinematicWeaponInteractor : Interactor, IWeapon
+    public class KinematicWeaponInteractor : Interactor, IWeaponInteractor
     {
-        public GameObject ProjectilePrefab;
-        public int KinematicLevel => repository.KinematicLevel;
+        public WeaponType WeaponType { get; set; }
+        public int Level => repository.KinematicLevel;
         public float DamageOnHit => repository.DamageOnHit;
         public float FireRate => repository.FireRate;
         public float Velocity => repository.Velocity;
+        public float DamagePerSecond => throw new System.NotImplementedException();
+
+        public GameObject ProjectilePrefab => repository.ProjectilePrefab;
+                
 
         private KinematicWeaponRepository repository;
-        private Coroutine fireRoutine;
+        private WeaponsRepository weaponsRepository;
 
-        private KinematicWeaponObject weaponObject;        
-
-        public KinematicWeaponInteractor()
+        public override void Initialize()
         {
-            repository = Game.GetRepository<KinematicWeaponRepository>();            
+            WeaponType = WeaponType.Kinematic;
+            repository = Game.GetRepository<KinematicWeaponRepository>();
+            weaponsRepository = Game.GetRepository<WeaponsRepository>();
+        }
+        
+        public void SetAsCurrentWeapon()
+        {
+            weaponsRepository.SetWeapon<KinematicWeaponInteractor>();
         }
 
-        public void UpgradeKinematic()
+        public void Upgrade()
         {
             repository.UpgradeKinematic();
-        }
-
-        public void OpenFire(Transform firePointRight, Transform firePointLeft)
-        {
-            weaponObject = Resources.Load<KinematicWeaponObject>("Kinematic");
-            ProjectilePrefab = weaponObject.ProjectilePrefab;
-
-            fireRoutine = Coroutines.StartRoutine(FireRoutine(firePointRight, firePointLeft));
-            Debug.Log("Opened Fire");
-        }
-
-        public void CeaseFire()
-        {
-            Coroutines.StopRoutine(fireRoutine);
-
-            Resources.UnloadUnusedAssets();
-        }
-
-        private IEnumerator FireRoutine(Transform firePointRight, Transform firePointLeft)
-        {
-            while (true)
-            {
-                MakeProjectile(firePointRight);
-                MakeProjectile(firePointLeft);
-
-                yield return new WaitForSeconds(1 / repository.FireRate);
-            }
-        }
-
-        private void MakeProjectile(Transform firePoint)
-        {
-            GameObject projectile = Object.Instantiate(ProjectilePrefab);
-                        
-            projectile.tag = "PlayerProjectile";
-            projectile.layer = LayerMask.NameToLayer("PlayerProjectile");
-               
-            projectile.transform.position = firePoint.transform.position;
-            projectile.GetComponent<Rigidbody>().velocity = Vector3.up * repository.Velocity;
-
-            projectile.GetComponent<Projectile>().damageOnHit = repository.DamageOnHit;            
-        }
+        }  
     }
 }

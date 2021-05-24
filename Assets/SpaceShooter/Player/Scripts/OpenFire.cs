@@ -39,7 +39,7 @@ namespace SpaceShooter
                 Debug.Log("Weapons Interactor is not Initialized");
             if (weaponsInteractor.CurrentWeapon == null)
                 Debug.Log("No Current Weapon Selected");
-            weaponsInteractor.CurrentWeapon.OpenFire(firePointRight, firePoinLeft);
+            //weaponsInteractor.CurrentWeapon.OpenFire(firePointRight, firePoinLeft);
         }
     }
         

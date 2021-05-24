@@ -3,8 +3,9 @@ using SpaceShooter.Architecture.SaveSystem;
 
 namespace SpaceShooter.Architecture {
     
-    public class KinematicWeaponRepository : Repository
+    public class KinematicWeaponRepository : Repository, IWeaponRepository
     {
+        public GameObject ProjectilePrefab { get; set; }
         public float DamageOnHit { get; private set; }
         public float FireRate { get; private set; }
         public float Velocity { get; private set; }
@@ -20,6 +21,7 @@ namespace SpaceShooter.Architecture {
         {
             storage = new Storage(SAVE_NAME);
             kinematicData = (KinematicRepositoryData)storage.Load(new KinematicRepositoryData());
+            ProjectilePrefab = kinematicData.ProjectilePrefab;
 
             Load();
         }
