@@ -1,19 +1,21 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+namespace SpaceShooter
 {
-    private Borderline borderline;
-    [HideInInspector] public float damageOnHit;
-
-
-    private void Awake()
+    public class Projectile : MonoBehaviour
     {
-        borderline = GetComponent<Borderline>();
-    }
+        private Borderline borderline;
+        [HideInInspector] public float damageOnHit;
 
-    private void Update()
-    {
-        if (borderline.offUp)
-            Destroy(gameObject);
+        private void Awake()
+        {
+            this.borderline = GetComponent<Borderline>();
+        }
+
+        private void Update()
+        {
+            if (this.borderline.offUp)
+                this.gameObject.SetActive(false);
+        }
     }
 }

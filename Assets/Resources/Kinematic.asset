@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64bdaabb5b040e46bfb07293f50231d, type: 3}
   m_Name: Kinematic
   m_EditorClassIdentifier: 
-  Type: 0
-  WeaponType: 0
   ProjectilePrefab: {fileID: 595834727452409173, guid: 9f993c89f18c9f34f930f4ea80566a66, type: 3}
   DamageOnHit: 3
-  DamagePerSecond: 0
   FireRate: 8
   Velocity: 100
-  Level: 0
+  DamageOnHitBonus1_5: 0.5
+  DamageOnHitBonus5_10: 1

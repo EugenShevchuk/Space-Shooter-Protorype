@@ -4,30 +4,36 @@ using System.Collections;
 
 namespace SpaceShooter
 {
-    public class Weapon : MonoBehaviour, IWeapon
+    public class Weapon : MonoBehaviour
     {
         [SerializeField] private Transform firePoint;
+        private WeaponsSystem weaponsSystem;
+
+        private void Awake()
+        {
+            this.weaponsSystem = GetComponentInParent<WeaponsSystem>();
+        }
 
         private void OnEnable()
         {
-            Game.GetInteractor<WeaponsInteractor>().AddWeapon(this);          
+            this.weaponsSystem.AddWeapon(this);
         }
 
         private void OnDisable()
         {
-            Game.GetInteractor<WeaponsInteractor>().RemoveWeapon(this);
+            this.weaponsSystem.RemoveWeapon(this);
         }
 
-        public void OpenFire(IWeaponInteractor interactor)
+        public void OpenFire(IWeaponInteractor interactor, ObjectPoolMono<Projectile> kinematicPool, ObjectPoolMono<Projectile> blasterPool)
         {
             Debug.Log($"Opening fire with {interactor.WeaponType}");
             switch (interactor.WeaponType)
             {
                 case WeaponType.Kinematic:
-                    this.StartCoroutine(FireGun(interactor));
+                    this.StartCoroutine(FireGun(interactor, kinematicPool));
                     break;
                 case WeaponType.Blaster:
-                    this.StartCoroutine(FireGun(interactor));
+                    this.StartCoroutine(FireGun(interactor, blasterPool));
                     break;
                 case WeaponType.Laser:
                     this.StartCoroutine(FireLaser(interactor));
@@ -38,16 +44,16 @@ namespace SpaceShooter
             }            
         }
 
-        public void CeaseFire(IWeaponInteractor interactor)
+        public void CeaseFire(IWeaponInteractor interactor, ObjectPoolMono<Projectile> kinematicPool, ObjectPoolMono<Projectile> blasterPool)
         {
             Debug.Log($"Ceasing fire with {interactor.WeaponType}");
             switch (interactor.WeaponType)
             {
                 case WeaponType.Kinematic:
-                    this.StopCoroutine(FireGun(interactor));
+                    this.StopCoroutine(FireGun(interactor, kinematicPool));
                     break;
                 case WeaponType.Blaster:
-                    this.StopCoroutine(FireGun(interactor));
+                    this.StopCoroutine(FireGun(interactor, blasterPool));
                     break;
                 case WeaponType.Laser:
                     this.StopCoroutine(FireLaser(interactor));
@@ -58,20 +64,20 @@ namespace SpaceShooter
             }
         }
 
-        private IEnumerator FireGun(IWeaponInteractor interactor)
+        private IEnumerator FireGun(IWeaponInteractor interactor, ObjectPoolMono<Projectile> pool)
         {
+            interactor.InitializeWeapon();
             while (true)
             {
-                GameObject projectile = Instantiate(interactor.ProjectilePrefab);
+                var projectile = pool.GetFreeElement();                
+                projectile.gameObject.transform.position = this.firePoint.transform.position;
+                projectile.gameObject.GetComponent<Rigidbody>().AddForce((Vector3.up * interactor.Velocity), ForceMode.Impulse);
 
-                projectile.tag = "PlayerProjectile";
-                projectile.layer = LayerMask.NameToLayer("PlayerProjectile");
+                projectile.damageOnHit = interactor.DamageOnHit;
 
-                projectile.transform.position = this.firePoint.transform.position;
-                projectile.GetComponent<Rigidbody>().velocity = Vector3.up * interactor.Velocity;
-
+                projectile.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");                
                 yield return new WaitForSeconds(1 / interactor.FireRate);
-            }
+            }            
         }
 
         private IEnumerator FireLaser(IWeaponInteractor interactor)

@@ -10,13 +10,13 @@ namespace SpaceShooter.Architecture
     }
     public interface IWeaponInteractor
     {
-        public WeaponType WeaponType { get; set; }
-        public GameObject ProjectilePrefab { get; }
+        public WeaponType WeaponType { get; }
         public int Level { get; }
         public float DamageOnHit { get; }
         public float DamagePerSecond { get; }
         public float FireRate { get; }
         public float Velocity { get; }
+        public void InitializeWeapon();
         public void SetAsCurrentWeapon();
         public void Upgrade();
     }

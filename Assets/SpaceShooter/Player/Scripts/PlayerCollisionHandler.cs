@@ -6,6 +6,7 @@ namespace SpaceShooter
 {
     public class PlayerCollisionHandler : MonoBehaviour
     {
+        [SerializeField] private GameObject shield;
         [SerializeField] private float damageFromCollisionWithEnemy = 5;
 
         public static event Action<float> OnDamageTakenEvent;
@@ -15,6 +16,7 @@ namespace SpaceShooter
         private void OnEnable()
         {
             PlayerStatsInteractor.OnPlayerDiedEvent += OnPlayerDied;
+            shield.gameObject.SetActive(true);
         }
 
         private void OnDisable()
@@ -41,6 +43,11 @@ namespace SpaceShooter
                 Destroy(triggerGO);
                 OnDamageTakenEvent(damageFromCollisionWithEnemy);
             }
+        }
+
+        private void CollisionWithEnemy()
+        { 
+            
         }
     }
 }

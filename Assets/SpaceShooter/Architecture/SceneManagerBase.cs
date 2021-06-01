@@ -21,22 +21,22 @@ namespace SpaceShooter.Architecture
 
         public SceneManagerBase()
         {
-            sceneConfigMap = new Dictionary<string, SceneConfig>();
-            InitializeScenesMap();
+            this.sceneConfigMap = new Dictionary<string, SceneConfig>();
+            this.InitializeScenesMap();
         }
 
         public abstract void InitializeScenesMap();
 
         public Coroutine LoadCurrentSceneAsync()
         {
-            if (IsLoading)
+            if (this.IsLoading)
                 throw new Exception("Scene is loading already");
 
             LoadingScreen.Show();
                         
             var sceneName = SceneManager.GetActiveScene().name;
 
-            var config = sceneConfigMap[sceneName];
+            var config = this.sceneConfigMap[sceneName];
             if (config == null)
                 throw new Exception("There is no config for this scene");
 
@@ -45,43 +45,44 @@ namespace SpaceShooter.Architecture
 
         private IEnumerator LoadCurrentSceneRoutine(SceneConfig config)
         {
-            IsLoading = true;
-            OnSceneStartLoadEvent?.Invoke(Scene);
+            this.IsLoading = true;
+            this.OnSceneStartLoadEvent?.Invoke(this.Scene);
 
             yield return Coroutines.StartRoutine(InitializeSceneRoutine(config));
                         
-            IsLoading = false;
-            OnSceneLoadedEvent?.Invoke(Scene);
+            this.IsLoading = false;
+            this.OnSceneLoadedEvent?.Invoke(this.Scene);
             LoadingScreen.Hide();
         }
 
         public Coroutine LoadNewSceneAsync(string sceneName)
         {
-            if (IsLoading)
+            if (this.IsLoading)
                 throw new Exception("Scene is loading already");
 
-            var config = sceneConfigMap[sceneName];
+            var config = this.sceneConfigMap[sceneName];
             if (config == null)
                 throw new Exception("There is no config for this scene");
 
+            LoadingScreen.Show();
             return Coroutines.StartRoutine(LoadNewSceneRoutine(config));
         }
 
         private IEnumerator LoadNewSceneRoutine(SceneConfig config)
         {
-            IsLoading = true;
-            OnSceneStartLoadEvent?.Invoke(Scene);
+            this.IsLoading = true;
+            this.OnSceneStartLoadEvent?.Invoke(this.Scene);
                         
-            yield return Coroutines.StartRoutine(LoadSceneRoutine(config));            
+            yield return Coroutines.StartRoutine(LoadSceneRoutine(config));
             yield return Coroutines.StartRoutine(InitializeSceneRoutine(config));
-            
-            IsLoading = false;
-            OnSceneLoadedEvent?.Invoke(Scene);
+
+            this.IsLoading = false;
+            this.OnSceneLoadedEvent?.Invoke(this.Scene);
+            OnSceneInitializedEvent?.Invoke();
         }
 
         private IEnumerator LoadSceneRoutine(SceneConfig config)
         {
-            LoadingScreen.Show();
             var loadAsync = SceneManager.LoadSceneAsync(config.SceneName);
             loadAsync.allowSceneActivation = false;
 
@@ -94,19 +95,18 @@ namespace SpaceShooter.Architecture
 
         private IEnumerator InitializeSceneRoutine(SceneConfig config)
         {
-            Scene = new Scene(config);
-            yield return Scene.InitializeRoutine();
-            OnSceneInitializedEvent?.Invoke();
+            this.Scene = new Scene(config);
+            yield return this.Scene.InitializeRoutine();            
         }
 
         public T GetRepository<T>() where T : Repository
         {
-            return Scene.GetRepository<T>();
+            return this.Scene.GetRepository<T>();
         }
 
         public T GerInteractor<T>() where T : Interactor
         {
-            return Scene.GetInteractor<T>();
+            return this.Scene.GetInteractor<T>();
         }
     }
 }

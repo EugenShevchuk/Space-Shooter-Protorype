@@ -3,9 +3,8 @@ using SpaceShooter.Architecture.SaveSystem;
 
 namespace SpaceShooter.Architecture {
     
-    public class KinematicWeaponRepository : Repository, IWeaponRepository
-    {
-        public GameObject ProjectilePrefab { get; set; }
+    public class KinematicWeaponRepository : Repository
+    { 
         public float DamageOnHit { get; private set; }
         public float FireRate { get; private set; }
         public float Velocity { get; private set; }
@@ -19,43 +18,42 @@ namespace SpaceShooter.Architecture {
         
         public override void Initialize()
         {
-            storage = new Storage(SAVE_NAME);
-            kinematicData = (KinematicRepositoryData)storage.Load(new KinematicRepositoryData());
-            ProjectilePrefab = kinematicData.ProjectilePrefab;
+            this.storage = new Storage(SAVE_NAME);
+            this.kinematicData = (KinematicRepositoryData)this.storage.Load(new KinematicRepositoryData());
 
-            Load();
+            this.Load();
         }
 
         public override void Save()
         {
-            kinematicData.DamageOnHit = this.DamageOnHit;
-            kinematicData.FireRate = this.FireRate;
-            kinematicData.Velocity = this.Velocity;
-            kinematicData.KinematicLevel = this.KinematicLevel;
+            this.kinematicData.DamageOnHit = this.DamageOnHit;
+            this.kinematicData.FireRate = this.FireRate;
+            this.kinematicData.Velocity = this.Velocity;
+            this.kinematicData.KinematicLevel = this.KinematicLevel;
 
-            storage.Save(kinematicData);
+            this.storage.Save(this.kinematicData);
         }
 
         public void Load()
         {
-            this.DamageOnHit = kinematicData.DamageOnHit;
-            this.FireRate = kinematicData.FireRate;
-            this.Velocity = kinematicData.Velocity;
-            this.KinematicLevel = kinematicData.KinematicLevel;
+            this.DamageOnHit = this.kinematicData.DamageOnHit;
+            this.FireRate = this.kinematicData.FireRate;
+            this.Velocity = this.kinematicData.Velocity;
+            this.KinematicLevel = this.kinematicData.KinematicLevel;
         }
 
         public void UpgradeKinematic()
         {
-            if (KinematicLevel < 10)
+            if (this.KinematicLevel < 10)
             {
-                if (KinematicLevel <= 5)
+                if (this.KinematicLevel <= 5)
                     this.DamageOnHit += damageOnHitBonus1_5;
 
                 else
                     this.DamageOnHit += damageOnHitBonus5_10;
 
-                KinematicLevel++;
-                Save();
+                this.KinematicLevel++;
+                this.Save();
             }
         }
     }

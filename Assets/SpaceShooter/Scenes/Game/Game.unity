@@ -398,6 +398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1622390539}
   - component: {fileID: 1622390540}
+  - component: {fileID: 1622390541}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -432,3 +433,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultPrefab: {fileID: 8135258762960326204, guid: 86f2a62c6e768c3468258a2dad61f49c, type: 3}
+  shield: {fileID: 0}
+--- !u!114 &1622390541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622390538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ecdb7ee7b4f1f942885bf386de7f94c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kinematicPoolSize: 100
+  isKinematicPoolExpandable: 1
+  kinematicPrefab: {fileID: -8329321983354270336, guid: 9f993c89f18c9f34f930f4ea80566a66, type: 3}
+  blasterPoolSize: 100
+  isBlasterPoolExpandable: 1
+  blasterPrefab: {fileID: -9174842177874845191, guid: 710f0521ec247f948b55e7eae570fa56, type: 3}

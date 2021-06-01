@@ -1,47 +1,46 @@
 using UnityEngine;
 using SpaceShooter.Architecture;
-using System;
 
-public class PlayerBehaviour : MonoBehaviour
+namespace SpaceShooter
 {
-    [SerializeField] private float roll = 20f;
-    [SerializeField] private float pitch = 15f;
+    public class PlayerBehaviour : MonoBehaviour
+    {
+        [SerializeField] private float roll = 20f;
+        [SerializeField] private float pitch = 15f;
 
-    private PlayerStatsInteractor statsInteractor;
-    private WeaponsInteractor weaponsInteractor;
-        
-    private void OnEnable()
-    {
-        SceneManagerBase.OnSceneInitializedEvent += OnSceneInitialized;        
-    }
+        private PlayerStatsInteractor statsInteractor;
 
-    private void OnSceneInitialized()
-    {
-        statsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
-        weaponsInteractor = Game.GetInteractor<WeaponsInteractor>();
-        weaponsInteractor.OpenFire();
-    }
-    
-    private void Update()
-    {
-        PlayerMove();
-    }
-
-    public void PlayerMove()
-    {
-        if (statsInteractor != null)
+        private void OnEnable()
         {
-            float xAxis = PlayerInputListener.instance.Horizontal;
-            float yAxis = PlayerInputListener.instance.Vertical;
+            SceneManagerBase.OnSceneInitializedEvent += OnSceneInitialized;
+        }
 
-            Vector3 position = transform.position;
+        private void OnSceneInitialized()
+        {
+            this.statsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
+        }
 
-            position.x += xAxis * statsInteractor.Speed * Time.deltaTime;
-            position.y += yAxis * statsInteractor.Speed * Time.deltaTime;
+        private void Update()
+        {
+            this.PlayerMove();
+        }
 
-            transform.position = position;
+        public void PlayerMove()
+        {
+            if (this.statsInteractor != null)
+            {
+                float xAxis = PlayerInputListener.instance.Horizontal;
+                float yAxis = PlayerInputListener.instance.Vertical;
 
-            transform.rotation = Quaternion.Euler(-90 + (yAxis * pitch), xAxis * roll, 0);
+                Vector3 position = this.transform.position;
+
+                position.x += xAxis * this.statsInteractor.Speed * Time.deltaTime;
+                position.y += yAxis * this.statsInteractor.Speed * Time.deltaTime;
+
+                this.transform.position = position;
+
+                this.transform.rotation = Quaternion.Euler(-90 + (yAxis * pitch), xAxis * roll, 0);
+            }
         }
     }
 }

@@ -1,27 +1,31 @@
-using System.Collections;
 using UnityEngine;
-using SpaceShooter.Tools;
 
 namespace SpaceShooter.Architecture
 {
     public class BlasterWeaponInteractor : Interactor, IWeaponInteractor
     {
         public WeaponType WeaponType { get; set; }
-        public GameObject ProjectilePrefab { get; }
         public int Level => repository.BlasterLevel;
-        public float DamageOnHit => repository.DamageOnHit;
-        public float FireRate => repository.FireRate;
-        public float Velocity => repository.Velocity;
-        public float DamagePerSecond { get; }
+        public float DamageOnHit { get; set; }
+        public float FireRate { get; set; }
+        public float Velocity { get; set; }
+        public float DamagePerSecond { get; set; }
 
         private BlasterWeaponRepository repository;
         private WeaponsRepository weaponsRepository;
         
         public override void Initialize()
         {
-            WeaponType = WeaponType.Blaster;
             repository = Game.GetRepository<BlasterWeaponRepository>();
             weaponsRepository = Game.GetRepository<WeaponsRepository>();
+
+            WeaponType = WeaponType.Blaster;
+            DamageOnHit = repository.DamageOnHit;
+        }
+
+        public void InitializeWeapon()
+        { 
+            
         }
 
         public void SetAsCurrentWeapon()

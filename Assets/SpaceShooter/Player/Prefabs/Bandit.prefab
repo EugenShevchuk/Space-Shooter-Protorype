@@ -3194,7 +3194,8 @@ GameObject:
   - component: {fileID: 1674928576638920228}
   - component: {fileID: 1520409335632695304}
   - component: {fileID: -7016594539299388835}
-  - component: {fileID: 4398008094563875427}
+  - component: {fileID: 7122654998843147718}
+  - component: {fileID: 5498171473151712253}
   m_Layer: 0
   m_Name: Bandit
   m_TagString: Untagged
@@ -3319,7 +3320,7 @@ MonoBehaviour:
   speedX: 15
   health: 10
   directionChangeChance: 0.01
---- !u!114 &4398008094563875427
+--- !u!114 &7122654998843147718
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3328,11 +3329,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 8135258762960326204}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1fc01b01b769224aa96dac86f38b900, type: 3}
+  m_Script: {fileID: 11500000, guid: 0283ab275ed6d4f41bc5a2504125696a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePointRight: {fileID: 5928461843094966283}
-  firePoinLeft: {fileID: 5928461842004377240}
+  objectPool: {fileID: 0}
+--- !u!114 &5498171473151712253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135258762960326204}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 584e52cee0b4d584f95a9defd6cac065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shield: {fileID: 4260469438566506382}
+  damageFromCollisionWithEnemy: 5
 --- !u!1 &8135290786950879896
 GameObject:
   m_ObjectHideFlags: 0
@@ -3956,6 +3970,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33582a0b0cd30044d85f8d9521ede777, type: 3}
+--- !u!1 &4260469438566506382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7545199079247694112, guid: 33582a0b0cd30044d85f8d9521ede777, type: 3}
+  m_PrefabInstance: {fileID: 6022954237087176366}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4260469438566506378 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7545199079247694116, guid: 33582a0b0cd30044d85f8d9521ede777, type: 3}

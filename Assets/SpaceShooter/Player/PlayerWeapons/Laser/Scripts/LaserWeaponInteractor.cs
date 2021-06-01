@@ -6,21 +6,26 @@ namespace SpaceShooter.Architecture
     {
         public GameObject ProjectilePrefab { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
-        public float DamageOnHit => throw new System.NotImplementedException();
+        public float DamageOnHit { get; set; }
 
-        public float DamagePerSecond => throw new System.NotImplementedException();
+        public float DamagePerSecond { get; set; }
 
-        public float FireRate => throw new System.NotImplementedException();
+        public float FireRate { get; set; }
 
-        public float Velocity => throw new System.NotImplementedException();
+        public float Velocity { get; set; }
 
-        public WeaponType WeaponType { get ; set ; }
+        public WeaponType WeaponType { get; set; }
 
         public int Level => throw new System.NotImplementedException();
 
         public override void Initialize()
         {
             base.Initialize();
+        }
+
+        public void InitializeWeapon()
+        {
+            throw new System.NotImplementedException();
         }
 
         public void SetAsCurrentWeapon()

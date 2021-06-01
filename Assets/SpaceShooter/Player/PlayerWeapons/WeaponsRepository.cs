@@ -6,6 +6,7 @@ namespace SpaceShooter.Architecture
 {    
     public class WeaponsRepository : Repository
     {
+        public IWeaponInteractor SelectedWeapon => WeaponsMap[WeaponKey];
         public Type WeaponKey => weaponsData.typeKey; 
         public Dictionary<Type, IWeaponInteractor> WeaponsMap;
 

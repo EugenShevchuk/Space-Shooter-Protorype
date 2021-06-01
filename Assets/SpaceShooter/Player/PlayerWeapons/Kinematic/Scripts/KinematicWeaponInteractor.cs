@@ -1,29 +1,28 @@
-using UnityEngine;
-
 namespace SpaceShooter.Architecture
 {
     public class KinematicWeaponInteractor : Interactor, IWeaponInteractor
     {
-        public WeaponType WeaponType { get; set; }
+        public WeaponType WeaponType => WeaponType.Kinematic;
         public int Level => repository.KinematicLevel;
         public float DamageOnHit => repository.DamageOnHit;
         public float FireRate => repository.FireRate;
         public float Velocity => repository.Velocity;
-        public float DamagePerSecond => throw new System.NotImplementedException();
-
-        public GameObject ProjectilePrefab => repository.ProjectilePrefab;
-                
+        public float DamagePerSecond { get; set; }
 
         private KinematicWeaponRepository repository;
         private WeaponsRepository weaponsRepository;
 
         public override void Initialize()
         {
-            WeaponType = WeaponType.Kinematic;
             repository = Game.GetRepository<KinematicWeaponRepository>();
             weaponsRepository = Game.GetRepository<WeaponsRepository>();
         }
-        
+
+        public void InitializeWeapon()
+        {
+            repository = Game.GetRepository<KinematicWeaponRepository>();                       
+        }
+
         public void SetAsCurrentWeapon()
         {
             weaponsRepository.SetWeapon<KinematicWeaponInteractor>();
@@ -32,6 +31,8 @@ namespace SpaceShooter.Architecture
         public void Upgrade()
         {
             repository.UpgradeKinematic();
-        }  
+        }
+
+        
     }
 }
