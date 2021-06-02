@@ -206,9 +206,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 1
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 0
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -651,7 +651,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 148198354}
   shieldBar: {fileID: 1860883233}
-  playerStats: {fileID: 11400000, guid: 5bd465f273e45bc489bf2340b0bec25d, type: 2}
 --- !u!1 &1409299863
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,9 +809,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 0
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

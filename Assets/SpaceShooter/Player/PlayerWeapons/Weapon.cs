@@ -71,7 +71,7 @@ namespace SpaceShooter
             {
                 var projectile = pool.GetFreeElement();                
                 projectile.gameObject.transform.position = this.firePoint.transform.position;
-                projectile.gameObject.GetComponent<Rigidbody>().AddForce((Vector3.up * interactor.Velocity), ForceMode.Impulse);
+                projectile.gameObject.GetComponent<Rigidbody>().velocity = Vector3.up * interactor.Velocity;
 
                 projectile.damageOnHit = interactor.DamageOnHit;
 

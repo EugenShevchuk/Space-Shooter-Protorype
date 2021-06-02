@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using SpaceShooter.Architecture;
+using System.Collections;
 
 namespace SpaceShooter
 {
@@ -8,28 +9,36 @@ namespace SpaceShooter
     {
         [SerializeField] private Slider healthBar;
         [SerializeField] private Slider shieldBar;
-        [SerializeField] private PlayerStatsObject playerStats;
+
+        public static PlayerStatsInteractor playerStats;
 
         private void Awake()
         {
-            healthBar.maxValue = playerStats.BaseHealthValue;
-            shieldBar.maxValue = playerStats.BaseShieldValue;
-            healthBar.value = healthBar.maxValue;
-            shieldBar.value = shieldBar.maxValue;
-        }
+            ShieldCollisionHandler.ShieldValueChangedEvent += OnShieldValueChanged;
 
-        private void OnEnable()
-        {
-            PlayerStatsInteractor.OnHealthValueChangedEvent += OnHealthValueChanged;
-
-            PlayerStatsInteractor.OnShieldValueChangedEvent += OnShieldValueChanged;
+            PlayerCollisionHandler.HealthValueChangedEvent += OnHealthValueChanged;
         }
 
         private void OnDisable()
         {
-            PlayerStatsInteractor.OnHealthValueChangedEvent -= OnHealthValueChanged;
+            ShieldCollisionHandler.ShieldValueChangedEvent += OnShieldValueChanged;
 
-            PlayerStatsInteractor.OnShieldValueChangedEvent -= OnShieldValueChanged;
+            PlayerCollisionHandler.HealthValueChangedEvent -= OnHealthValueChanged;
+        }
+
+        private void Start()
+        {
+            StartCoroutine(InitializeRoutine());
+        }
+
+        private IEnumerator InitializeRoutine()
+        {
+            yield return new WaitUntil(() => playerStats != null);
+
+            healthBar.maxValue = playerStats.Health;
+            shieldBar.maxValue = playerStats.Shield;
+            healthBar.value = playerStats.Health;
+            shieldBar.value = playerStats.Shield;
         }
 
         private void OnHealthValueChanged(float newValue)

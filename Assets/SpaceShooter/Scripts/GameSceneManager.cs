@@ -53,6 +53,8 @@ namespace SpaceShooter
 
             player.GetComponent<PlayerBehaviour>().enabled = true;
             player.GetComponent<PlayerCollisionHandler>().enabled = true;
+            player.GetComponentInChildren(typeof(ShieldCollisionHandler), true).gameObject.SetActive(true);
+            
             player.layer = LayerMask.NameToLayer("Player");
         }
 

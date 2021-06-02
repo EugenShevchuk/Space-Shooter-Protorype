@@ -29,7 +29,7 @@ namespace SpaceShooter.Architecture {
             interactorsBase.SendOnCreateToAllInteractors();
             yield return null;
 
-            repositoriesBase.InitializeAllRepositories();            
+            repositoriesBase.InitializeAllRepositories();
             interactorsBase.InitializeAllInteractors();
             yield return null;
 

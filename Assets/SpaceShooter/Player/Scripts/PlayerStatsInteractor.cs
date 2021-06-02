@@ -6,10 +6,6 @@ namespace SpaceShooter.Architecture {
     {
         private PlayerStatsRepository repository;
 
-        public static event Action OnPlayerDiedEvent;
-        public static event Action<float> OnShieldValueChangedEvent;
-        public static event Action<float> OnHealthValueChangedEvent;
-
         public float Health => repository.Health;
         public int HealthLevel => repository.HealthLevel;
         public float Shield => repository.Shield;
@@ -17,11 +13,9 @@ namespace SpaceShooter.Architecture {
         public float Speed => repository.Speed;
         public int SpeedLevel => repository.SpeedLevel;
 
-
         public override void Initialize()
         {
-            //PlayerCollisionHandler.OnDamageTakenEvent += OnDamageTaken;
-            repository = Game.GetRepository<PlayerStatsRepository>();            
+            repository = Game.GetRepository<PlayerStatsRepository>();
         }
 
         public void UpgradeMaxHealth()

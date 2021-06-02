@@ -35,8 +35,7 @@ namespace SpaceShooter
                 childRenderers[i].material = enemyMaterials[materialIndex];
             }
 
-            // ¬ключает скрипт Enemy и присваивает соответствующий тег и слой.
-            enemy.GetComponent<EnemyBehaviour>().enabled = true;
+            // ¬ключает скрипт Enemy и присваивает соответствующий тег и слой.           
             enemy.tag = "Enemy";
             enemy.layer = LayerMask.NameToLayer("Enemy");
 

@@ -1,28 +1,19 @@
-using System;
 using UnityEngine;
+using System;
 
-namespace SpaceShooter
+namespace SpaceShooter 
 {
-    public class PlayerCollisionHandler : CollisionHandler
+    public class ShieldCollisionHandler : CollisionHandler
     {
+        public static event Action<float> ShieldValueChangedEvent;
+
         [SerializeField] private float damageFromCollisionWithEnemy = 5;
-
-        public static event Action<float> HealthValueChangedEvent;        
                 
-        private ShieldCollisionHandler shield;
-
-        private void Start()
-        {
-            shield = GetComponentInChildren<ShieldCollisionHandler>();
-        }
-
         private void OnTriggerEnter(Collider other)
         {
-            if (shield.isActiveAndEnabled)
-                return;
-
             Transform rootTransform = other.gameObject.transform.root;
             GameObject triggerGO = rootTransform.gameObject;
+            Debug.Log($"Shield collided with {triggerGO.name}");
 
             if (triggerGO == lastTriggerGo)
                 return;
@@ -34,25 +25,25 @@ namespace SpaceShooter
                 CollidedWithEnemy();
             }
         }
-
+        
         protected override void CollidedWithEnemy()
         {
             TakeDamage(damageFromCollisionWithEnemy);            
-        }
+        }  
 
         protected override void TakeDamage(float damage)
         {
-            healthlValue -= damage;
+            shieldValue -= damage;
 
-            HealthValueChangedEvent?.Invoke(healthlValue);
+            ShieldValueChangedEvent?.Invoke(shieldValue);
 
-            if (healthlValue <= 0)
-                PlayerDied();
+            if (shieldValue <= 0)
+                ShieldDestroyed();
         }
 
-        private void PlayerDied()
+        private void ShieldDestroyed()
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }
