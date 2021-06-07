@@ -1,14 +1,19 @@
+using System;
+
 namespace SpaceShooter.Architecture
 {
     public class KinematicWeaponInteractor : Interactor, IWeaponInteractor
     {
+        #region NotImplemented
+        public float DamagePerSecond => throw new NotImplementedException("Kinematic doesn't have damage per second");
+        #endregion
+
         public WeaponType WeaponType => WeaponType.Kinematic;
         public int Level => repository.KinematicLevel;
         public float DamageOnHit => repository.DamageOnHit;
         public float FireRate => repository.FireRate;
         public float Velocity => repository.Velocity;
-        public float DamagePerSecond { get; set; }
-
+        
         private KinematicWeaponRepository repository;
         private WeaponsRepository weaponsRepository;
 
@@ -31,8 +36,6 @@ namespace SpaceShooter.Architecture
         public void Upgrade()
         {
             repository.UpgradeKinematic();
-        }
-
-        
+        }        
     }
 }

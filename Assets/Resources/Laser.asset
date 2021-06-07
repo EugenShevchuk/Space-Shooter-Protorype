@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65751217a9b39df4a891b892d52efae4, type: 3}
   m_Name: Laser
   m_EditorClassIdentifier: 
-  Type: 0
-  WeaponType: 2
-  ProjectilePrefab: {fileID: 5573171456088269011, guid: 7a81b2a4989c9204ab7f8a444cad6816, type: 3}
-  DamageOnHit: 0
-  DamagePerSecond: 5
-  FireRate: 0
-  Velocity: 0
+  ProjectilePrefab: {fileID: 2120881649181167050, guid: 0b45edbcfb5ce7e42bd197ebef64b0c9, type: 3}
+  DamagePerSecond: 25
+  DamagePerSecondBonus1_5: 0.5
+  DamagePerSecondBonus5_10: 1.5

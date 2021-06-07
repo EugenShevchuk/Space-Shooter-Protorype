@@ -1,8 +1,7 @@
 using UnityEngine;
 using SpaceShooter.Architecture.SaveSystem;
 
-namespace SpaceShooter.Architecture {
-    
+namespace SpaceShooter.Architecture {    
     public class KinematicWeaponRepository : Repository
     { 
         public float DamageOnHit { get; private set; }

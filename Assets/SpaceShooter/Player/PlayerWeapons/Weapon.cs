@@ -7,11 +7,16 @@ namespace SpaceShooter
     public class Weapon : MonoBehaviour
     {
         [SerializeField] private Transform firePoint;
+        private GameObject laserPrefab;
+        private bool isLaserActive = false;
         private WeaponsSystem weaponsSystem;
 
         private void Awake()
         {
             this.weaponsSystem = GetComponentInParent<WeaponsSystem>();
+            var laserObject = Resources.Load<LaserWeaponObject>("Laser");
+            laserPrefab = laserObject.ProjectilePrefab;
+            Resources.UnloadUnusedAssets();
         }
 
         private void OnEnable()
@@ -36,6 +41,7 @@ namespace SpaceShooter
                     this.StartCoroutine(FireGun(interactor, blasterPool));
                     break;
                 case WeaponType.Laser:
+                    this.isLaserActive = true;
                     this.StartCoroutine(FireLaser(interactor));
                     break;
                 default:
@@ -56,6 +62,7 @@ namespace SpaceShooter
                     this.StopCoroutine(FireGun(interactor, blasterPool));
                     break;
                 case WeaponType.Laser:
+                    this.isLaserActive = false;
                     this.StopCoroutine(FireLaser(interactor));
                     break;
                 default:
@@ -82,7 +89,11 @@ namespace SpaceShooter
 
         private IEnumerator FireLaser(IWeaponInteractor interactor)
         {
-            yield return new WaitForEndOfFrame();
+            var laser = Instantiate(laserPrefab, firePoint);
+
+            yield return new WaitWhile(() => isLaserActive);
+
+            Destroy(laser);
         }
     }
 }

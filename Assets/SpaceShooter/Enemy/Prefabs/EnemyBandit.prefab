@@ -3652,7 +3652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedY: 10
   speedX: 15
-  health: 10
+  health: 100
   directionChangeChance: 0.01
 --- !u!1 &4345954336103720701
 GameObject:

@@ -1,41 +1,41 @@
-using UnityEngine;
+using System;
 
 namespace SpaceShooter.Architecture
 {
     public class LaserWeaponInteractor : Interactor, IWeaponInteractor
     {
-        public GameObject ProjectilePrefab { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        #region NotImplemented
+        public float DamageOnHit => throw new NotImplementedException("Laser doesn't have damage on hit");
+        public float FireRate => throw new NotImplementedException("Laser doesn't have fire rate");
+        public float Velocity => throw new NotImplementedException("Laser doesn't have velocity");
+        #endregion
 
-        public float DamageOnHit { get; set; }
+        public WeaponType WeaponType => WeaponType.Laser;
+        public float DamagePerSecond => repository.DamagePerSecond;
+        public int Level => repository.LaserLevel;
 
-        public float DamagePerSecond { get; set; }
-
-        public float FireRate { get; set; }
-
-        public float Velocity { get; set; }
-
-        public WeaponType WeaponType { get; set; }
-
-        public int Level => throw new System.NotImplementedException();
+        private LaserWeaponRepository repository;
+        private WeaponsRepository weaponsRepository;
 
         public override void Initialize()
         {
-            base.Initialize();
+            repository = Game.GetRepository<LaserWeaponRepository>();
+            weaponsRepository = Game.GetRepository<WeaponsRepository>();
         }
 
         public void InitializeWeapon()
         {
-            throw new System.NotImplementedException();
+            repository = Game.GetRepository<LaserWeaponRepository>();
         }
 
         public void SetAsCurrentWeapon()
         {
-            throw new System.NotImplementedException();
+            weaponsRepository.SetWeapon<LaserWeaponInteractor>();
         }
 
         public void Upgrade()
         {
-            throw new System.NotImplementedException();
+            repository.UpgradeLaser();
         }
     }
 }

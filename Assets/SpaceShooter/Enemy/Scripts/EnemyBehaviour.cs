@@ -58,20 +58,18 @@ namespace SpaceShooter
 
         private void OnTriggerEnter(Collider other)
         {
-            GameObject triggerGO = other.gameObject;
-            if (triggerGO.CompareTag("PlayerProjectile"))
+            if (other.gameObject.TryGetComponent(out Projectile projectile))
             {
-                Projectile proj = triggerGO.GetComponent<Projectile>();
-                health -= proj.damageOnHit;
+                health -= projectile.damageOnHit;
                 if (health <= 0)
                 {
                     Destroy(gameObject);
                 }
-                Destroy(triggerGO);
+                other.gameObject.SetActive(false);
             }
         }
 
-        public void TakeDamageFromLaser(float damage)
+        public void TakeDamageOverTime(float damage)
         {
             health -= damage * Time.deltaTime;
             if (health <= 0)
