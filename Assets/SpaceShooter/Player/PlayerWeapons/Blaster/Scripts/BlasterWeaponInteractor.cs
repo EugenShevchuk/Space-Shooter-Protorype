@@ -1,15 +1,22 @@
-using UnityEngine;
+using System;
 
 namespace SpaceShooter.Architecture
 {
     public class BlasterWeaponInteractor : Interactor, IWeaponInteractor
     {
-        public WeaponType WeaponType { get; set; }
+        #region NotImplemented
+        public float DamagePerSecond => throw new NotImplementedException();
+        #endregion
+
+        public WeaponType WeaponType => WeaponType.Blaster;
         public int Level => repository.BlasterLevel;
-        public float DamageOnHit { get; set; }
-        public float FireRate { get; set; }
-        public float Velocity { get; set; }
-        public float DamagePerSecond { get; set; }
+        public float DamageOnHit => repository.DamageOnHit;
+        public float FireRate => repository.FireRate + FireRateModifier;
+        public float Velocity => repository.Velocity + VelocityModifier;
+
+        public float FireRateModifier;
+        public float VelocityModifier;
+        public int modifiedTimes;
 
         private BlasterWeaponRepository repository;
         private WeaponsRepository weaponsRepository;
@@ -18,14 +25,11 @@ namespace SpaceShooter.Architecture
         {
             repository = Game.GetRepository<BlasterWeaponRepository>();
             weaponsRepository = Game.GetRepository<WeaponsRepository>();
-
-            WeaponType = WeaponType.Blaster;
-            DamageOnHit = repository.DamageOnHit;
         }
 
         public void InitializeWeapon()
-        { 
-            
+        {
+            repository = Game.GetRepository<BlasterWeaponRepository>();
         }
 
         public void SetAsCurrentWeapon()

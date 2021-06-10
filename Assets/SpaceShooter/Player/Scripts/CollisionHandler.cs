@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using SpaceShooter.Architecture;
 
@@ -6,8 +5,6 @@ namespace SpaceShooter
 {
     public abstract class CollisionHandler : MonoBehaviour
     {
-        public static event Action<PlayerStatsInteractor> StatsInitialized;
-
         protected PlayerStatsInteractor playerStats;
         protected float shieldValue;
         protected float healthlValue;
@@ -34,6 +31,6 @@ namespace SpaceShooter
 
         protected abstract void CollidedWithEnemy();
 
-        protected abstract void TakeDamage(float damage);
+        protected abstract void TakeDamage(float damage);                
     }
 }

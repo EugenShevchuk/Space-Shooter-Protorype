@@ -11,8 +11,11 @@ namespace SpaceShooter.Architecture
         #endregion
 
         public WeaponType WeaponType => WeaponType.Laser;
-        public float DamagePerSecond => repository.DamagePerSecond;
+        public float DamagePerSecond => repository.DamagePerSecond + DamagePerSecondBonus;        
         public int Level => repository.LaserLevel;
+
+        public float DamagePerSecondBonus;
+        public int modifiedTimes;
 
         private LaserWeaponRepository repository;
         private WeaponsRepository weaponsRepository;

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SpaceShooter.Architecture;
@@ -19,12 +18,14 @@ namespace SpaceShooter
 
         private void OnEnable()
         {
-            this.weaponsInteractor.SelectedWeaponSwitchedEvent += OnWeaponSwitched;
+            this.weaponsInteractor.SwitchingSelectedWeaponEvent += CeaseFire;
+            this.weaponsInteractor.SelectedWeaponSwitchedEvent += OpenFire;
         }
 
         private void OnDisable()
         {
-            this.weaponsInteractor.SelectedWeaponSwitchedEvent -= OnWeaponSwitched;
+            this.weaponsInteractor.SwitchingSelectedWeaponEvent -= CeaseFire;
+            this.weaponsInteractor.SelectedWeaponSwitchedEvent -= OpenFire;
         }
 
         public void OpenFire()
@@ -51,13 +52,6 @@ namespace SpaceShooter
         public void RemoveWeapon(Weapon weapon)
         {
             this.weapons.Remove(weapon);
-        }
-
-        private void OnWeaponSwitched(IWeaponInteractor weapon)
-        {
-            this.CeaseFire();
-
-            this.OpenFire();
         }
     }
 }

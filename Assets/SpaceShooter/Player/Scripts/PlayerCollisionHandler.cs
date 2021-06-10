@@ -33,6 +33,10 @@ namespace SpaceShooter
                 Destroy(triggerGO);
                 CollidedWithEnemy();
             }
+            if (triggerGO.TryGetComponent(out IPowerUp powerUp))
+            {
+                powerUp.GetAbsorbed();
+            }
         }
 
         protected override void CollidedWithEnemy()

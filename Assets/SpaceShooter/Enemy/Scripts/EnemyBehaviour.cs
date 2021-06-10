@@ -4,6 +4,9 @@ namespace SpaceShooter
 {
     public class EnemyBehaviour : MonoBehaviour
     {
+        [SerializeField] private float powerUpDropChance;
+        [SerializeField] private GameObject[] powerUps;
+ 
         [SerializeField] private float speedY = 10f;
         [SerializeField] private float speedX = 15f;
         [SerializeField] private float health = 10f;
@@ -26,14 +29,15 @@ namespace SpaceShooter
                 startDirection = true;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Move();
 
-            if (borderline != null && borderline.offDown)
-            {
+            if (borderline != null && borderline.offDown)            
                 Destroy(gameObject);
-            }
+
+            if (health <= 0)
+                EnemyDie();            
         }
 
         public virtual void Move()
@@ -61,10 +65,7 @@ namespace SpaceShooter
             if (other.gameObject.TryGetComponent(out Projectile projectile))
             {
                 health -= projectile.damageOnHit;
-                if (health <= 0)
-                {
-                    Destroy(gameObject);
-                }
+                
                 other.gameObject.SetActive(false);
             }
         }
@@ -72,10 +73,18 @@ namespace SpaceShooter
         public void TakeDamageOverTime(float damage)
         {
             health -= damage * Time.deltaTime;
-            if (health <= 0)
+        }
+
+        private void EnemyDie()
+        {
+            if (Random.value < powerUpDropChance)
             {
-                Destroy(gameObject);
+                var powerUp = powerUps[Random.Range(0, powerUps.Length)];
+                var position = this.transform.position;
+                Instantiate(powerUp, position, Quaternion.identity);
             }
+
+            Destroy(this.gameObject);
         }
     }
 }

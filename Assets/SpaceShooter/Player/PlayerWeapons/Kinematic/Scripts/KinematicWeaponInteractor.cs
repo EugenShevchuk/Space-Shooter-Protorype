@@ -9,10 +9,14 @@ namespace SpaceShooter.Architecture
         #endregion
 
         public WeaponType WeaponType => WeaponType.Kinematic;
-        public int Level => repository.KinematicLevel;
+        public int Level => repository.KinematicLevel;        
         public float DamageOnHit => repository.DamageOnHit;
-        public float FireRate => repository.FireRate;
-        public float Velocity => repository.Velocity;
+        public float FireRate => repository.FireRate + FireRateModifier;        
+        public float Velocity => repository.Velocity + VelocityModifier;
+
+        public int modifiedTimes;
+        public float FireRateModifier;
+        public float VelocityModifier;
         
         private KinematicWeaponRepository repository;
         private WeaponsRepository weaponsRepository;

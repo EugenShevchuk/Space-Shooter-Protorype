@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectilePrefab: {fileID: 2120881649181167050, guid: 0b45edbcfb5ce7e42bd197ebef64b0c9, type: 3}
   DamagePerSecond: 25
-  DamagePerSecondBonus1_5: 0.5
-  DamagePerSecondBonus5_10: 1.5
+  DamagePerSecondBonus1_5: 2.5
+  DamagePerSecondBonus5_10: 5

@@ -4,7 +4,8 @@ namespace SpaceShooter.Architecture
 {
     public class WeaponsInteractor : Interactor
     {
-        public event Action<IWeaponInteractor> SelectedWeaponSwitchedEvent;
+        public event Action SelectedWeaponSwitchedEvent;
+        public event Action SwitchingSelectedWeaponEvent;
         public IWeaponInteractor CurrentWeapon => repository.SelectedWeapon;
 
         private WeaponsRepository repository;
@@ -16,9 +17,11 @@ namespace SpaceShooter.Architecture
 
         public void SelectWeapon(IWeaponInteractor weapon)
         {
+            SwitchingSelectedWeaponEvent?.Invoke();
+
             weapon.SetAsCurrentWeapon();
 
-            SelectedWeaponSwitchedEvent?.Invoke(CurrentWeapon);
+            SelectedWeaponSwitchedEvent?.Invoke();
         }
     }
 }

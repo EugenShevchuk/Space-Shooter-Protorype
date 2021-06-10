@@ -880,7 +880,7 @@
     "m_Guid": {
         "m_GuidSerialized": "3f532f3e-7ae3-4dbc-90dd-27c356b0457c"
     },
-    "m_Name": "mainColor",
+    "m_Name": "_mainColor",
     "m_DefaultReferenceName": "Color_454cbc27896d4329a65165efe665f43f",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -1046,7 +1046,7 @@
     "m_Guid": {
         "m_GuidSerialized": "f8ff171b-48c4-4541-ad24-7a076b8d0cc3"
     },
-    "m_Name": "hexagons",
+    "m_Name": "_hexagons",
     "m_DefaultReferenceName": "Texture2D_67361f7e8871414b89378e68da8ab8b5",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -1160,7 +1160,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "7da3638447984949b110fe1b6282f5e6",
     "m_Id": 0,
-    "m_DisplayName": "fresnelPower",
+    "m_DisplayName": "_fresnelPower",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1177,7 +1177,7 @@
     "m_Guid": {
         "m_GuidSerialized": "0dd138a1-f519-4997-8382-e6393585d95d"
     },
-    "m_Name": "fresnelPower",
+    "m_Name": "_fresnelPower",
     "m_DefaultReferenceName": "Vector1_851f9efcb6e64a50a216516a933b35d1",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -1257,7 +1257,7 @@
     "m_Guid": {
         "m_GuidSerialized": "3311ee87-e4a4-43fd-9a57-30192245194c"
     },
-    "m_Name": "rotarionSpeed",
+    "m_Name": "_rotarionSpeed",
     "m_DefaultReferenceName": "Vector1_9b7ee07c2b474e44bbb15c76ea1c61f5",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -1701,7 +1701,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "bf5c872fbee04b05a876fb66e72253e8",
     "m_Id": 0,
-    "m_DisplayName": "hexagons",
+    "m_DisplayName": "_hexagons",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1865,7 +1865,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "dd01ed479ea84c56849fcf8d0b93df68",
     "m_Id": 0,
-    "m_DisplayName": "mainColor",
+    "m_DisplayName": "_mainColor",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2047,7 +2047,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "f782b78fe7f94504a51692a4c2eaf996",
     "m_Id": 0,
-    "m_DisplayName": "rotarionSpeed",
+    "m_DisplayName": "_rotarionSpeed",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
