@@ -3,31 +3,64 @@ namespace SpaceShooter.Architecture {
     {
         private PlayerStatsRepository repository;
 
-        public float Health => repository.Health;
-        public int HealthLevel => repository.HealthLevel;
-        public float Shield => repository.Shield;
-        public int ShieldLevel => repository.ShieldLevel;
-        public float Speed => repository.Speed;
-        public int SpeedLevel => repository.SpeedLevel;
+        private float health;
+        public float Health
+        {
+            get => this.health;
+            set 
+            {
+                if (value <= this.repository.Health)
+                    this.health = value;
+                else
+                    this.health = this.repository.Health;
+            }
+        }
+        public int HealthLevel => this.repository.HealthLevel;
+
+        private float shield;
+        public float Shield 
+        {
+            get => this.shield;
+            set 
+            {
+                if (value <= this.repository.Shield)
+                    this.shield = value;
+                else
+                    this.shield = this.repository.Shield;
+            } 
+        }
+        public int ShieldLevel => this.repository.ShieldLevel;
+
+        private float speed;
+        public float Speed
+        {
+            get => this.speed;
+            set => this.speed = value;
+        }
+        public int SpeedLevel => this.repository.SpeedLevel;
 
         public override void Initialize()
         {
-            repository = Game.GetRepository<PlayerStatsRepository>();
+            this.repository = Game.GetRepository<PlayerStatsRepository>();
+            
+            this.Health = this.repository.Health;
+            this.Shield = this.repository.Shield;
+            this.Speed = this.repository.Speed;            
         }
 
         public void UpgradeMaxHealth()
         {
-            repository.UpgradeMaxHealth();
+            this.repository.UpgradeMaxHealth();
         }
 
         public void UpgradeMaxShield()
         {
-            repository.UpgradeMaxShield();
+            this.repository.UpgradeMaxShield();
         }
 
         public void UpgradeMaxSpeed()
         {
-            repository.UpgradeMaxSpeed();
+            this.repository.UpgradeMaxSpeed();
         }        
     }
 }

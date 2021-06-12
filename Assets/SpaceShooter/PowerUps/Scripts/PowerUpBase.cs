@@ -11,7 +11,7 @@ namespace SpaceShooter
 
         protected void InitializeBase()
         {
-            this.borderline = this.GetComponent<Borderline>();
+            this.borderline = GetComponent<Borderline>();
 
             if (borderline == null)
                 Debug.LogError("Object has no attached borderline script");

@@ -3,12 +3,11 @@ using UnityEngine;
 
 namespace SpaceShooter
 {
-    public class PlayerCollisionHandler : CollisionHandler
+    public class PlayerCollisionHandler
     {
-        [SerializeField] private float damageFromCollisionWithEnemy = 5;
-
-        public static event Action<float> HealthValueChangedEvent;        
-                
+        /*
+        public static event Action<float> HealthValueChangedEvent;
+        
         private ShieldCollisionHandler shield;
 
         private void Start()
@@ -16,19 +15,23 @@ namespace SpaceShooter
             shield = GetComponentInChildren<ShieldCollisionHandler>();
         }
 
-        private void OnTriggerEnter(Collider other)
+        protected override void OnTriggerEnter(Collider other)
         {
             if (shield.isActiveAndEnabled)
                 return;
 
-            Transform rootTransform = other.gameObject.transform.root;
-            GameObject triggerGO = rootTransform.gameObject;
+            base.OnTriggerEnter(other);
+            
+            if (shield.isActiveAndEnabled)
+                return;
+
+            GameObject triggerGO = other.gameObject.transform.root.gameObject;
 
             if (triggerGO == lastTriggerGo)
                 return;
             lastTriggerGo = triggerGO;
 
-            if (triggerGO.TryGetComponent(out EnemyBehaviour enemy))
+            if (triggerGO.TryGetComponent(out EnemyBehaviour enemy)) 
             {
                 Destroy(triggerGO);
                 CollidedWithEnemy();
@@ -37,6 +40,7 @@ namespace SpaceShooter
             {
                 powerUp.GetAbsorbed();
             }
+            
         }
 
         protected override void CollidedWithEnemy()
@@ -46,17 +50,17 @@ namespace SpaceShooter
 
         protected override void TakeDamage(float damage)
         {
-            healthlValue -= damage;
+            healthValue -= damage;
 
-            HealthValueChangedEvent?.Invoke(healthlValue);
+            HealthValueChangedEvent?.Invoke(healthValue);
 
-            if (healthlValue <= 0)
+            if (healthValue <= 0)
                 PlayerDied();
         }
 
         private void PlayerDied()
         {
             Destroy(this.gameObject);
-        }
+        }*/
     }
 }

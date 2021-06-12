@@ -1,14 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using SpaceShooter.Architecture;
 
-public class UISceneLoader : MonoBehaviour
+namespace SpaceShooter
 {
-    private const string UI_SCENE_NAME = "InGameUI";
-
-    private void Awake()
+    public class UISceneLoader : MonoBehaviour
     {
-        if (SceneManager.GetSceneByName(UI_SCENE_NAME).isLoaded == false)
-            SceneManager.LoadSceneAsync(UI_SCENE_NAME, LoadSceneMode.Additive);
+        
     }
-
 }

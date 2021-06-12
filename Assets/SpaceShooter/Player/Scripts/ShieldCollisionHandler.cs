@@ -3,14 +3,15 @@ using System;
 
 namespace SpaceShooter 
 {
-    public class ShieldCollisionHandler : CollisionHandler
+    public class ShieldCollisionHandler
     {
+        /*
         public static event Action<float> ShieldValueChangedEvent;
-
-        [SerializeField] private float damageFromCollisionWithEnemy = 5;
-                
-        private void OnTriggerEnter(Collider other)
+                                
+        protected override void OnTriggerEnter(Collider other)
         {
+            base.OnTriggerEnter(other);
+            
             Transform rootTransform = other.gameObject.transform.root;
             GameObject triggerGO = rootTransform.gameObject;
             Debug.Log($"Shield collided with {triggerGO.name}");
@@ -28,6 +29,7 @@ namespace SpaceShooter
             {
                 powerUp.GetAbsorbed();
             }
+            
         }
         
         protected override void CollidedWithEnemy()
@@ -48,6 +50,7 @@ namespace SpaceShooter
         private void ShieldDestroyed()
         {
             this.gameObject.SetActive(false);
-        }
+        }*/
     }
+
 }

@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2934691147105266091}
-  - component: {fileID: 2934691147105266092}
+  - component: {fileID: -1231305866476682921}
+  - component: {fileID: 6468018966698921362}
   m_Layer: 0
   m_Name: PowerUpHealth
   m_TagString: Untagged
@@ -25,14 +26,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2934691147105266090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.28, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2934691147860536720}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2934691147105266092
+--- !u!114 &-1231305866476682921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,11 +42,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 2934691147105266090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfd9dfdb6d33735468e7ec32234a3160, type: 3}
+  m_Script: {fileID: 11500000, guid: 1701599835ba1d7408f6ce389f7f9d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goToRotate: {fileID: 2934691147860536720}
-  rotationSpeed: 3
+  amountHealthToRestore: 5
+--- !u!114 &6468018966698921362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2934691147105266090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3257a55761ef77745b2d6d15ab5a71ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 1
+  keepOnScreen: 0
+  offRight: 0
+  offLeft: 0
+  offUp: 0
+  offDown: 0
+  isOnscreen: 1
+  CamWidth: 0
+  CamHeight: 0
 --- !u!1 &2934691147724759347
 GameObject:
   m_ObjectHideFlags: 0

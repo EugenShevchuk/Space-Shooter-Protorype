@@ -3,13 +3,15 @@ using SpaceShooter.Architecture;
 
 namespace SpaceShooter
 {
-    public abstract class CollisionHandler : MonoBehaviour
+    public class CollisionHandler : MonoBehaviour
     {
-        protected PlayerStatsInteractor playerStats;
-        protected float shieldValue;
-        protected float healthlValue;
+        [SerializeField] private float damageFromCollisionWithEnemy = 5;
+        [SerializeField] private GameObject shield;
 
-        protected GameObject lastTriggerGo = null;
+        private PlayerStatsInteractor playerStats;
+        private bool isStatsInitialized = false;
+
+        private GameObject lastTriggerGo = null;
 
         private void OnEnable()
         {
@@ -21,16 +23,80 @@ namespace SpaceShooter
             Scene.InitializedEvent -= OnSceneInitialized;
         }
 
-        protected void OnSceneInitialized()
+        private void OnSceneInitialized()
         {
             playerStats = Game.GetInteractor<PlayerStatsInteractor>();
-            shieldValue = playerStats.Shield;
-            healthlValue = playerStats.Health;
-            HealthShieldBars.playerStats = this.playerStats;
+            isStatsInitialized = true;
         }
 
-        protected abstract void CollidedWithEnemy();
+        private void Update()
+        {
+            if (isStatsInitialized)
+            {
+                if (playerStats.Shield == 0 && shield.activeSelf)
+                    shield.SetActive(false);
 
-        protected abstract void TakeDamage(float damage);                
+                if (shield.activeSelf == false && playerStats.Shield > 0)
+                    shield.SetActive(true);
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            GameObject triggerGO = other.gameObject.transform.root.gameObject;
+
+            if (triggerGO == lastTriggerGo)
+                return;
+            lastTriggerGo = triggerGO;
+
+            if (triggerGO.TryGetComponent(out EnemyBehaviour enemy))
+            {
+                Destroy(triggerGO);
+                CollidedWithEnemy();
+            }
+            if (triggerGO.TryGetComponent(out IPowerUp powerUp))
+            {
+                powerUp.GetAbsorbed();
+            }
+        }
+
+        private void CollidedWithEnemy()
+        {
+            TakeDamage(damageFromCollisionWithEnemy);
+        }
+
+        private void TakeDamage(float damage)
+        {
+            if (shield.activeSelf)
+            {
+                TakeDamageToShield(damage);
+            }
+            else
+            {
+                TakeDamageToHealth(damage);
+            }            
+        }
+
+        private void TakeDamageToShield(float damage)
+        {
+            if (damage > playerStats.Shield)
+            {
+                var exscesAmount = damage - playerStats.Shield;
+                playerStats.Shield -= (damage - exscesAmount);
+                TakeDamageToHealth(exscesAmount);
+            }
+            else
+            {
+                playerStats.Shield -= damage;
+            }
+        }
+
+        private void TakeDamageToHealth(float damage)
+        {
+            playerStats.Health -= damage;
+
+            if (playerStats.Health <= 0)
+                Destroy(this.gameObject);
+        }
     }
 }

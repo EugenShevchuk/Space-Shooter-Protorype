@@ -72,7 +72,7 @@ namespace SpaceShooter.Architecture
         {
             this.IsLoading = true;
             this.OnSceneStartLoadEvent?.Invoke(this.Scene);
-                        
+            
             yield return Coroutines.StartRoutine(LoadSceneRoutine(config));
             yield return Coroutines.StartRoutine(InitializeSceneRoutine(config));
 

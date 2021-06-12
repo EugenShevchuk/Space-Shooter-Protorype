@@ -6,6 +6,7 @@ namespace SpaceShooter.Architecture
         {
             sceneConfigMap[SceneConfigMainMenu.SCENE_NAME] = new SceneConfigMainMenu();
             sceneConfigMap[SceneConfigGame.SCENE_NAME] = new SceneConfigGame();
+            sceneConfigMap[SceneConfigInGameUI.SCENE_NAME] = new SceneConfigInGameUI();
         }
     }
 }
