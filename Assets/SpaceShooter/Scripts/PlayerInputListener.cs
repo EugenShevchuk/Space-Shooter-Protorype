@@ -10,7 +10,7 @@ public sealed class PlayerInputListener : MonoBehaviour
 
     private static PlayerInputListener GetInstance()
     {
-        if (!isInitialized)
+        if (isInitialized == false)
             m_instance = CreateSingleton();
         return m_instance;
     }

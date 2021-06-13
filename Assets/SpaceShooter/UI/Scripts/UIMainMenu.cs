@@ -2,53 +2,56 @@ using UnityEngine;
 using SpaceShooter.Architecture;
 using Lean.Gui;
 
-public class UIMainMenu : MonoBehaviour
+namespace SpaceShooter
 {
-    [SerializeField] private Canvas mainMenu;
-    [SerializeField] private Canvas upgradeMenu;
-    [SerializeField] private Canvas cosmeticMenu;
-    [SerializeField] private LeanButton playButton;
-    [SerializeField] private LeanButton toHangarButton;
-    [SerializeField] private LeanButton exitButton;
-
-    private void Awake()
+    public class UIMainMenu : MonoBehaviour
     {
-        if (upgradeMenu != null && cosmeticMenu != null && upgradeMenu != null)
+        [SerializeField] private Canvas mainMenu;
+        [SerializeField] private Canvas upgradeMenu;
+        [SerializeField] private Canvas cosmeticMenu;
+        [SerializeField] private LeanButton playButton;
+        [SerializeField] private LeanButton toHangarButton;
+        [SerializeField] private LeanButton exitButton;
+
+        private void Awake()
         {
-            mainMenu.gameObject.SetActive(true);
-            upgradeMenu.gameObject.SetActive(false);
-            cosmeticMenu.gameObject.SetActive(false);
+            if (this.upgradeMenu != null && this.cosmeticMenu != null && this.upgradeMenu != null)
+            {
+                this.mainMenu.gameObject.SetActive(true);
+                this.upgradeMenu.gameObject.SetActive(false);
+                this.cosmeticMenu.gameObject.SetActive(false);
+            }
         }
-    }
 
-    private void OnEnable()
-    {
-        playButton.OnClick.AddListener(OnPlayButtonClicked);
-        toHangarButton.OnClick.AddListener(OnToHangarButtonClicked);
-        exitButton.OnClick.AddListener(OnExitButtonClicked);
-    }
+        private void OnEnable()
+        {
+            this.playButton.OnClick.AddListener(OnPlayButtonClicked);
+            this.toHangarButton.OnClick.AddListener(OnToHangarButtonClicked);
+            this.exitButton.OnClick.AddListener(OnExitButtonClicked);
+        }
 
-    private void OnDisable()
-    {
-        playButton.OnClick.RemoveListener(OnPlayButtonClicked);
-        toHangarButton.OnClick.RemoveListener(OnToHangarButtonClicked);
-        exitButton.OnClick.RemoveListener(OnExitButtonClicked);
-    }
+        private void OnDisable()
+        {
+            this.playButton.OnClick.RemoveListener(OnPlayButtonClicked);
+            this.toHangarButton.OnClick.RemoveListener(OnToHangarButtonClicked);
+            this.exitButton.OnClick.RemoveListener(OnExitButtonClicked);
+        }
 
-    public void OnPlayButtonClicked()
-    {
-        Game.SceneManager.LoadNewSceneAsync(SceneConfigGame.SCENE_NAME);
-    }
+        public void OnPlayButtonClicked()
+        {
+            Game.SceneManager.LoadNewSceneAsync(SceneConfigGame.SCENE_NAME);
+        }
 
-    public void OnToHangarButtonClicked()
-    {
-        mainMenu.gameObject.SetActive(false);
-        upgradeMenu.gameObject.SetActive(true);
-        cosmeticMenu.gameObject.SetActive(false);
-    }
+        public void OnToHangarButtonClicked()
+        {
+            this.mainMenu.gameObject.SetActive(false);
+            this.upgradeMenu.gameObject.SetActive(true);
+            this.cosmeticMenu.gameObject.SetActive(false);
+        }
 
-    public void OnExitButtonClicked()
-    {
-        Application.Quit();
+        public void OnExitButtonClicked()
+        {
+            Application.Quit();
+        }
     }
 }

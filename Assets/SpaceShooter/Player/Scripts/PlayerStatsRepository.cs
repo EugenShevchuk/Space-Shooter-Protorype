@@ -34,72 +34,72 @@ namespace SpaceShooter.Architecture
 
         public override void Save()
         {
-            statsData.MaxHealth = this.Health;
-            statsData.HealthLevel = this.HealthLevel;
+            this.statsData.MaxHealth = this.Health;
+            this.statsData.HealthLevel = this.HealthLevel;
 
-            statsData.MaxShield = this.Shield;
-            statsData.ShieldLevel = this.ShieldLevel;
+            this.statsData.MaxShield = this.Shield;
+            this.statsData.ShieldLevel = this.ShieldLevel;
 
-            statsData.MaxSpeed = this.Speed;
-            statsData.SpeedLevel = this.SpeedLevel;
+            this.statsData.MaxSpeed = this.Speed;
+            this.statsData.SpeedLevel = this.SpeedLevel;
 
-            storage.Save(statsData);
+            this.storage.Save(this.statsData);
         }
 
         public void Load()
         {
-            this.Health = statsData.MaxHealth;
-            this.HealthLevel = statsData.HealthLevel;
+            this.Health = this.statsData.MaxHealth;
+            this.HealthLevel = this.statsData.HealthLevel;
 
-            this.Shield = statsData.MaxShield;
-            this.ShieldLevel = statsData.ShieldLevel;
+            this.Shield = this.statsData.MaxShield;
+            this.ShieldLevel = this.statsData.ShieldLevel;
 
-            this.Speed = statsData.MaxSpeed;
-            this.SpeedLevel = statsData.SpeedLevel;
+            this.Speed = this.statsData.MaxSpeed;
+            this.SpeedLevel = this.statsData.SpeedLevel;
         }
 
         public void UpgradeMaxHealth()
         {
-            if (HealthLevel < 10)
+            if (this.HealthLevel < 10)
             {
-                if (HealthLevel <= 5)
-                    Health += healthBonusLevel1_5;
+                if (this.HealthLevel <= 5)
+                    this.Health += this.healthBonusLevel1_5;
 
                 else
-                    Health += healthBonusLevel5_10;
+                    this.Health += this.healthBonusLevel5_10;
 
-                HealthLevel++;
-                Save();
+                this.HealthLevel++;
+                this.Save();
             }
         }
 
         public void UpgradeMaxShield()
         {
-            if (ShieldLevel < 10)
+            if (this.ShieldLevel < 10)
             {
-                if (ShieldLevel <= 5)
-                    Shield += shieldBonusLevel1_5;
+                if (this.ShieldLevel <= 5)
+                    this.Shield += this.shieldBonusLevel1_5;
 
                 else
-                    Shield += shieldBonusLevel5_10;
+                    this.Shield += this.shieldBonusLevel5_10;
 
-                ShieldLevel++;
-                Save();
+                this.ShieldLevel++;
+                this.Save();
             }
         }
 
         public void UpgradeMaxSpeed()
         {
-            if (SpeedLevel < 10)
+            if (this.SpeedLevel < 10)
             {
-                if (SpeedLevel <= 5)
-                    Speed += speedBonusLevel1_5;
+                if (this.SpeedLevel <= 5)
+                    this.Speed += this.speedBonusLevel1_5;
 
                 else
-                    Speed += speedBonusLevel5_10;
+                    this.Speed += this.speedBonusLevel5_10;
 
-                SpeedLevel++;
-                Save();
+                this.SpeedLevel++;
+                this.Save();
             }
         }
     }

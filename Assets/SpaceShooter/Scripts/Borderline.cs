@@ -1,71 +1,74 @@
 using UnityEngine;
 
-public class Borderline : MonoBehaviour
+namespace SpaceShooter
 {
-    [SerializeField] private float radius = 1f;
-    [SerializeField] private bool keepOnScreen = true;
-
-    [HideInInspector]
-    public bool offRight, offLeft, offUp, offDown;
-
-    [SerializeField] private bool isOnscreen = true;
-    public float CamWidth;
-    public float CamHeight;
-
-    private void Awake()
+    public class Borderline : MonoBehaviour
     {
-        CamHeight = Camera.main.orthographicSize;
-        CamWidth = CamHeight * Camera.main.aspect;
-    }
+        [SerializeField] private float radius = 1f;
+        [SerializeField] private bool keepOnScreen = false;
+        [SerializeField] private bool isOnscreen = true;
 
-    private void LateUpdate()
-    {
-        Vector3 position = transform.position;
-        isOnscreen = true;
-        offDown = offUp = offRight = offLeft = false;
+        [HideInInspector]
+        public bool offRight, offLeft, offUp, offDown;
+        
+        public float CamWidth;
+        public float CamHeight;
 
-        if (CompareTag("Enemy") || CompareTag("PlayerProjectile") || CompareTag("EnemyProjectile"))
-            keepOnScreen = false;
-
-        if (position.x > CamWidth - radius) 
+        private void Awake()
         {
-            position.x = CamWidth - radius;
-            offRight = true;
+            this.CamHeight = Camera.main.orthographicSize;
+            this.CamWidth = CamHeight * Camera.main.aspect;
         }
 
-        if (position.x < radius - CamWidth)
+        private void LateUpdate()
         {
-            position.x = radius - CamWidth;
-            offLeft = true;
+            Vector3 position = this.transform.position;
+            this.isOnscreen = true;
+            this.offDown = this.offUp = this.offRight = this.offLeft = false;
+
+            if (this.TryGetComponent(out PlayerBehaviour player))
+                this.keepOnScreen = true;
+
+            if (position.x > this.CamWidth - this.radius)
+            {
+                position.x = this.CamWidth - this.radius;
+                this.offRight = true;
+            }
+
+            if (position.x < this.radius - this.CamWidth)
+            {
+                position.x = this.radius - this.CamWidth;
+                this.offLeft = true;
+            }
+
+            if (position.y > this.CamHeight - this.radius)
+            {
+                position.y = this.CamHeight - this.radius;
+                this.offUp = true;
+            }
+
+            if (position.y < this.radius - this.CamHeight)
+            {
+                position.y = this.radius - this.CamHeight;
+                this.offDown = true;
+            }
+
+            this.isOnscreen = (this.offUp || this.offDown || this.offRight || this.offLeft) == false;
+            if (this.keepOnScreen && this.isOnscreen == false)
+            {
+                this.transform.position = position;
+                this.isOnscreen = true;
+                this.offUp = this.offDown = this.offRight = this.offLeft = false;
+            }
         }
 
-        if (position.y > CamHeight - radius)
+        private void OnDrawGizmos()
         {
-            position.y = CamHeight - radius;
-            offUp = true;
+            if (!Application.isPlaying) return;
+
+            Vector3 borders = new Vector3(this.CamWidth * 2, this.CamHeight * 2, 0.1f);
+
+            Gizmos.DrawWireCube(Vector3.zero, borders);
         }
-
-        if (position.y < radius - CamHeight)
-        {
-            position.y = radius - CamHeight;
-            offDown = true;
-        }
-
-        isOnscreen = !(offUp || offDown || offRight || offLeft);
-        if (keepOnScreen && !isOnscreen)
-        {
-            transform.position = position;
-            isOnscreen = true;
-            offUp = offDown = offRight = offLeft = false;
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (!Application.isPlaying) return;
-
-        Vector3 borders = new Vector3(CamWidth * 2, CamHeight * 2, 0.1f);
-
-        Gizmos.DrawWireCube(Vector3.zero, borders);
     }
 }

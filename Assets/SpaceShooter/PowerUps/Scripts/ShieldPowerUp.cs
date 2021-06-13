@@ -9,12 +9,12 @@ namespace SpaceShooter
 
         private void Awake()
         {
-            InitializeStats();    
+            this.InitializeStats();    
         }
 
         public void GetAbsorbed()
         {
-            statsInteractor.Shield += amountShieldToRestore;
+            this.statsInteractor.Shield += this.amountShieldToRestore;
             Destroy(this.gameObject);
         }
     }

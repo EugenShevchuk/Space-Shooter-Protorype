@@ -35,81 +35,80 @@ namespace SpaceShooter {
 
         private void OnGameInitialized()
         {
-            currentRotation = Quaternion.Euler(7, 140, 0);
+            this.currentRotation = Quaternion.Euler(7, 140, 0);
             SetPrefab();
         }
 
         private void FixedUpdate()
         {
-            if (currentPrefab != null)
+            if (this.currentPrefab != null)
             {
-                currentPrefab.transform.Rotate(0, prefabRotationSpeed * Time.deltaTime, 0);
-                currentRotation = currentPrefab.transform.rotation;
+                this.currentPrefab.transform.Rotate(0, this.prefabRotationSpeed * Time.deltaTime, 0);
+                this.currentRotation = this.currentPrefab.transform.rotation;
             }
         }
 
         private void SetPrefab()
         {
-            if (currentPrefab != null)
-                Destroy(currentPrefab);
+            if (this.currentPrefab != null)
+                Destroy(this.currentPrefab);
 
-            currentPrefab = Instantiate(shipPrefabs[prefabIndex]);
+            this.currentPrefab = Instantiate(this.shipPrefabs[prefabIndex]);
 
-            currentPrefab.layer = LayerMask.NameToLayer("Player");
-            currentPrefab.transform.position = spawnPosition;
-            currentPrefab.transform.localScale *= localScale;
-            currentPrefab.transform.rotation = currentRotation;
+            this.currentPrefab.layer = LayerMask.NameToLayer("Player");
+            this.currentPrefab.transform.position = this.spawnPosition;
+            this.currentPrefab.transform.localScale *= this.localScale;
+            this.currentPrefab.transform.rotation = this.currentRotation;
         }
 
         private void SetMaterial()
-        {
-            // Костыль создающий массив дочерних элементов, после чего, с помощью цикла присваивающий каждому элементу материал.        
+        {                    
             MeshRenderer[] childRenderers = currentPrefab.GetComponentsInChildren<MeshRenderer>();
             for (int i = 0; i < childRenderers.Length; i++)
             {
-                childRenderers[i].material = shipMaterials[materialIndex];
+                childRenderers[i].material = this.shipMaterials[this.materialIndex];
             }
 
-            prefabText.text = shipPrefabs[prefabIndex].name;
-            materialText.text = shipMaterials[materialIndex].name;
+            this.prefabText.text = this.shipPrefabs[this.prefabIndex].name;
+            this.materialText.text = this.shipMaterials[this.materialIndex].name;
         }
 
         public void NextPrefabClicked()
         {
-            prefabIndex++;
-            if (prefabIndex > shipPrefabs.Length - 1)
-                prefabIndex = 0;
-            SetPrefab();
+            this.prefabIndex++;
+            if (this.prefabIndex > this.shipPrefabs.Length - 1)
+                this.prefabIndex = 0;
+            this.SetPrefab();
         }
 
         public void PreviousPrefabClicked()
         {
-            prefabIndex--;
-            if (prefabIndex < 0)
-                prefabIndex = shipPrefabs.Length - 1;
-            SetPrefab();
+            this.prefabIndex--;
+            if (this.prefabIndex < 0)
+                this.prefabIndex = this.shipPrefabs.Length - 1;
+            this.SetPrefab();
         }
 
         public void NextMaterialClicked()
         {
-            materialIndex++;
-            if (materialIndex > shipMaterials.Length - 1)
-                materialIndex = 0;
-            SetMaterial();
+            this.materialIndex++;
+            if (this.materialIndex > this.shipMaterials.Length - 1)
+                this.materialIndex = 0;
+            this.SetMaterial();
         }
 
         public void PreviousMaterialClicked()
         {
-            materialIndex--;
-            if (materialIndex < 0)
-                materialIndex = shipMaterials.Length - 1;
-            SetMaterial();
+            this.materialIndex--;
+            if (this.materialIndex < 0)
+                this.materialIndex = this.shipMaterials.Length - 1;
+            this.SetMaterial();
         }
 
         public void ApplyClicked()
         {
-            ChosenPrefab = shipPrefabs[prefabIndex];
-            ChosenMaterial = shipMaterials[materialIndex];
+            ChosenPrefab = this.shipPrefabs[prefabIndex];
+            ChosenMaterial = this.shipMaterials[materialIndex];
         }
     }
 }

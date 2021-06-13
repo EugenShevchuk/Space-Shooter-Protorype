@@ -17,54 +17,52 @@ namespace SpaceShooter
 
         public Vector3 Position
         {
-            get { return (transform.position); }
-            set { transform.position = value; }
+            get { return (this.transform.position); }
+            set { this.transform.position = value; }
         }
 
         private void Awake()
         {
-            borderline = GetComponent<Borderline>();
+            this.borderline = GetComponent<Borderline>();
 
             if (Random.value > 1)
-                startDirection = true;
+                this.startDirection = true;
         }
 
         private void FixedUpdate()
         {
-            Move();
+            this.Move();
 
-            if (borderline != null && borderline.offDown)            
-                Destroy(gameObject);
+            if (this.borderline != null && this.borderline.offDown)            
+                Destroy(this.gameObject);
 
-            if (health <= 0)
-                EnemyDie();            
+            if (this.health <= 0)
+                this.EnemyDie();            
         }
 
         public virtual void Move()
         {
-            Vector3 tempPosition = Position;
-            tempPosition.y -= speedY * Time.deltaTime;
+            Vector3 tempPosition = this.Position;
+            tempPosition.y -= this.speedY * Time.deltaTime;
 
-            // Меняет направление движения в случае выхода объекта за границы по сторонам.
-            if (borderline.offLeft || borderline.offRight)
-                speedX *= -1;
-            // Случайно меняет направление движения
+            if (this.borderline.offLeft || this.borderline.offRight)
+                this.speedX *= -1;            
             if (Random.value < directionChangeChance)
-                speedX *= -1;
-            // Случайно определяет изначальное напрвление движения по оси Х.
-            if (startDirection == true)
-                tempPosition.x += speedX * Time.deltaTime;
+                this.speedX *= -1;
+            
+            if (this.startDirection == true)
+                tempPosition.x += this.speedX * Time.deltaTime;
             else
-                tempPosition.x -= speedX * Time.deltaTime;
+                tempPosition.x -= this.speedX * Time.deltaTime;
 
-            Position = tempPosition;
+            this.Position = tempPosition;
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.TryGetComponent(out Projectile projectile))
             {
-                health -= projectile.damageOnHit;
+                this.health -= projectile.damageOnHit;
                 
                 other.gameObject.SetActive(false);
             }
@@ -72,14 +70,14 @@ namespace SpaceShooter
 
         public void TakeDamageOverTime(float damage)
         {
-            health -= damage * Time.deltaTime;
+            this.health -= damage * Time.deltaTime;
         }
 
         private void EnemyDie()
         {
-            if (Random.value < powerUpDropChance)
+            if (Random.value < this.powerUpDropChance)
             {
-                var powerUp = powerUps[Random.Range(0, powerUps.Length)];
+                var powerUp = this.powerUps[Random.Range(0, this.powerUps.Length)];
                 var position = this.transform.position;
                 Instantiate(powerUp, position, Quaternion.identity);
             }

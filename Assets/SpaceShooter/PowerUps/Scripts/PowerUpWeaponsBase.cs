@@ -8,8 +8,8 @@ namespace SpaceShooter
 
         protected void InitializeWeapons()
         {
-            InitializeBase();
-            weaponsInteractor = Game.GetInteractor<WeaponsInteractor>();
+            this.InitializeBase();
+            this.weaponsInteractor = Game.GetInteractor<WeaponsInteractor>();
         }
     }
 }

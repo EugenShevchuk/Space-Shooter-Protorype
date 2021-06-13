@@ -13,7 +13,7 @@ namespace SpaceShooter
         {
             this.borderline = GetComponent<Borderline>();
 
-            if (borderline == null)
+            if (this.borderline == null)
                 Debug.LogError("Object has no attached borderline script");
         }
 
@@ -24,9 +24,9 @@ namespace SpaceShooter
 
         public void Move()
         {
-            this.transform.Translate(Vector3.down * floatSpeed);
+            this.transform.Translate(Vector3.down * this.floatSpeed);
 
-            this.transform.Rotate(0, rotationSpeed, 0);
+            this.transform.Rotate(0, this.rotationSpeed, 0);
 
             if (this.borderline.offDown)
                 Destroy(this.gameObject);

@@ -13,7 +13,7 @@ namespace SpaceShooter
 
         private void Awake()
         {
-            InitializeWeapons();
+            this.InitializeWeapons();
             this.blasterInteractor = Game.GetInteractor<BlasterWeaponInteractor>();
         }   
 
@@ -33,7 +33,7 @@ namespace SpaceShooter
             {
                 this.blasterInteractor.FireRateModifier += this.fireRateModifier;
                 this.blasterInteractor.VelocityModifier += this.velocityModifiet;
-                Debug.Log($"Blaster was upgraded {blasterInteractor.modifiedTimes} times");
+                Debug.Log($"Blaster was upgraded {this.blasterInteractor.modifiedTimes} times");
                 this.blasterInteractor.modifiedTimes++;
             }
 

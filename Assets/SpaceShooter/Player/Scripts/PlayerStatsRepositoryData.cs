@@ -24,23 +24,23 @@ namespace SpaceShooter.Architecture.SaveSystem
         [NonSerialized] private PlayerStatsObject statsObject;
 
         public PlayerStatsRepositoryData()
-        { 
-            statsObject = Resources.Load<PlayerStatsObject>("PlayerStats");
+        {
+            this.statsObject = Resources.Load<PlayerStatsObject>("PlayerStats");
 
-            this.MaxHealth = statsObject.BaseHealthValue;
-            HealthLevel = 0;
-            HealthBonusLevel1_5 = statsObject.healthBonusLevel1_5;
-            HealthBonusLevel5_10 = statsObject.healthBonusLevel5_10;
+            this.MaxHealth = this.statsObject.BaseHealthValue;
+            this.HealthLevel = 0;
+            this.HealthBonusLevel1_5 = this.statsObject.healthBonusLevel1_5;
+            this.HealthBonusLevel5_10 = this.statsObject.healthBonusLevel5_10;
 
-            MaxShield = statsObject.BaseShieldValue;
-            ShieldLevel = 0;
-            ShieldBonusLevel1_5 = statsObject.shieldBonusLevel1_5;
-            ShieldBonusLevel5_10 = statsObject.shieldBonusLevel5_10;
+            this.MaxShield = this.statsObject.BaseShieldValue;
+            this.ShieldLevel = 0;
+            this.ShieldBonusLevel1_5 = this.statsObject.shieldBonusLevel1_5;
+            this.ShieldBonusLevel5_10 = this.statsObject.shieldBonusLevel5_10;
 
-            MaxSpeed = statsObject.BaseSpeedValue;
-            SpeedLevel = 0;
-            SpeedBonusLevel1_5 = statsObject.speedBonusLevel1_5;
-            SpeedBonusLevel5_10 = statsObject.speedBonusLevel5_10;
+            this.MaxSpeed = this.statsObject.BaseSpeedValue;
+            this.SpeedLevel = 0;
+            this.SpeedBonusLevel1_5 = this.statsObject.speedBonusLevel1_5;
+            this.SpeedBonusLevel5_10 = this.statsObject.speedBonusLevel5_10;
 
             Resources.UnloadUnusedAssets();
         }

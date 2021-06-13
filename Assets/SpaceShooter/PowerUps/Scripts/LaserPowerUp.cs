@@ -12,7 +12,7 @@ namespace SpaceShooter
 
         private void Awake()
         {
-            InitializeWeapons();
+            this.InitializeWeapons();
             this.laserInteractor = Game.GetInteractor<LaserWeaponInteractor>();
         }
 
@@ -20,7 +20,7 @@ namespace SpaceShooter
         {
             if (this.weaponsInteractor.CurrentWeapon != this.laserInteractor)
             {
-                this.weaponsInteractor.SelectWeapon(laserInteractor);
+                this.weaponsInteractor.SelectWeapon(this.laserInteractor);
                 this.laserInteractor.modifiedTimes = 0;
                 Destroy(this.gameObject);
                 return;

@@ -13,7 +13,7 @@ namespace SpaceShooter
 
         private void Awake()
         {
-            InitializeWeapons();
+            this.InitializeWeapons();
             this.kinematicInteractor = Game.GetInteractor<KinematicWeaponInteractor>();
         }
 
@@ -21,7 +21,7 @@ namespace SpaceShooter
         {
             if (this.weaponsInteractor.CurrentWeapon != this.kinematicInteractor)
             {
-                this.weaponsInteractor.SelectWeapon(kinematicInteractor);
+                this.weaponsInteractor.SelectWeapon(this.kinematicInteractor);
                 this.kinematicInteractor.modifiedTimes = 0;
                 Destroy(this.gameObject);
                 return;
@@ -31,7 +31,7 @@ namespace SpaceShooter
             {
                 this.kinematicInteractor.FireRateModifier += this.fireRateModifier;
                 this.kinematicInteractor.VelocityModifier += this.velocityModifiet;
-                Debug.Log($"Kinematic was upgraded {kinematicInteractor.modifiedTimes} times"); 
+                Debug.Log($"Kinematic was upgraded {this.kinematicInteractor.modifiedTimes} times"); 
                 this.kinematicInteractor.modifiedTimes++;
             }
 

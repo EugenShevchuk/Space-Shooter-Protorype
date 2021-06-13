@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpaceShooter
@@ -16,42 +14,37 @@ namespace SpaceShooter
 
         private void Awake()
         {
-            borderline = GetComponent<Borderline>();
+            this.borderline = GetComponent<Borderline>();
 
-            Invoke(nameof(SpawnEnemy), spawnRate);
+            this.Invoke(nameof(this.SpawnEnemy), this.spawnRate);
         }
 
         private void SpawnEnemy()
         {
-            int prefabIndex = Random.Range(0, enemyPrefabs.Length);
-            int materialIndex = Random.Range(0, enemyMaterials.Length);
+            int prefabIndex = Random.Range(0, this.enemyPrefabs.Length);
+            int materialIndex = Random.Range(0, this.enemyMaterials.Length);
 
-            GameObject enemy = Instantiate(enemyPrefabs[prefabIndex]);
-
-            // Костыль создающий массив дочерних элементов, после чего, с помощью цикла присваивающий каждому элементу материал.
+            var enemy = Instantiate(this.enemyPrefabs[prefabIndex]);
+                        
             MeshRenderer[] childRenderers = enemy.GetComponentsInChildren<MeshRenderer>();
             for (int i = 0; i < childRenderers.Length; i++)
             {
-                childRenderers[i].material = enemyMaterials[materialIndex];
+                childRenderers[i].material = this.enemyMaterials[materialIndex];
             }
 
-            // Включает скрипт Enemy и присваивает соответствующий тег и слой.           
-            enemy.tag = "Enemy";
             enemy.layer = LayerMask.NameToLayer("Enemy");
 
-            // Позволяет задать случайную точку спавна по Х в пределах ширины экрана.
-            // По Y позиция - самый верх+отступ.
             Vector3 position = Vector3.zero;
-            float minX = padding - borderline.CamWidth;
-            float maxX = borderline.CamWidth - padding;
+            float minX = this.padding - this.borderline.CamWidth;
+            float maxX = this.borderline.CamWidth - this.padding;
 
             position.x = Random.Range(minX, maxX);
-            position.y = borderline.CamHeight + padding;
+            position.y = this.borderline.CamHeight + this.padding;
 
             enemy.transform.position = position;
             enemy.transform.rotation = Quaternion.Euler(90, 180, 0);
 
-            Invoke(nameof(SpawnEnemy), spawnRate);
+            this.Invoke(nameof(this.SpawnEnemy), this.spawnRate);
         }
     }
 }

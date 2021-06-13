@@ -57,49 +57,49 @@ namespace SpaceShooter
         #region OnEnable/OnDisable
         private void OnEnable()
         {
-            playerStatsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
-            weaponsInteractor = Game.GetInteractor<WeaponsInteractor>();
-            kinematicInteractor = Game.GetInteractor<KinematicWeaponInteractor>();
-            blasterInteractor = Game.GetInteractor<BlasterWeaponInteractor>();
-            laserInteractor = Game.GetInteractor<LaserWeaponInteractor>();
-                       
-            kinematicToggle.OnOn.AddListener(OnKinematicSelected);
-            blasterToggle.OnOn.AddListener(OnBlasterSelected);
-            laserToggle.OnOn.AddListener(OnLaserSelected);
-            SetToggles();
+            this.playerStatsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
+            this.weaponsInteractor = Game.GetInteractor<WeaponsInteractor>();
+            this.kinematicInteractor = Game.GetInteractor<KinematicWeaponInteractor>();
+            this.blasterInteractor = Game.GetInteractor<BlasterWeaponInteractor>();
+            this.laserInteractor = Game.GetInteractor<LaserWeaponInteractor>();
 
-            kinematicUpgradeButton.OnClick.AddListener(OnKinematicUpgradeClicked);
-            blasterUpgradeButton.OnClick.AddListener(OnBlasterUpgradeClicked);
-            laserUpgradeButton.OnClick.AddListener(OnLaserUpgradeClicked);
+            this.kinematicToggle.OnOn.AddListener(OnKinematicSelected);
+            this.blasterToggle.OnOn.AddListener(OnBlasterSelected);
+            this.laserToggle.OnOn.AddListener(OnLaserSelected);
+            this.SetToggles();
 
-            healthUpgradeButton.OnClick.AddListener(OnHealthUpgradeClicked);
-            shieldUpgradeButton.OnClick.AddListener(OnShieldUpgradeClicked);
-            engineUpgradeButton.OnClick.AddListener(OnEngineUpgradeClicked);
+            this.kinematicUpgradeButton.OnClick.AddListener(OnKinematicUpgradeClicked);
+            this.blasterUpgradeButton.OnClick.AddListener(OnBlasterUpgradeClicked);
+            this.laserUpgradeButton.OnClick.AddListener(OnLaserUpgradeClicked);
 
-            playButton.OnClick.AddListener(OnPlayButtonClicked);
-            appearenceButton.OnClick.AddListener(OnAppearenceButtonClicked);
-            menuButton.OnClick.AddListener(OnMenuButtonClicked);
+            this.healthUpgradeButton.OnClick.AddListener(OnHealthUpgradeClicked);
+            this.shieldUpgradeButton.OnClick.AddListener(OnShieldUpgradeClicked);
+            this.engineUpgradeButton.OnClick.AddListener(OnEngineUpgradeClicked);
 
-            SetSliderValues();
+            this.playButton.OnClick.AddListener(OnPlayButtonClicked);
+            this.appearenceButton.OnClick.AddListener(OnAppearenceButtonClicked);
+            this.menuButton.OnClick.AddListener(OnMenuButtonClicked);
+
+            this.SetSliderValues();
         }
 
         private void OnDisable()
         {
-            kinematicToggle.OnOn.RemoveListener(OnKinematicSelected);
-            blasterToggle.OnOn.RemoveListener(OnBlasterSelected);
-            laserToggle.OnOn.RemoveListener(OnLaserSelected);
+            this.kinematicToggle.OnOn.RemoveListener(OnKinematicSelected);
+            this.blasterToggle.OnOn.RemoveListener(OnBlasterSelected);
+            this.laserToggle.OnOn.RemoveListener(OnLaserSelected);
 
-            kinematicUpgradeButton.OnClick.RemoveListener(OnKinematicUpgradeClicked);
-            blasterUpgradeButton.OnClick.RemoveListener(OnBlasterUpgradeClicked);
-            laserUpgradeButton.OnClick.RemoveListener(OnLaserUpgradeClicked);
+            this.kinematicUpgradeButton.OnClick.RemoveListener(OnKinematicUpgradeClicked);
+            this.blasterUpgradeButton.OnClick.RemoveListener(OnBlasterUpgradeClicked);
+            this.laserUpgradeButton.OnClick.RemoveListener(OnLaserUpgradeClicked);
 
-            healthUpgradeButton.OnClick.RemoveListener(OnHealthUpgradeClicked);
-            shieldUpgradeButton.OnClick.RemoveListener(OnShieldUpgradeClicked);
-            engineUpgradeButton.OnClick.RemoveListener(OnEngineUpgradeClicked);
+            this.healthUpgradeButton.OnClick.RemoveListener(OnHealthUpgradeClicked);
+            this.shieldUpgradeButton.OnClick.RemoveListener(OnShieldUpgradeClicked);
+            this.engineUpgradeButton.OnClick.RemoveListener(OnEngineUpgradeClicked);
 
-            playButton.OnClick.RemoveListener(OnPlayButtonClicked);
-            appearenceButton.OnClick.RemoveListener(OnAppearenceButtonClicked);
-            menuButton.OnClick.RemoveListener(OnMenuButtonClicked);
+            this.playButton.OnClick.RemoveListener(OnPlayButtonClicked);
+            this.appearenceButton.OnClick.RemoveListener(OnAppearenceButtonClicked);
+            this.menuButton.OnClick.RemoveListener(OnMenuButtonClicked);
         }
         #endregion
 
@@ -107,44 +107,44 @@ namespace SpaceShooter
 
         private void SetToggles()
         {
-            switch (weaponsInteractor.CurrentWeapon.WeaponType)
+            switch (this.weaponsInteractor.CurrentWeapon.WeaponType)
             {
                 case WeaponType.Kinematic:
-                    kinematicToggle.TurnOn();
-                    blasterToggle.TurnOff();
-                    laserToggle.TurnOff();
+                    this.kinematicToggle.TurnOn();
+                    this.blasterToggle.TurnOff();
+                    this.laserToggle.TurnOff();
                     break;
                 case WeaponType.Blaster:
-                    kinematicToggle.TurnOff();
-                    blasterToggle.TurnOn();
-                    laserToggle.TurnOff();
+                    this.kinematicToggle.TurnOff();
+                    this.blasterToggle.TurnOn();
+                    this.laserToggle.TurnOff();
                     break;
                 case WeaponType.Laser:
-                    kinematicToggle.TurnOff();
-                    blasterToggle.TurnOff();
-                    laserToggle.TurnOn();
+                    this.kinematicToggle.TurnOff();
+                    this.blasterToggle.TurnOff();
+                    this.laserToggle.TurnOn();
                     break;
                 default:
-                    kinematicToggle.TurnOn();
-                    blasterToggle.TurnOff();
-                    laserToggle.TurnOff();
+                    this.kinematicToggle.TurnOn();
+                    this.blasterToggle.TurnOff();
+                    this.laserToggle.TurnOff();
                     break;
             }
         }
 
         private void OnKinematicSelected()
         {
-            weaponsInteractor.SelectWeapon(kinematicInteractor);
+            this.weaponsInteractor.SelectWeapon(this.kinematicInteractor);
         }
 
         private void OnBlasterSelected()
         {
-            weaponsInteractor.SelectWeapon(blasterInteractor);
+            this.weaponsInteractor.SelectWeapon(this.blasterInteractor);
         }
 
         private void OnLaserSelected()
         {
-            weaponsInteractor.SelectWeapon(laserInteractor);
+            this.weaponsInteractor.SelectWeapon(this.laserInteractor);
         }
 
         #endregion
@@ -153,49 +153,49 @@ namespace SpaceShooter
 
         private void SetSliderValues()
         {
-            healthBar.value = playerStatsInteractor.HealthLevel;
-            shieldBar.value = playerStatsInteractor.ShieldLevel;
-            engineBar.value = playerStatsInteractor.SpeedLevel;
+            this.healthBar.value = this.playerStatsInteractor.HealthLevel;
+            this.shieldBar.value = this.playerStatsInteractor.ShieldLevel;
+            this.engineBar.value = this.playerStatsInteractor.SpeedLevel;
 
-            kinematicBar.value = kinematicInteractor.Level;
-            blasterBar.value = blasterInteractor.Level;
-            laserBar.value = laserInteractor.Level;
+            this.kinematicBar.value = this.kinematicInteractor.Level;
+            this.blasterBar.value = this.blasterInteractor.Level;
+            this.laserBar.value = this.laserInteractor.Level;
         }
 
         private void OnKinematicUpgradeClicked()
         {
-            kinematicInteractor.Upgrade();
-            SetSliderValues();
+            this.kinematicInteractor.Upgrade();
+            this.SetSliderValues();
         }
 
         private void OnBlasterUpgradeClicked()
         {
-            blasterInteractor.Upgrade();
-            SetSliderValues();
+            this.blasterInteractor.Upgrade();
+            this.SetSliderValues();
         }
 
         private void OnLaserUpgradeClicked()
         {
-            laserInteractor.Upgrade();
-            SetSliderValues();
+            this.laserInteractor.Upgrade();
+            this.SetSliderValues();
         }
 
         private void OnHealthUpgradeClicked()
         {
-            playerStatsInteractor.UpgradeMaxHealth();
-            SetSliderValues();
+            this.playerStatsInteractor.UpgradeMaxHealth();
+            this.SetSliderValues();
         }
 
         private void OnShieldUpgradeClicked()
         {
-            playerStatsInteractor.UpgradeMaxShield();
-            SetSliderValues();
+            this.playerStatsInteractor.UpgradeMaxShield();
+            this.SetSliderValues();
         }
 
         private void OnEngineUpgradeClicked()
         {
-            playerStatsInteractor.UpgradeMaxSpeed();
-            SetSliderValues();
+            this.playerStatsInteractor.UpgradeMaxSpeed();
+            this.SetSliderValues();
         }
         #endregion
 
@@ -206,16 +206,16 @@ namespace SpaceShooter
 
         private void OnMenuButtonClicked()
         {
-            mainMenu.gameObject.SetActive(true);
-            upgradeMenu.gameObject.SetActive(false);
-            cosmeticMenu.gameObject.SetActive(false);
+            this.mainMenu.gameObject.SetActive(true);
+            this.upgradeMenu.gameObject.SetActive(false);
+            this.cosmeticMenu.gameObject.SetActive(false);
         }
 
         private void OnAppearenceButtonClicked()
         {
-            mainMenu.gameObject.SetActive(false);
-            upgradeMenu.gameObject.SetActive(false);
-            cosmeticMenu.gameObject.SetActive(true);
+            this.mainMenu.gameObject.SetActive(false);
+            this.upgradeMenu.gameObject.SetActive(false);
+            this.cosmeticMenu.gameObject.SetActive(true);
         }
     }
 }

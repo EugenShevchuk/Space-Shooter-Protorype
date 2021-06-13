@@ -8,8 +8,8 @@ namespace SpaceShooter
 
         protected void InitializeStats()
         {
-            InitializeBase();
-            statsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
+            this.InitializeBase();
+            this.statsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
         }
     }
 }

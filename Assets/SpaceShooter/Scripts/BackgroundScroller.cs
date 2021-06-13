@@ -9,12 +9,12 @@ public class BackgroundScroller : MonoBehaviour
 
 	void Start ()
 	{
-		startPosition = transform.position;	
+		this.startPosition = this.transform.position;	
 	}
 
 	void Update ()
 	{
-		float newPosition = Mathf.Repeat(Time.time * scrollSpeed, tileWidth);
-		transform.position = startPosition + Vector3.down * newPosition;
+		float newPosition = Mathf.Repeat(Time.time * this.scrollSpeed, this.tileWidth);
+		this.transform.position = this.startPosition + Vector3.down * newPosition;
 	}
 }

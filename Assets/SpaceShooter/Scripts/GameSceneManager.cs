@@ -16,11 +16,6 @@ namespace SpaceShooter
 
         private ProjectileObjectPool objectPool;
 
-        private void Awake()
-        {
-            objectPool = GetComponent<ProjectileObjectPool>();
-        }
-
         private void OnEnable()
         {
             SceneManagerBase.OnSceneInitializedEvent += InitializePlayer;
@@ -32,35 +27,36 @@ namespace SpaceShooter
         }
 
         private void Start()
-        {
+        {            
             InstantiatePlayer();
         }
 
         private void InstantiatePlayer()
         {
-            if (playerPrefab != null)
-            {
-                player = Instantiate(playerPrefab);                
+            this.objectPool = GetComponent<ProjectileObjectPool>();
 
-                MeshRenderer[] childRenderers = player.GetComponentsInChildren<MeshRenderer>();
+            if (this.playerPrefab != null)
+            {
+                this.player = Instantiate(this.playerPrefab);                
+
+                MeshRenderer[] childRenderers = this.player.GetComponentsInChildren<MeshRenderer>();
                 for (int i = 0; i < childRenderers.Length; i++)                
-                    childRenderers[i].material = playerMaterial;                
+                    childRenderers[i].material = this.playerMaterial;
             }
             else
             {
-                player = Instantiate(defaultPrefab);
+                this.player = Instantiate(this.defaultPrefab);                
             }
 
-            player.GetComponent<PlayerBehaviour>().enabled = true;
-            player.GetComponent<CollisionHandler>().enabled = true;
-            //player.GetComponentInChildren(typeof(ShieldCollisionHandler), true).gameObject.SetActive(true);
-            
-            player.layer = LayerMask.NameToLayer("Player");
+            this.player.GetComponent<PlayerBehaviour>().enabled = true;
+            this.player.GetComponent<CollisionHandler>().enabled = true;
+
+            this.player.layer = LayerMask.NameToLayer("Player");
         }
 
         private void InitializePlayer()
         {
-            var weaponSystem = player.GetComponent<WeaponsSystem>();
+            var weaponSystem = this.player.GetComponent<WeaponsSystem>();
             weaponSystem.objectPool = this.objectPool;
             weaponSystem.enabled = true;
             weaponSystem.OpenFire();

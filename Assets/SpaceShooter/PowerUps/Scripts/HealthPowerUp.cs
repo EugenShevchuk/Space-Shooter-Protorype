@@ -9,12 +9,12 @@ namespace SpaceShooter
 
         private void Awake()
         {
-            InitializeStats();
+            this.InitializeStats();
         }
 
         public void GetAbsorbed()
         {
-            statsInteractor.Health += amountHealthToRestore;
+            this.statsInteractor.Health += this.amountHealthToRestore;
             Destroy(this.gameObject);
         }
     }

@@ -8,39 +8,42 @@ namespace SpaceShooter
         [SerializeField] private float roll = 20f;
         [SerializeField] private float pitch = 15f;
 
-        private PlayerStatsInteractor statsInteractor;
+        private PlayerStatsInteractor playerStats;
 
         private void OnEnable()
         {
             SceneManagerBase.OnSceneInitializedEvent += OnSceneInitialized;
         }
 
+        private void OnDisable()
+        {
+            SceneManagerBase.OnSceneInitializedEvent -= OnSceneInitialized;
+        }
+
         private void OnSceneInitialized()
         {
-            this.statsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
+            this.playerStats = Game.GetInteractor<PlayerStatsInteractor>();
         }
 
         private void Update()
         {
-            this.PlayerMove();
+            if (this.playerStats != null)
+                this.PlayerMove();
         }
 
-        public void PlayerMove()
+        private void PlayerMove()
         {
-            if (this.statsInteractor != null)
-            {
-                float xAxis = PlayerInputListener.instance.Horizontal;
-                float yAxis = PlayerInputListener.instance.Vertical;
+            float xAxis = PlayerInputListener.instance.Horizontal;
+            float yAxis = PlayerInputListener.instance.Vertical;
 
-                Vector3 position = this.transform.position;
+            Vector3 position = this.transform.position;
 
-                position.x += xAxis * this.statsInteractor.Speed * Time.deltaTime;
-                position.y += yAxis * this.statsInteractor.Speed * Time.deltaTime;
+            position.x += xAxis * this.playerStats.Speed * Time.deltaTime;
+            position.y += yAxis * this.playerStats.Speed * Time.deltaTime;
 
-                this.transform.position = position;
+            this.transform.position = position;
 
-                this.transform.rotation = Quaternion.Euler(-90 + (yAxis * pitch), xAxis * roll, 0);
-            }
+            this.transform.rotation = Quaternion.Euler(-90 + (yAxis * pitch), xAxis * roll, 0);
         }
     }
 }

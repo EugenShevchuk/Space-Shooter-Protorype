@@ -9,7 +9,6 @@ namespace SpaceShooter
         [SerializeField] private GameObject shield;
 
         private PlayerStatsInteractor playerStats;
-        private bool isStatsInitialized = false;
 
         private GameObject lastTriggerGo = null;
 
@@ -25,19 +24,18 @@ namespace SpaceShooter
 
         private void OnSceneInitialized()
         {
-            playerStats = Game.GetInteractor<PlayerStatsInteractor>();
-            isStatsInitialized = true;
+            this.playerStats = Game.GetInteractor<PlayerStatsInteractor>();
         }
 
         private void Update()
         {
-            if (isStatsInitialized)
+            if (this.playerStats != null)
             {
-                if (playerStats.Shield == 0 && shield.activeSelf)
-                    shield.SetActive(false);
+                if (this.playerStats.Shield <= 0 && this.shield.activeSelf)
+                    this.shield.SetActive(false);
 
-                if (shield.activeSelf == false && playerStats.Shield > 0)
-                    shield.SetActive(true);
+                if (this.shield.activeSelf == false && this.playerStats.Shield > 0)
+                    this.shield.SetActive(true);
             }
         }
 
@@ -45,9 +43,9 @@ namespace SpaceShooter
         {
             GameObject triggerGO = other.gameObject.transform.root.gameObject;
 
-            if (triggerGO == lastTriggerGo)
+            if (triggerGO == this.lastTriggerGo)
                 return;
-            lastTriggerGo = triggerGO;
+            this.lastTriggerGo = triggerGO;
 
             if (triggerGO.TryGetComponent(out EnemyBehaviour enemy))
             {
@@ -62,40 +60,37 @@ namespace SpaceShooter
 
         private void CollidedWithEnemy()
         {
-            TakeDamage(damageFromCollisionWithEnemy);
+            TakeDamage(this.damageFromCollisionWithEnemy);
         }
 
         private void TakeDamage(float damage)
         {
-            if (shield.activeSelf)
-            {
-                TakeDamageToShield(damage);
-            }
-            else
-            {
-                TakeDamageToHealth(damage);
-            }            
+            if (this.shield.activeSelf)            
+                this.TakeDamageToShield(damage);
+            
+            else            
+                this.TakeDamageToHealth(damage);                        
         }
 
         private void TakeDamageToShield(float damage)
         {
-            if (damage > playerStats.Shield)
+            if (damage > this.playerStats.Shield)
             {
-                var exscesAmount = damage - playerStats.Shield;
-                playerStats.Shield -= (damage - exscesAmount);
-                TakeDamageToHealth(exscesAmount);
+                var exscesAmount = damage - this.playerStats.Shield;
+                this.playerStats.Shield -= (damage - exscesAmount);
+                this.TakeDamageToHealth(exscesAmount);
             }
             else
             {
-                playerStats.Shield -= damage;
+                this.playerStats.Shield -= damage;
             }
         }
 
         private void TakeDamageToHealth(float damage)
         {
-            playerStats.Health -= damage;
+            this.playerStats.Health -= damage;
 
-            if (playerStats.Health <= 0)
+            if (this.playerStats.Health <= 0)
                 Destroy(this.gameObject);
         }
     }
