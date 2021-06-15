@@ -1,6 +1,7 @@
-namespace SpaceShooter.Architecture {
+namespace SpaceShooter.Architecture 
+{
     public class PlayerStatsInteractor : Interactor
-    {
+    {/*
         private PlayerStatsRepository repository;
 
         private float health;
@@ -61,6 +62,6 @@ namespace SpaceShooter.Architecture {
         public void UpgradeMaxSpeed()
         {
             this.repository.UpgradeMaxSpeed();
-        }        
-    }
+        }  */      
+    }        
 }

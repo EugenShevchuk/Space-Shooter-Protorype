@@ -46,7 +46,6 @@ namespace SpaceShooter
         [SerializeField] private Canvas upgradeMenu;
         [SerializeField] private Canvas cosmeticMenu;
 
-        private PlayerStatsInteractor playerStatsInteractor;
         private WeaponsInteractor weaponsInteractor;
         private KinematicWeaponInteractor kinematicInteractor;
         private BlasterWeaponInteractor blasterInteractor;
@@ -57,7 +56,6 @@ namespace SpaceShooter
         #region OnEnable/OnDisable
         private void OnEnable()
         {
-            this.playerStatsInteractor = Game.GetInteractor<PlayerStatsInteractor>();
             this.weaponsInteractor = Game.GetInteractor<WeaponsInteractor>();
             this.kinematicInteractor = Game.GetInteractor<KinematicWeaponInteractor>();
             this.blasterInteractor = Game.GetInteractor<BlasterWeaponInteractor>();
@@ -68,19 +66,9 @@ namespace SpaceShooter
             this.laserToggle.OnOn.AddListener(OnLaserSelected);
             this.SetToggles();
 
-            this.kinematicUpgradeButton.OnClick.AddListener(OnKinematicUpgradeClicked);
-            this.blasterUpgradeButton.OnClick.AddListener(OnBlasterUpgradeClicked);
-            this.laserUpgradeButton.OnClick.AddListener(OnLaserUpgradeClicked);
-
-            this.healthUpgradeButton.OnClick.AddListener(OnHealthUpgradeClicked);
-            this.shieldUpgradeButton.OnClick.AddListener(OnShieldUpgradeClicked);
-            this.engineUpgradeButton.OnClick.AddListener(OnEngineUpgradeClicked);
-
             this.playButton.OnClick.AddListener(OnPlayButtonClicked);
             this.appearenceButton.OnClick.AddListener(OnAppearenceButtonClicked);
             this.menuButton.OnClick.AddListener(OnMenuButtonClicked);
-
-            this.SetSliderValues();
         }
 
         private void OnDisable()
@@ -88,14 +76,6 @@ namespace SpaceShooter
             this.kinematicToggle.OnOn.RemoveListener(OnKinematicSelected);
             this.blasterToggle.OnOn.RemoveListener(OnBlasterSelected);
             this.laserToggle.OnOn.RemoveListener(OnLaserSelected);
-
-            this.kinematicUpgradeButton.OnClick.RemoveListener(OnKinematicUpgradeClicked);
-            this.blasterUpgradeButton.OnClick.RemoveListener(OnBlasterUpgradeClicked);
-            this.laserUpgradeButton.OnClick.RemoveListener(OnLaserUpgradeClicked);
-
-            this.healthUpgradeButton.OnClick.RemoveListener(OnHealthUpgradeClicked);
-            this.shieldUpgradeButton.OnClick.RemoveListener(OnShieldUpgradeClicked);
-            this.engineUpgradeButton.OnClick.RemoveListener(OnEngineUpgradeClicked);
 
             this.playButton.OnClick.RemoveListener(OnPlayButtonClicked);
             this.appearenceButton.OnClick.RemoveListener(OnAppearenceButtonClicked);
@@ -147,56 +127,6 @@ namespace SpaceShooter
             this.weaponsInteractor.SelectWeapon(this.laserInteractor);
         }
 
-        #endregion
-
-        #region Upgrades;
-
-        private void SetSliderValues()
-        {
-            this.healthBar.value = this.playerStatsInteractor.HealthLevel;
-            this.shieldBar.value = this.playerStatsInteractor.ShieldLevel;
-            this.engineBar.value = this.playerStatsInteractor.SpeedLevel;
-
-            this.kinematicBar.value = this.kinematicInteractor.Level;
-            this.blasterBar.value = this.blasterInteractor.Level;
-            this.laserBar.value = this.laserInteractor.Level;
-        }
-
-        private void OnKinematicUpgradeClicked()
-        {
-            this.kinematicInteractor.Upgrade();
-            this.SetSliderValues();
-        }
-
-        private void OnBlasterUpgradeClicked()
-        {
-            this.blasterInteractor.Upgrade();
-            this.SetSliderValues();
-        }
-
-        private void OnLaserUpgradeClicked()
-        {
-            this.laserInteractor.Upgrade();
-            this.SetSliderValues();
-        }
-
-        private void OnHealthUpgradeClicked()
-        {
-            this.playerStatsInteractor.UpgradeMaxHealth();
-            this.SetSliderValues();
-        }
-
-        private void OnShieldUpgradeClicked()
-        {
-            this.playerStatsInteractor.UpgradeMaxShield();
-            this.SetSliderValues();
-        }
-
-        private void OnEngineUpgradeClicked()
-        {
-            this.playerStatsInteractor.UpgradeMaxSpeed();
-            this.SetSliderValues();
-        }
         #endregion
 
         private void OnPlayButtonClicked()

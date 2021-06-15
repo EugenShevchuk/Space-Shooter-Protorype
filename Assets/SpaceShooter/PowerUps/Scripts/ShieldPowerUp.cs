@@ -1,20 +1,24 @@
 using UnityEngine;
+using SpaceShooter.Architecture;
 
 namespace SpaceShooter 
 {
-    public class ShieldPowerUp : PowerUpStatsBase, IPowerUp
+    public class ShieldPowerUp : PowerUpBase, IPowerUp
     {
         [Header("On Absorb Modifiers")]
         [SerializeField] private float amountShieldToRestore;
 
+        private PlayerShieldInteractor shieldInteractor;
+
         private void Awake()
         {
-            this.InitializeStats();    
+            this.InitializeBase();
+            this.shieldInteractor = Game.GetInteractor<PlayerShieldInteractor>();
         }
 
         public void GetAbsorbed()
         {
-            this.statsInteractor.Shield += this.amountShieldToRestore;
+            this.shieldInteractor.Restore(this.amountShieldToRestore);
             Destroy(this.gameObject);
         }
     }

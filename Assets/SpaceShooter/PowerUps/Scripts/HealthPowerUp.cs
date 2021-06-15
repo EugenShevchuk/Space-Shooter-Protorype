@@ -1,20 +1,24 @@
 using UnityEngine;
+using SpaceShooter.Architecture;
 
 namespace SpaceShooter
 {
-    public class HealthPowerUp : PowerUpStatsBase, IPowerUp
+    public class HealthPowerUp : PowerUpBase, IPowerUp
     {
         [Header("On Absorb Modifiers")]
         [SerializeField] private float amountHealthToRestore;
 
+        private PlayerHealthInteractor healthInteractor;
+
         private void Awake()
         {
-            this.InitializeStats();
+            this.InitializeBase();
+            this.healthInteractor = Game.GetInteractor<PlayerHealthInteractor>();
         }
 
         public void GetAbsorbed()
         {
-            this.statsInteractor.Health += this.amountHealthToRestore;
+            this.healthInteractor.Restore(this.amountHealthToRestore);
             Destroy(this.gameObject);
         }
     }

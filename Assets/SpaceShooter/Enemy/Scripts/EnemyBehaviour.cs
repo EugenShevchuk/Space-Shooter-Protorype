@@ -1,9 +1,11 @@
 using UnityEngine;
+using SpaceShooter.Architecture;
 
 namespace SpaceShooter
 {
     public class EnemyBehaviour : MonoBehaviour
     {
+        [SerializeField] private int killReward;
         [SerializeField] private float powerUpDropChance;
         [SerializeField] private GameObject[] powerUps;
  
@@ -12,6 +14,7 @@ namespace SpaceShooter
         [SerializeField] private float health = 10f;
         [SerializeField] private float directionChangeChance = 0.01f;
 
+        private BankInteractor bank;
         private Borderline borderline;
         private bool startDirection = false;
 
@@ -24,6 +27,7 @@ namespace SpaceShooter
         private void Awake()
         {
             this.borderline = GetComponent<Borderline>();
+            this.bank = Game.GetInteractor<BankInteractor>();
 
             if (Random.value > 1)
                 this.startDirection = true;
@@ -81,6 +85,8 @@ namespace SpaceShooter
                 var position = this.transform.position;
                 Instantiate(powerUp, position, Quaternion.identity);
             }
+
+            this.bank.AddMoney(this.killReward);
 
             Destroy(this.gameObject);
         }

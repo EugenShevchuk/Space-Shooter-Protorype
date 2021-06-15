@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a75daf967cb1b5c45a5c92be76ca57be, type: 3}
+  m_Name: UpgradeBase
+  m_EditorClassIdentifier: 
+  CanPurchaseMainColor: {r: 0.03137255, g: 0.5803922, b: 0.96862745, a: 1}
+  CanPurchaseTransitionColor: {r: 0.03529412, g: 0.4627451, b: 0.7647059, a: 1}
+  CanNotPurchaseMainColor: {r: 0.8773585, g: 0.12551604, b: 0.10346207, a: 1}
+  CanNotPurchaseTransitionColor: {r: 0.5849056, g: 0.10208259, b: 0.10208259, a: 1}
+  costLevelOne: 100
+  costLevelTwo: 150
+  costLevelThree: 250
+  costLevelFour: 400
+  costLevelFive: 500
+  costLevelSix: 750
+  costLevelSeven: 1000
+  costLevelEight: 1250
+  costLevelNine: 1500
+  costLevelTen: 2000

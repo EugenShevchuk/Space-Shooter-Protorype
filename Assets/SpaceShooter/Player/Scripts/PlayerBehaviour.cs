@@ -8,7 +8,7 @@ namespace SpaceShooter
         [SerializeField] private float roll = 20f;
         [SerializeField] private float pitch = 15f;
 
-        private PlayerStatsInteractor playerStats;
+        private PlayerEngineInteractor engineInteractor;
 
         private void OnEnable()
         {
@@ -22,12 +22,12 @@ namespace SpaceShooter
 
         private void OnSceneInitialized()
         {
-            this.playerStats = Game.GetInteractor<PlayerStatsInteractor>();
+            this.engineInteractor = Game.GetInteractor<PlayerEngineInteractor>();
         }
 
         private void Update()
         {
-            if (this.playerStats != null)
+            if (this.engineInteractor != null)
                 this.PlayerMove();
         }
 
@@ -38,8 +38,8 @@ namespace SpaceShooter
 
             Vector3 position = this.transform.position;
 
-            position.x += xAxis * this.playerStats.Speed * Time.deltaTime;
-            position.y += yAxis * this.playerStats.Speed * Time.deltaTime;
+            position.x += xAxis * this.engineInteractor.Speed * Time.deltaTime;
+            position.y += yAxis * this.engineInteractor.Speed * Time.deltaTime;
 
             this.transform.position = position;
 

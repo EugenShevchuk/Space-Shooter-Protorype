@@ -1,4 +1,3 @@
-using UnityEngine;
 using SpaceShooter.Architecture.SaveSystem;
 
 namespace SpaceShooter.Architecture {    

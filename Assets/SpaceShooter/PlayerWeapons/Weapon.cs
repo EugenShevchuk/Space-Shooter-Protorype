@@ -56,6 +56,7 @@ namespace SpaceShooter
 
         private IEnumerator FireGun(IWeaponInteractor interactor, ObjectPoolMono<Projectile> pool)
         {
+            interactor.InitializeWeapon();
             while (true)
             {
                 var projectile = pool.GetFreeElement();                

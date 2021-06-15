@@ -3649,10 +3649,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afddc1ad442622649ad57a1fe06fc35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killReward: 100
   powerUpDropChance: 0.5
   powerUps:
   - {fileID: 2934691147105266090, guid: 434af77925117f8449a075cc338f1d09, type: 3}
   - {fileID: 4397846509487735431, guid: 9e66f2f6fcb7be246a146e3499c7599f, type: 3}
+  - {fileID: 6517120409121199774, guid: 877e199a0f783074881a7bff8f8195ac, type: 3}
+  - {fileID: 2207886304329931679, guid: b86955b3a5d08a247892299190ccb65b, type: 3}
+  - {fileID: 9136893393112723020, guid: 4f208d2578a906345a27bfdaa3864db7, type: 3}
   speedY: 10
   speedX: 15
   health: 100

@@ -17,6 +17,7 @@ namespace SpaceShooter.Architecture
             CreateRepository<BlasterWeaponRepository>(repositoriesMap);
             CreateRepository<LaserWeaponRepository>(repositoriesMap);
             CreateRepository<WeaponsRepository>(repositoriesMap);
+            CreateRepository<BankRepository>(repositoriesMap);
 
             return (repositoriesMap);
         }
@@ -25,11 +26,14 @@ namespace SpaceShooter.Architecture
         {
             var interactorsMap = new Dictionary<Type, Interactor>();
 
-            CreateInteractor<PlayerStatsInteractor>(interactorsMap);            
+            CreateInteractor<PlayerHealthInteractor>(interactorsMap);
+            CreateInteractor<PlayerShieldInteractor>(interactorsMap);
+            CreateInteractor<PlayerEngineInteractor>(interactorsMap);
             CreateInteractor<KinematicWeaponInteractor>(interactorsMap);
             CreateInteractor<BlasterWeaponInteractor>(interactorsMap);
             CreateInteractor<LaserWeaponInteractor>(interactorsMap);
             CreateInteractor<WeaponsInteractor>(interactorsMap);
+            CreateInteractor<BankInteractor>(interactorsMap);
 
             return (interactorsMap);
         }

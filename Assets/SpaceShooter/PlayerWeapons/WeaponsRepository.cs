@@ -27,11 +27,6 @@ namespace SpaceShooter.Architecture
             this.storage.Save(this.weaponsData);
         }
 
-        public void Load()
-        {
-            this.storage.Load(new WeaponsRepoData());
-        }
-
         public void SetWeapon<T>() where T : IWeaponInteractor
         {
             this.weaponsData.typeKey = typeof(T);

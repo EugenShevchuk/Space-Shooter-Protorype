@@ -8,7 +8,8 @@ namespace SpaceShooter
         [SerializeField] private float damageFromCollisionWithEnemy = 5;
         [SerializeField] private GameObject shield;
 
-        private PlayerStatsInteractor playerStats;
+        private PlayerHealthInteractor healthInteractor;
+        private PlayerShieldInteractor shieldInteractor;
 
         private GameObject lastTriggerGo = null;
 
@@ -24,19 +25,11 @@ namespace SpaceShooter
 
         private void OnSceneInitialized()
         {
-            this.playerStats = Game.GetInteractor<PlayerStatsInteractor>();
-        }
+            this.healthInteractor = Game.GetInteractor<PlayerHealthInteractor>();
+            this.shieldInteractor = Game.GetInteractor<PlayerShieldInteractor>();
 
-        private void Update()
-        {
-            if (this.playerStats != null)
-            {
-                if (this.playerStats.Shield <= 0 && this.shield.activeSelf)
-                    this.shield.SetActive(false);
-
-                if (this.shield.activeSelf == false && this.playerStats.Shield > 0)
-                    this.shield.SetActive(true);
-            }
+            if (this.shield.activeSelf == false && this.shieldInteractor.Shield > 0)
+                this.shield.SetActive(true);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -55,6 +48,9 @@ namespace SpaceShooter
             if (triggerGO.TryGetComponent(out IPowerUp powerUp))
             {
                 powerUp.GetAbsorbed();
+
+                if (this.shield.activeSelf == false && this.shieldInteractor.Shield > 0)
+                    this.shield.SetActive(true);
             }
         }
 
@@ -74,23 +70,26 @@ namespace SpaceShooter
 
         private void TakeDamageToShield(float damage)
         {
-            if (damage > this.playerStats.Shield)
+            if (damage > this.shieldInteractor.Shield)
             {
-                var exscesAmount = damage - this.playerStats.Shield;
-                this.playerStats.Shield -= (damage - exscesAmount);
+                var exscesAmount = damage - this.shieldInteractor.Shield;
+                this.shieldInteractor.TakeDamage(damage - exscesAmount);
                 this.TakeDamageToHealth(exscesAmount);
             }
             else
             {
-                this.playerStats.Shield -= damage;
+                this.shieldInteractor.TakeDamage(damage);
             }
+
+            if (this.shieldInteractor.Shield <= 0 && this.shield.activeSelf)
+                this.shield.SetActive(false);
         }
 
         private void TakeDamageToHealth(float damage)
         {
-            this.playerStats.Health -= damage;
+            this.healthInteractor.TakeDamage(damage);
 
-            if (this.playerStats.Health <= 0)
+            if (this.healthInteractor.Health <= 0)
                 Destroy(this.gameObject);
         }
     }

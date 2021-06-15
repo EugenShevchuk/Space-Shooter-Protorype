@@ -37,6 +37,8 @@ namespace SpaceShooter.Architecture
         {
             this.DamageOnHit = this.blasterData.DamageOnHit;
             this.BlasterLevel = this.blasterData.BlasterLevel;
+            this.Velocity = this.blasterData.Velocity;
+            this.FireRate = this.blasterData.FireRate;
         }
 
         public void UpgradeBlaster()

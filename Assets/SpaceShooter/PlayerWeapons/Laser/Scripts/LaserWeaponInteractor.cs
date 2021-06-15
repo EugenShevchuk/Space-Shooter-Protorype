@@ -2,7 +2,7 @@ using System;
 
 namespace SpaceShooter.Architecture
 {
-    public class LaserWeaponInteractor : Interactor, IWeaponInteractor
+    public class LaserWeaponInteractor : Interactor, IWeaponInteractor, IUpgradable
     {
         #region NotImplemented
         public float DamageOnHit => throw new NotImplementedException("Laser doesn't have damage on hit");
@@ -19,6 +19,12 @@ namespace SpaceShooter.Architecture
 
         private LaserWeaponRepository repository;
         private WeaponsRepository weaponsRepository;
+
+        public override void Initialize()
+        {
+            this.repository = Game.GetRepository<LaserWeaponRepository>();
+            this.weaponsRepository = Game.GetRepository<WeaponsRepository>();
+        }
 
         public void InitializeWeapon()
         {

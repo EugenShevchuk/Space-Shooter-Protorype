@@ -2,7 +2,7 @@ using System;
 
 namespace SpaceShooter.Architecture
 {
-    public class BlasterWeaponInteractor : Interactor, IWeaponInteractor
+    public class BlasterWeaponInteractor : Interactor, IWeaponInteractor, IUpgradable
     {
         #region NotImplemented
         public float DamagePerSecond => throw new NotImplementedException();
@@ -20,7 +20,13 @@ namespace SpaceShooter.Architecture
 
         private BlasterWeaponRepository repository;
         private WeaponsRepository weaponsRepository;
-        
+
+        public override void Initialize()
+        {
+            this.repository = Game.GetRepository<BlasterWeaponRepository>();
+            this.weaponsRepository = Game.GetRepository<WeaponsRepository>();
+        }
+
         public void InitializeWeapon()
         {
             this.repository = Game.GetRepository<BlasterWeaponRepository>();
