@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2120881647341229021}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: StartEffects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2120881647473721608}
   - component: {fileID: 2120881647473721610}
   - component: {fileID: 2120881647473721609}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Spiral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4877,7 +4877,7 @@ GameObject:
   - component: {fileID: 2120881648347643854}
   - component: {fileID: 2120881648347643840}
   - component: {fileID: 2120881648347643855}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SparksLong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9749,7 +9749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2120881648662728869}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HitEffects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9785,7 +9785,7 @@ GameObject:
   - component: {fileID: 2120881648683034087}
   - component: {fileID: 2120881648683034105}
   - component: {fileID: 2120881648683034104}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14601,7 +14601,7 @@ GameObject:
   - component: {fileID: 2120881648720685460}
   - component: {fileID: 2120881648720685462}
   - component: {fileID: 2120881648720685461}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SparksBlack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19435,7 +19435,7 @@ GameObject:
   - component: {fileID: 2120881648823909661}
   - component: {fileID: 2120881648823909663}
   - component: {fileID: 2120881648823909662}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24269,7 +24269,7 @@ GameObject:
   - component: {fileID: 2120881648904918464}
   - component: {fileID: 2120881648904918466}
   - component: {fileID: 2120881648904918465}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29085,7 +29085,7 @@ GameObject:
   - component: {fileID: 2120881649181167051}
   - component: {fileID: 2120881649181167053}
   - component: {fileID: 2120881649181167052}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LaserWithParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

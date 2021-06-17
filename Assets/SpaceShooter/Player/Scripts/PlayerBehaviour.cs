@@ -5,45 +5,38 @@ namespace SpaceShooter
 {
     public class PlayerBehaviour : MonoBehaviour
     {
-        [SerializeField] private float roll = 20f;
-        [SerializeField] private float pitch = 15f;
-
         private PlayerEngineInteractor engineInteractor;
 
+        private Camera mainCamera;
+
         private void OnEnable()
-        {
+        {            
             SceneManagerBase.OnSceneInitializedEvent += OnSceneInitialized;
+            mainCamera = Camera.main;
         }
 
         private void OnDisable()
         {
             SceneManagerBase.OnSceneInitializedEvent -= OnSceneInitialized;
+            PlayerInputListener.instance.ScreenTouchedEvent -= Move;
         }
 
         private void OnSceneInitialized()
         {
             this.engineInteractor = Game.GetInteractor<PlayerEngineInteractor>();
+            PlayerInputListener.instance.ScreenTouchedEvent += Move;
         }
 
-        private void Update()
+        private void Move(Vector2 touchPosition)
         {
-            if (this.engineInteractor != null)
-                this.PlayerMove();
-        }
+            Vector3 screenPosition = new Vector3(touchPosition.x, touchPosition.y, mainCamera.nearClipPlane);
+            Vector3 targetPosition = mainCamera.ScreenToWorldPoint(screenPosition);
+            targetPosition.z = 0;
 
-        private void PlayerMove()
-        {
-            float xAxis = PlayerInputListener.instance.Horizontal;
-            float yAxis = PlayerInputListener.instance.Vertical;
+            var currentPosition = this.transform.position;
+            var step = 10 * Time.deltaTime;
 
-            Vector3 position = this.transform.position;
-
-            position.x += xAxis * this.engineInteractor.Speed * Time.deltaTime;
-            position.y += yAxis * this.engineInteractor.Speed * Time.deltaTime;
-
-            this.transform.position = position;
-
-            this.transform.rotation = Quaternion.Euler(-90 + (yAxis * pitch), xAxis * roll, 0);
+            this.transform.position = Vector3.Lerp(currentPosition, targetPosition, step);
         }
     }
 }

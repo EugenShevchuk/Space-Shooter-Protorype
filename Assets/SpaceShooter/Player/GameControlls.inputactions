@@ -1,0 +1,45 @@
+{
+    "name": "GameControlls",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "b977ae1b-55d7-4be7-800a-d8399d50794c",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "f7d2e924-fb7d-4815-ad7a-09ddd1baca24",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "78262abf-8cf8-4fd3-9987-2f6092db59d5",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "TouchscreenScheme",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "TouchscreenScheme",
+            "bindingGroup": "TouchscreenScheme",
+            "devices": [
+                {
+                    "devicePath": "<Touchscreen>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

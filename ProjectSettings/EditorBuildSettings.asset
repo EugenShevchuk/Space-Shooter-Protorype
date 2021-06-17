@@ -6,15 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/SpaceShooter/Scenes/LoadingScreen.unity
-    guid: a769354c10ab5054990a23792fa6ce0a
-  - enabled: 1
     path: Assets/SpaceShooter/Scenes/MainMenu/MainMenu.unity
     guid: 2ee6be2c13843c64b85a66f7c93043c2
   - enabled: 1
     path: Assets/SpaceShooter/Scenes/Game/Game.unity
     guid: a3320f9a94c66d6459479d87a59bb104
-  - enabled: 1
-    path: Assets/SpaceShooter/UI/Scripts/InGameUI.unity
-    guid: 63c47b7be56669f4e87eb34b6361b1fd
   m_configObjects: {}
