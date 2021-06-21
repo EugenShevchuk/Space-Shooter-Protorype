@@ -26,7 +26,7 @@ namespace SpaceShooter
             this.isOnscreen = true;
             this.offDown = this.offUp = this.offRight = this.offLeft = false;
 
-            if (this.TryGetComponent(out PlayerBehaviour player))
+            if (this.TryGetComponent(out PlayerMoveBehaviour player))
                 this.keepOnScreen = true;
 
             if (position.x > this.CamWidth - this.radius)

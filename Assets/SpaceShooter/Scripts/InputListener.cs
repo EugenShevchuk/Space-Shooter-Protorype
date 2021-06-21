@@ -4,32 +4,33 @@ using UnityEngine.InputSystem;
 
 namespace SpaceShooter
 {
-    public sealed class PlayerInputListener : MonoBehaviour
+    public sealed class InputListener : MonoBehaviour
     {
         #region Singleton
-        public static PlayerInputListener instance => GetInstance();
-        private static PlayerInputListener m_instance;
+        public static InputListener instance => GetInstance();
+        private static InputListener m_instance;
         private static bool isInitialized => m_instance != null;
 
         private const string NAME = "[INPUT LISTENER]";
 
-        private static PlayerInputListener GetInstance()
+        private static InputListener GetInstance()
         {
             if (isInitialized == false)
                 m_instance = CreateSingleton();
             return m_instance;
         }
 
-        private static PlayerInputListener CreateSingleton()
+        private static InputListener CreateSingleton()
         {
-            PlayerInputListener createdManager = new GameObject(NAME).AddComponent<PlayerInputListener>();
+            InputListener createdManager = new GameObject(NAME).AddComponent<InputListener>();
             //createdManager.hideFlags = HideFlags.HideAndDontSave;
             DontDestroyOnLoad(createdManager.gameObject);
             return createdManager;
         }
         #endregion
 
-        public event Action<Vector2> ScreenTouchedEvent;
+        public event Action<Vector2> TouchStartedEvent;
+        public event Action TouchEndedEvent;
         
         private GameControlls gameControlls;
 
@@ -42,23 +43,30 @@ namespace SpaceShooter
         {
             this.gameControlls.Enable();
 
-            this.gameControlls.Gameplay.Move.performed += ctx => ScreenTouched(ctx);
+            this.gameControlls.Gameplay.Move.performed += ctx => TouchStarted(ctx);
+            this.gameControlls.Gameplay.Move.canceled += ctx => TouchEnded();
         }
 
         private void OnDisable()
         {
-            this.gameControlls.Gameplay.Move.performed -= ctx => ScreenTouched(ctx);
+            this.gameControlls.Gameplay.Move.performed -= ctx => TouchStarted(ctx);
+            this.gameControlls.Gameplay.Move.canceled -= ctx => TouchEnded();
 
             this.gameControlls.Disable();            
         }
 
-        private void ScreenTouched(InputAction.CallbackContext context)
+        private void TouchStarted(InputAction.CallbackContext context)
         {
             var position = context.ReadValue<Vector2>();
                         
             Debug.Log($"Touch position - {position}");
             
-            ScreenTouchedEvent?.Invoke(position);
+            TouchStartedEvent?.Invoke(position);
+        }
+
+        private void TouchEnded()
+        {
+            TouchEndedEvent?.Invoke();
         }
     }
 }

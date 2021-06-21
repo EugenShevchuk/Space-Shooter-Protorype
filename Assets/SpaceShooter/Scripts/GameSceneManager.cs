@@ -48,7 +48,7 @@ namespace SpaceShooter
                 this.player = Instantiate(this.defaultPrefab);                
             }
 
-            this.player.GetComponent<PlayerBehaviour>().enabled = true;
+            this.player.GetComponent<PlayerMoveBehaviour>().enabled = true;
             this.player.GetComponent<CollisionHandler>().enabled = true;
 
             this.player.layer = LayerMask.NameToLayer("Player");
